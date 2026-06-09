@@ -1,0 +1,108 @@
+{% extends 'accounts/auth_base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Ro'yxatdan o'tish" %}{% endblock %}
+{% block shell_class %}auth-shell--wide{% endblock %}
+{% block heading %}{% trans "Ro'yxatdan o'tish" %}{% endblock %}
+{% block subtitle %}{% blocktrans %}Faqat <b>Administrator</b> va <b>Direktor</b> o'zini ro'yxatdan o'tkaza oladi. Tasdiqlash kodi <b>Telegram bot</b> orqali yuboriladi.{% endblocktrans %}{% endblock %}
+
+{% block content %}
+{% if form.role.field.choices %}
+<form method="post" novalidate class="reg-form" id="regForm">
+    {% csrf_token %}
+
+    {# --- Lavozim --- #}
+    <label class="form-label">{% trans "Lavozimni tanlang" %}</label>
+    <div class="role-grid">
+        {% for radio in form.role %}
+            <div>
+                <input type="radio" class="role-radio" name="{{ radio.data.name }}"
+                       id="{{ radio.id_for_label }}" value="{{ radio.data.value }}"
+                       {% if radio.data.selected %}checked{% endif %}>
+                <label class="role-card" for="{{ radio.id_for_label }}">
+                    <span class="rc-ic">
+                        {% if radio.data.value == 'director' %}<i class="bi bi-person-badge"></i>
+                        {% else %}<i class="bi bi-shield-shaded"></i>{% endif %}
+                    </span>
+                    <span>
+                        <span class="rc-t d-block">{{ radio.choice_label }}</span>
+                        <span class="rc-s">
+                            {% if radio.data.value == 'director' %}{% trans "Boshqaruv va monitoring" %}
+                            {% else %}{% trans "To'liq tizim nazorati" %}{% endif %}
+                        </span>
+                    </span>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    {% for e in form.role.errors %}<div class="errorlist mb-2">{{ e }}</div>{% endfor %}
+
+    {# --- Telegram ID --- #}
+    <div class="mt-2">
+        <div class="tg-hint">
+            <i class="bi bi-telegram"></i>
+            <span>{% blocktrans %}Telegram botni oching, <b>«🆔 ID raqamim»</b> tugmasini bosing va chiqqan raqamni quyiga kiriting.{% endblocktrans %}
+            {% if CENTER.telegram_bot_username %}<a href="https://t.me/{{ CENTER.telegram_bot_username }}" target="_blank">@{{ CENTER.telegram_bot_username }}</a>{% endif %}</span>
+        </div>
+        <label class="form-label">{% trans "Telegram ID" %}</label>
+        <div class="input-icon"><i class="bi bi-telegram"></i>{{ form.telegram_chat_id }}</div>
+        {% for e in form.telegram_chat_id.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+    </div>
+
+    {# --- Shaxsiy ma'lumotlar --- #}
+    <div class="row g-2 mt-1">
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Ism" %}</label>
+            <div class="input-icon"><i class="bi bi-person"></i>{{ form.first_name }}</div>
+            {% for e in form.first_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Familiya" %}</label>
+            <div class="input-icon"><i class="bi bi-person"></i>{{ form.last_name }}</div>
+            {% for e in form.last_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Login" %}</label>
+            <div class="input-icon"><i class="bi bi-at"></i>{{ form.username }}</div>
+            {% for e in form.username.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Telefon" %}</label>
+            <div class="input-icon"><i class="bi bi-telephone"></i>{{ form.phone }}</div>
+            {% for e in form.phone.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Parol" %}</label>
+            <div class="input-icon"><i class="bi bi-lock"></i>
+                <input type="password" name="password1" class="form-control" placeholder="{% trans 'Kamida 6 ta belgi' %}"
+                       autocomplete="new-password" data-pw-meter="#pwMeter">
+                <button type="button" class="pw-toggle"><i class="bi bi-eye"></i></button></div>
+            <div class="pw-meter" id="pwMeter"><span></span></div>
+            <div class="pw-hint"></div>
+            {% for e in form.password1.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">{% trans "Parolni takrorlang" %}</label>
+            <div class="input-icon"><i class="bi bi-lock-fill"></i>{{ form.password2 }}
+                <button type="button" class="pw-toggle"><i class="bi bi-eye"></i></button></div>
+            {% for e in form.password2.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        </div>
+    </div>
+
+    {% if form.non_field_errors %}
+        <div class="errorlist mt-2">{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>
+    {% endif %}
+
+    <button type="submit" class="btn-brand mt-3" id="regSubmit">
+        <i class="bi bi-telegram"></i> <span>{% trans "Botga kod yuborish" %}</span>
+    </button>
+</form>
+{% else %}
+<div class="alert alert-warning py-2 px-3 rounded-3 small fw-semibold">
+    {% trans "Hozircha yangi Administrator yoki Direktor uchun bo'sh joy yo'q. O'qituvchi va o'quvchilarni Administrator yaratadi." %}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+    {% trans "Hisobingiz bormi?" %} <a href="{% url 'accounts:login_page' %}">{% trans "Kirish" %}</a>
+{% endblock %}

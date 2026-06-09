@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "O'quvchilar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "O'quvchilar" %}</h1><div class="sub">{% trans "Markazning barcha o'quvchilari" %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'payments:debtors' %}" class="btn btn-light">⚠️ {% trans "Qarzdorlar" %}</a>
+        <a href="{% url 'students:create' %}" class="btn btn-primary">➕ {% trans "Yangi o'quvchi" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-3" style="margin-bottom:18px;">
+    <div class="stat"><div class="stat__label">{% trans "Jami o'quvchi" %}</div><div class="stat__value" style="font-size:24px;">{{ total }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Faol" %}</div><div class="stat__value" style="font-size:24px;">{{ active }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Qarzdorlar" %}</div><div class="stat__value text-danger" style="font-size:24px;">{{ debtors }}</div></div>
+</div>
+
+<form method="get" class="toolbar">
+    <div class="search">🔎<input type="text" name="q" value="{{ q }}" placeholder="{% trans 'Ism yoki telefon...' %}"></div>
+    <select name="status" class="form-select" style="max-width:180px;" onchange="this.form.submit()">
+        <option value="">{% trans "Barcha holat" %}</option>
+        {% for v,l in status_choices %}<option value="{{ v }}" {% if status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-light">{% trans "Filtr" %}</button>
+</form>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Telefon" %}</th>{% if request.user.is_admin_role %}<th>{% trans "Login" %}</th><th>{% trans "Parol" %}</th>{% endif %}<th>{% trans "Guruhlar" %}</th><th>{% trans "Davomat" %}</th><th class="num">{% trans "Balans" %}</th><th>{% trans "Holat" %}</th></tr></thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td><div class="cell">
+                        {% if s.photo %}<img class="avatar" src="{{ s.photo.url }}">{% else %}<span class="avatar">{{ s.initials }}</span>{% endif %}
+                        <div><a href="{% url 'students:detail' s.slug %}" class="cell__name">{{ s.full_name }}</a>
+                        <div class="cell__meta">{{ s.grade|default:"—" }}</div></div></div></td>
+                    <td>{{ s.phone }}</td>
+                    {% if request.user.is_admin_role %}
+                    <td>{% if s.user %}<code>{{ s.user.username }}</code>{% else %}<span class="text-muted" style="font-size:12px;">—</span>{% endif %}</td>
+                    <td>
+                        {% if s.user.plain_password %}
+                        <span class="pw-cell">
+                            <span class="pw-dots">••••••••</span>
+                            <span class="pw-real" style="display:none;"><code>{{ s.user.plain_password }}</code></span>
+                            <button type="button" class="btn btn-ghost btn-sm pw-eye" title="{% trans 'Ko‘rsatish' %}">👁</button>
+                        </span>
+                        {% elif s.user %}<span class="text-muted" style="font-size:12px;">{% trans "Parol saqlanmagan" %}</span>
+                        {% else %}<span class="text-muted" style="font-size:12px;">{% trans "Login yo‘q" %}</span>{% endif %}
+                    </td>
+                    {% endif %}
+                    <td>{% blocktrans with n=s.active_enrollments.count %}{{ n }} ta{% endblocktrans %}</td>
+                    <td>{{ s.attendance_percentage }}%</td>
+                    <td class="num money {% if s.is_debtor %}text-danger{% elif s.balance > 0 %}text-success{% endif %}">{{ s.balance|floatformat:0|intcomma }}</td>
+                    <td><span class="badge {% if s.status == 'active' %}success{% elif s.status == 'graduated' %}info{% else %}muted{% endif %}">{{ s.get_status_display }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="{% if request.user.is_admin_role %}8{% else %}6{% endif %}"><div class="empty"><div class="ico">🎓</div>{% trans "O'quvchi topilmadi" %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if request.user.is_admin_role %}
+<style>
+    .pw-cell{display:inline-flex;align-items:center;gap:8px;}
+    .pw-dots{letter-spacing:2px;color:var(--muted,#8a91a4);}
+</style>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+{% if request.user.is_admin_role %}
+<script>
+    document.querySelectorAll('.pw-eye').forEach(function(b){
+        b.addEventListener('click', function(){
+            var cell=b.closest('.pw-cell');
+            var dots=cell.querySelector('.pw-dots'), real=cell.querySelector('.pw-real');
+            var show=real.style.display==='none';
+            real.style.display=show?'inline':'none';
+            dots.style.display=show?'none':'inline';
+            b.textContent=show?'🙈':'👁';
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

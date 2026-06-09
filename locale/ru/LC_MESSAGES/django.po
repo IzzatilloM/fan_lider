@@ -1,0 +1,4138 @@
+# Fan Lider CRM — Russian translation.
+msgid ""
+msgstr ""
+"Project-Id-Version: Fan Lider CRM\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-07 07:56+0500\n"
+"PO-Revision-Date: 2026-06-04 20:00+0500\n"
+"Last-Translator: Fan Lider\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\accounts\decorators.py:20
+msgid "Sizda bu sahifaga ruxsat yo'q."
+msgstr "У вас нет доступа к этой странице."
+
+#: .\accounts\decorators.py:33
+msgid "Bu bo'limga faqat xodimlar kira oladi."
+msgstr "В этот раздел могут входить только сотрудники."
+
+#: .\accounts\decorators.py:34
+msgid "Ruxsat yo'q."
+msgstr "Доступ запрещён."
+
+#: .\accounts\decorators.py:46
+msgid "Bu amal faqat administrator/direktor uchun."
+msgstr "Это действие доступно только администратору/директору."
+
+#: .\accounts\forms.py:20 .\accounts\forms.py:185
+#: .\templates\accounts\register.html:14
+msgid "Tasdiqlash usuli"
+msgstr "Способ подтверждения"
+
+#: .\accounts\forms.py:21 .\accounts\forms.py:186 .\accounts\models.py:110
+msgid "Telegram bot"
+msgstr "Telegram-бот"
+
+#: .\accounts\forms.py:21 .\accounts\forms.py:186 .\accounts\models.py:111
+msgid "Gmail"
+msgstr "Gmail"
+
+#: .\accounts\forms.py:26 .\salaries\models.py:46
+#: .\templates\salaries\employee_list.html:24
+#: .\templates\salaries\home.html:89 .\templates\salaries\payslip.html:63
+msgid "Lavozim"
+msgstr "Должность"
+
+#: .\accounts\forms.py:27 .\accounts\forms.py:140 .\accounts\models.py:15
+#: .\salaries\models.py:27
+msgid "Administrator"
+msgstr "Администратор"
+
+#: .\accounts\forms.py:27 .\accounts\forms.py:141 .\accounts\models.py:16
+msgid "Direktor"
+msgstr "Директор"
+
+#: .\accounts\forms.py:31 .\accounts\forms.py:289 .\instructors\forms.py:32
+#: .\instructors\forms.py:33 .\students\models.py:28
+#: .\templates\accounts\register.html:76
+#: .\templates\accounts\user_form.html:21
+#: .\templates\enrollments\application_list.html:29
+msgid "Ism"
+msgstr "Имя"
+
+#: .\accounts\forms.py:32
+msgid "Ismingiz"
+msgstr "Ваше имя"
+
+#: .\accounts\forms.py:35 .\accounts\forms.py:290 .\instructors\forms.py:35
+#: .\instructors\forms.py:36 .\students\models.py:29
+#: .\templates\accounts\register.html:81
+#: .\templates\accounts\user_form.html:23
+msgid "Familiya"
+msgstr "Фамилия"
+
+#: .\accounts\forms.py:36
+msgid "Familiyangiz"
+msgstr "Ваша фамилия"
+
+#: .\accounts\forms.py:39 .\accounts\forms.py:154
+#: .\templates\accounts\_user_table.html:7 .\templates\accounts\login.html:41
+#: .\templates\accounts\register.html:86
+#: .\templates\accounts\users_list.html:36
+#: .\templates\students\student_detail.html:50
+#: .\templates\students\student_detail.html:57
+#: .\templates\students\student_detail.html:71
+msgid "Login"
+msgstr "Логин"
+
+#: .\accounts\forms.py:40
+msgid "login (keyin shu bilan kirasiz)"
+msgstr "логин (с ним вы будете входить)"
+
+#: .\accounts\forms.py:41
+msgid "Tizimga kirish uchun login. Faqat harf, raqam va _ belgisi."
+msgstr "Логин для входа. Только буквы, цифры и _."
+
+#: .\accounts\forms.py:44 .\accounts\forms.py:191
+#: .\templates\accounts\register.html:60 .\templates\accounts\settings.html:47
+msgid "Telegram ID"
+msgstr "Telegram ID"
+
+#: .\accounts\forms.py:45 .\accounts\forms.py:193
+msgid "Botdan olingan ID raqami"
+msgstr "ID, полученный от бота"
+
+#: .\accounts\forms.py:46
+msgid ""
+"Botni oching va «🆔 ID raqamim» tugmasini bosib, raqamni shu yerga kiriting."
+msgstr "Откройте бота, нажмите «🆔 Мой ID» и введите номер сюда."
+
+#: .\accounts\forms.py:49 .\accounts\forms.py:198
+#: .\templates\accounts\register.html:67
+msgid "Email (Gmail)"
+msgstr "Email (Gmail)"
+
+#: .\accounts\forms.py:54
+msgid "Tasdiqlash kodi shu manzilga yuboriladi."
+msgstr "Код подтверждения будет отправлен на этот адрес."
+
+#: .\accounts\forms.py:57 .\accounts\models.py:24 .\enrollments\models.py:31
+#: .\instructors\forms.py:38 .\instructors\forms.py:89
+#: .\instructors\models.py:15 .\students\models.py:32
+#: .\templates\accounts\profile.html:17 .\templates\accounts\register.html:91
+#: .\templates\accounts\settings.html:46 .\templates\accounts\settings.html:98
+#: .\templates\accounts\user_form.html:31
+#: .\templates\courses\course_detail.html:32
+#: .\templates\dashboard\home.html:121
+#: .\templates\enrollments\application_detail.html:25
+#: .\templates\enrollments\application_list.html:29
+#: .\templates\instructors\instructor_detail.html:25
+#: .\templates\payments\debtors.html:19
+#: .\templates\payments\finance_dashboard.html:56
+#: .\templates\students\student_list.html:31
+msgid "Telefon"
+msgstr "Телефон"
+
+#: .\accounts\forms.py:61 .\accounts\forms.py:158 .\accounts\forms.py:279
+#: .\instructors\forms.py:63 .\templates\accounts\_user_table.html:8
+#: .\templates\accounts\login.html:51 .\templates\accounts\register.html:96
+#: .\templates\accounts\user_form.html:33
+#: .\templates\accounts\users_list.html:36
+#: .\templates\students\student_create.html:39
+#: .\templates\students\student_detail.html:73
+msgid "Parol"
+msgstr "Пароль"
+
+#: .\accounts\forms.py:62 .\accounts\forms.py:228 .\accounts\forms.py:331
+#: .\templates\accounts\force_password.html:14
+#: .\templates\accounts\register.html:98
+msgid "Kamida 6 ta belgi"
+msgstr "Не менее 6 символов"
+
+#: .\accounts\forms.py:65 .\accounts\forms.py:231
+#: .\templates\accounts\force_password.html:23
+#: .\templates\accounts\register.html:106
+msgid "Parolni takrorlang"
+msgstr "Повторите пароль"
+
+#: .\accounts\forms.py:66 .\accounts\forms.py:232 .\accounts\forms.py:335
+msgid "Parolni qayta kiriting"
+msgstr "Введите пароль ещё раз"
+
+#: .\accounts\forms.py:81
+msgid "Login majburiy."
+msgstr "Логин обязателен."
+
+#: .\accounts\forms.py:83
+msgid "Login faqat harf, raqam va _ belgisidan iborat bo'lsin."
+msgstr "Логин может содержать только буквы, цифры и _."
+
+#: .\accounts\forms.py:85 .\accounts\forms.py:311
+msgid "Bu login band. Boshqasini tanlang."
+msgstr "Этот логин занят. Выберите другой."
+
+#: .\accounts\forms.py:92
+msgid "Telegram ID faqat raqamlardan iborat (botdan oling)."
+msgstr "Telegram ID состоит только из цифр (получите у бота)."
+
+#: .\accounts\forms.py:98
+msgid "Bu email allaqachon ro'yxatdan o'tgan."
+msgstr "Этот email уже зарегистрирован."
+
+#: .\accounts\forms.py:105
+msgid "Direktor allaqachon mavjud. Yangi direktor qo'sha olmaysiz."
+msgstr "Директор уже существует. Добавить нового нельзя."
+
+#: .\accounts\forms.py:107
+msgid "Administratorlar soni to'lgan."
+msgstr "Лимит администраторов исчерпан."
+
+#: .\accounts\forms.py:118
+msgid "Gmail orqali ro'yxatdan o'tish uchun email kiriting."
+msgstr "Укажите email для регистрации через Gmail."
+
+#: .\accounts\forms.py:121
+msgid "Telegram bot orqali ro'yxatdan o'tish uchun ID kiriting."
+msgstr "Укажите ID для регистрации через Telegram-бота."
+
+#: .\accounts\forms.py:125 .\accounts\forms.py:239
+msgid "Parollar mos kelmadi."
+msgstr "Пароли не совпадают."
+
+#: .\accounts\forms.py:142 .\accounts\models.py:17 .\accounts\models.py:202
+#: .\courses\models.py:61 .\instructors\models.py:27
+#: .\instructors\views.py:119 .\salaries\models.py:25
+#: .\templates\dashboard\director.html:85
+#: .\templates\instructors\instructor_detail.html:9
+#: .\templates\instructors\instructor_list.html:19
+msgid "O'qituvchi"
+msgstr "Преподаватель"
+
+#: .\accounts\forms.py:143 .\accounts\models.py:18 .\accounts\models.py:203
+#: .\enrollments\models.py:90 .\monitoring\models.py:19
+#: .\monitoring\models.py:61 .\payments\models.py:27 .\payments\models.py:102
+#: .\students\models.py:58 .\students\views.py:153
+#: .\templates\cabinet\base_cabinet.html:79
+#: .\templates\courses\course_detail.html:32
+#: .\templates\dashboard\director.html:157 .\templates\dashboard\home.html:121
+#: .\templates\enrollments\enrollment_list.html:20
+#: .\templates\monitoring\attendance_journal.html:29
+#: .\templates\monitoring\attendance_take.html:34
+#: .\templates\monitoring\grade_book.html:36
+#: .\templates\payments\debtors.html:19
+#: .\templates\payments\finance_dashboard.html:56
+#: .\templates\payments\invoice_list.html:29
+#: .\templates\payments\payment_list.html:29
+#: .\templates\students\student_list.html:31
+msgid "O'quvchi"
+msgstr "Ученик"
+
+#: .\accounts\forms.py:147 .\accounts\models.py:22 .\accounts\models.py:211
+#: .\templates\accounts\user_form.html:27
+#: .\templates\accounts\users_list.html:36
+msgid "Rol"
+msgstr "Роль"
+
+#: .\accounts\forms.py:155
+msgid "Loginingiz (yoki email)"
+msgstr "Ваш логин (или email)"
+
+#: .\accounts\forms.py:159
+msgid "Parolingiz"
+msgstr "Ваш пароль"
+
+#: .\accounts\forms.py:165 .\accounts\models.py:134
+msgid "Tasdiqlash kodi"
+msgstr "Код подтверждения"
+
+#: .\accounts\forms.py:176
+msgid "Kod faqat raqamlardan iborat."
+msgstr "Код состоит только из цифр."
+
+#: .\accounts\forms.py:208
+msgid "Telegram ID faqat raqamlardan iborat."
+msgstr "Telegram ID состоит только из цифр."
+
+#: .\accounts\forms.py:219
+msgid "Email manzilingizni kiriting."
+msgstr "Введите ваш email."
+
+#: .\accounts\forms.py:221
+msgid "Telegram ID raqamingizni kiriting."
+msgstr "Введите ваш Telegram ID."
+
+#: .\accounts\forms.py:227 .\accounts\forms.py:330
+#: .\templates\accounts\force_password.html:3
+#: .\templates\accounts\force_password.html:12
+#: .\templates\accounts\reset_requests.html:43
+#: .\templates\accounts\settings.html:67
+#: .\templates\students\student_detail.html:59
+msgid "Yangi parol"
+msgstr "Новый пароль"
+
+#: .\accounts\forms.py:280
+msgid "Bo'sh qoldirilsa — avtomatik / o'zgarmaydi"
+msgstr "Если оставить пустым — авто / без изменений"
+
+#: .\accounts\forms.py:281
+msgid ""
+"Yangi foydalanuvchi uchun majburiy. Tahrirda bo'sh = parol o'zgarmaydi."
+msgstr ""
+"Обязателен для нового пользователя. Пусто при редактировании = пароль не "
+"меняется."
+
+#: .\accounts\forms.py:292
+msgid "email (ixtiyoriy)"
+msgstr "email (необязательно)"
+
+#: .\accounts\forms.py:294
+msgid "Telegram ID (ixtiyoriy)"
+msgstr "Telegram ID (необязательно)"
+
+#: .\accounts\forms.py:306
+msgid "Login (username) majburiy."
+msgstr "Логин (username) обязателен."
+
+#: .\accounts\forms.py:318
+msgid "Yangi foydalanuvchi uchun parol majburiy."
+msgstr "Пароль обязателен для нового пользователя."
+
+#: .\accounts\forms.py:326 .\templates\accounts\settings.html:62
+msgid "Joriy parol"
+msgstr "Текущий пароль"
+
+#: .\accounts\forms.py:327
+msgid "Hozirgi parolingiz"
+msgstr "Ваш текущий пароль"
+
+#: .\accounts\forms.py:334 .\templates\accounts\settings.html:72
+msgid "Yangi parolni takrorlang"
+msgstr "Повторите новый пароль"
+
+#: .\accounts\forms.py:345
+msgid "Joriy parol noto'g'ri."
+msgstr "Текущий пароль неверен."
+
+#: .\accounts\forms.py:352
+msgid "Yangi parollar mos kelmadi."
+msgstr "Новые пароли не совпадают."
+
+#: .\accounts\models.py:26 .\instructors\forms.py:57
+#: .\instructors\models.py:21 .\students\models.py:42
+msgid "Rasm"
+msgstr "Фото"
+
+#: .\accounts\models.py:28
+msgid "Google rasmi"
+msgstr "Фото Google"
+
+#: .\accounts\models.py:32 .\accounts\models.py:118 .\accounts\models.py:217
+#: .\enrollments\models.py:47 .\students\models.py:50
+msgid "Telegram chat ID"
+msgstr "Telegram chat ID"
+
+#: .\accounts\models.py:33
+msgid "Telegram bot bergan ID — tasdiqlash kodi shu yerga yuboriladi."
+msgstr "ID, выданный Telegram-ботом — сюда отправляется код подтверждения."
+
+#: .\accounts\models.py:35 .\templates\accounts\profile.html:18
+msgid "Tasdiqlangan"
+msgstr "Подтверждён"
+
+#: .\accounts\models.py:39
+msgid "Ko'rinadigan parol"
+msgstr "Видимый пароль"
+
+#: .\accounts\models.py:40
+msgid "Admin yaratgan parol — faqat admin panelida ko'rinadi."
+msgstr ""
+"Пароль, заданный администратором — виден только в панели администратора."
+
+#: .\accounts\models.py:43
+msgid "Parol yangilanishi shart"
+msgstr "Требуется смена пароля"
+
+#: .\accounts\models.py:47 .\salaries\models.py:43
+#: .\templates\accounts\_user_table.html:6
+#: .\templates\accounts\users_list.html:36
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+#: .\accounts\models.py:48 .\templates\accounts\users_list.html:3
+#: .\templates\accounts\users_list.html:8 .\templates\partials\sidebar.html:66
+msgid "Foydalanuvchilar"
+msgstr "Пользователи"
+
+#: .\accounts\models.py:106 .\templates\accounts\login.html:69
+#: .\templates\accounts\register.html:3 .\templates\accounts\register.html:5
+#: .\templates\partials\sidebar.html:32
+msgid "Ro'yxatdan o'tish"
+msgstr "Регистрация"
+
+#: .\accounts\models.py:107 .\templates\accounts\reset_help.html:3
+#: .\templates\accounts\reset_help.html:4
+msgid "Parolni tiklash"
+msgstr "Сброс пароля"
+
+#: .\accounts\models.py:115
+msgid "Kanal"
+msgstr "Канал"
+
+#: .\accounts\models.py:120 .\instructors\forms.py:41
+#: .\instructors\forms.py:90 .\instructors\models.py:16
+#: .\students\models.py:34 .\templates\accounts\settings.html:99
+#: .\templates\accounts\user_form.html:29
+msgid "Email"
+msgstr "Email"
+
+#: .\accounts\models.py:121
+msgid "Kod"
+msgstr "Код"
+
+#: .\accounts\models.py:123
+msgid "Maqsad"
+msgstr "Цель"
+
+#: .\accounts\models.py:126
+msgid "Ma'lumotlar"
+msgstr "Данные"
+
+#: .\accounts\models.py:128
+msgid "Urinishlar"
+msgstr "Попытки"
+
+#: .\accounts\models.py:129
+msgid "Ishlatilgan"
+msgstr "Использован"
+
+#: .\accounts\models.py:131
+msgid "Amal qilish muddati"
+msgstr "Срок действия"
+
+#: .\accounts\models.py:135
+msgid "Tasdiqlash kodlari"
+msgstr "Коды подтверждения"
+
+#: .\accounts\models.py:206 .\templates\accounts\profile.html:18
+#: .\templates\payments\finance_dashboard.html:28
+msgid "Kutilmoqda"
+msgstr "Ожидает"
+
+#: .\accounts\models.py:207
+msgid "Yangi parol berildi"
+msgstr "Новый пароль выдан"
+
+#: .\accounts\models.py:208 .\enrollments\models.py:19
+msgid "Rad etildi"
+msgstr "Отклонено"
+
+#: .\accounts\models.py:213
+msgid "Login / telefon"
+msgstr "Логин / телефон"
+
+#: .\accounts\models.py:214
+msgid "Foydalanuvchi botda kiritgan login yoki telefon."
+msgstr "Логин или телефон, введённый пользователем в боте."
+
+#: .\accounts\models.py:216
+msgid "Ism (botdan)"
+msgstr "Имя (из бота)"
+
+#: .\accounts\models.py:219 .\courses\models.py:79 .\enrollments\models.py:51
+#: .\enrollments\models.py:101 .\monitoring\models.py:26
+#: .\payments\models.py:43 .\salaries\models.py:102 .\salaries\models.py:171
+#: .\students\models.py:43 .\templates\accounts\_user_table.html:9
+#: .\templates\accounts\profile.html:18
+#: .\templates\accounts\users_list.html:36
+#: .\templates\cabinet\overview.html:154
+#: .\templates\courses\course_detail.html:32
+#: .\templates\enrollments\application_list.html:29
+#: .\templates\enrollments\enrollment_list.html:20
+#: .\templates\instructors\instructor_detail.html:28
+#: .\templates\monitoring\attendance_take.html:34
+#: .\templates\payments\invoice_list.html:29
+#: .\templates\salaries\employee_list.html:25
+#: .\templates\salaries\home.html:90 .\templates\salaries\payslip.html:95
+#: .\templates\students\student_list.html:31
+msgid "Holat"
+msgstr "Статус"
+
+#: .\accounts\models.py:222
+msgid "Topilgan foydalanuvchi"
+msgstr "Найденный пользователь"
+
+#: .\accounts\models.py:226
+msgid "Hal qilgan admin"
+msgstr "Решено администратором"
+
+#: .\accounts\models.py:228 .\monitoring\models.py:27
+#: .\monitoring\models.py:73 .\payments\models.py:115 .\salaries\models.py:66
+#: .\salaries\models.py:151 .\students\models.py:48
+msgid "Izoh"
+msgstr "Примечание"
+
+#: .\accounts\models.py:233
+msgid "Parol tiklash murojaati"
+msgstr "Запрос на сброс пароля"
+
+#: .\accounts\models.py:234 .\templates\accounts\reset_requests.html:3
+#: .\templates\accounts\reset_requests.html:8
+msgid "Parol tiklash murojaatlari"
+msgstr "Запросы на сброс пароля"
+
+#: .\accounts\views.py:60
+msgid "Login yoki parol noto'g'ri."
+msgstr "Неверный логин или пароль."
+
+#: .\accounts\views.py:62
+msgid "Hisobingiz faollashtirilmagan. Administratorga murojaat qiling."
+msgstr "Ваша учётная запись не активирована. Обратитесь к администратору."
+
+#: .\accounts\views.py:66
+#, python-format
+msgid ""
+"Siz «%(role)s» sifatida ro'yxatdan o'tmagansiz. Iltimos, to'g'ri rolni "
+"tanlang."
+msgstr ""
+"Вы не зарегистрированы как «%(role)s». Пожалуйста, выберите правильную роль."
+
+#: .\accounts\views.py:73
+#, python-format
+msgid ""
+"Administratorlar soni cheklangan (%(limit)s ta). Siz ushbu hisob bilan "
+"administrator sifatida kira olmaysiz."
+msgstr ""
+"Количество администраторов ограничено (%(limit)s). Вы не можете войти "
+"администратором с этой учётной записью."
+
+#: .\accounts\views.py:81
+msgid "Xavfsizlik uchun yangi parol o'rnating."
+msgstr "Установите новый пароль в целях безопасности."
+
+#: .\accounts\views.py:83
+#, python-format
+msgid "Xush kelibsiz, %(name)s!"
+msgstr "Добро пожаловать, %(name)s!"
+
+#: .\accounts\views.py:125
+msgid ""
+"Kod yuborilmadi. Email manzilingiz to'g'ri ekanini tekshiring va qaytadan "
+"urinib ko'ring."
+msgstr "Код не отправлен. Проверьте правильность email и попробуйте снова."
+
+#: .\accounts\views.py:131
+msgid ""
+"Kod yuborilmadi. Botni oching, «🆔 ID raqamim» tugmasini bosib, ID raqamingiz"
+" to'g'ri ekanini tekshiring va qaytadan urinib ko'ring."
+msgstr ""
+"Код не отправлен. Откройте бота, нажмите «🆔 Мой ID», проверьте правильность "
+"ID и попробуйте снова."
+
+#: .\accounts\views.py:141
+msgid "Tasdiqlash kodi email manzilingizga yuborildi."
+msgstr "Код подтверждения отправлен на ваш email."
+
+#: .\accounts\views.py:143
+msgid "Tasdiqlash kodi Telegram botingizga yuborildi."
+msgstr "Код подтверждения отправлен в ваш Telegram-бот."
+
+#: .\accounts\views.py:157
+msgid "Avval ro'yxatdan o'ting."
+msgstr "Сначала зарегистрируйтесь."
+
+#: .\accounts\views.py:164
+msgid "Kod eskirgan yoki topilmadi. Qaytadan yuboring."
+msgstr "Код устарел или не найден. Отправьте заново."
+
+#: .\accounts\views.py:169
+#, python-format
+msgid "Kod noto'g'ri. Qolgan urinishlar: %(left)s."
+msgstr "Неверный код. Осталось попыток: %(left)s."
+
+#: .\accounts\views.py:205
+#, python-format
+msgid ""
+"Hisobingiz yaratildi. Login: %(username)s. Siz %(role)s sifatida kirdingiz."
+msgstr ""
+"Ваша учётная запись создана. Логин: %(username)s. Вы вошли как %(role)s."
+
+#: .\accounts\views.py:215
+msgid "Tasdiqlandi. Endi yangi parol o'rnating."
+msgstr "Подтверждено. Теперь установите новый пароль."
+
+#: .\accounts\views.py:230
+#, python-format
+msgid "Iltimos, %(seconds)s soniyadan so'ng qayta urining."
+msgstr "Пожалуйста, повторите через %(seconds)s секунд."
+
+#: .\accounts\views.py:249
+msgid "Yangi kod yuborildi."
+msgstr "Новый код отправлен."
+
+#: .\accounts\views.py:251
+msgid "Kodni yuborishda xatolik yuz berdi."
+msgstr "Произошла ошибка при отправке кода."
+
+#: .\accounts\views.py:284
+msgid "Kodni yuborishda xatolik. Ma'lumotlaringizni tekshiring."
+msgstr "Ошибка отправки кода. Проверьте свои данные."
+
+#: .\accounts\views.py:296
+msgid "Agar bu email ro'yxatdan o'tgan bo'lsa, kod yuborildi."
+msgstr "Если этот email зарегистрирован, код отправлен."
+
+#: .\accounts\views.py:298
+msgid "Agar bu ID ro'yxatdan o'tgan bo'lsa, kod botingizga yuborildi."
+msgstr "Если этот ID зарегистрирован, код отправлен в ваш бот."
+
+#: .\accounts\views.py:308
+msgid "Avval kod bilan tasdiqlang."
+msgstr "Сначала подтвердите кодом."
+
+#: .\accounts\views.py:322
+msgid "Foydalanuvchi topilmadi."
+msgstr "Пользователь не найден."
+
+#: .\accounts\views.py:328
+msgid "Parol yangilandi. Endi kirishingiz mumkin."
+msgstr "Пароль обновлён. Теперь вы можете войти."
+
+#: .\accounts\views.py:349
+msgid "Parol muvaffaqiyatli yangilandi."
+msgstr "Пароль успешно обновлён."
+
+#: .\accounts\views.py:381
+msgid "Bu murojaat allaqachon ko'rib chiqilgan."
+msgstr "Этот запрос уже обработан."
+
+#: .\accounts\views.py:392
+msgid "Murojaat rad etildi."
+msgstr "Запрос отклонён."
+
+#: .\accounts\views.py:405
+msgid ""
+"Foydalanuvchi topilmadi. Login (username) ni qo'lda kiriting va qaytadan "
+"urinib ko'ring."
+msgstr ""
+"Пользователь не найден. Введите логин (username) вручную и попробуйте снова."
+
+#: .\accounts\views.py:411
+msgid "Parol kamida 6 ta belgidan iborat bo'lishi kerak."
+msgstr "Пароль должен содержать не менее 6 символов."
+
+#: .\accounts\views.py:437
+#, python-format
+msgid "Yangi parol o'rnatildi va %(username)s ga botga yuborildi."
+msgstr "Новый пароль установлен и отправлен %(username)s в бот."
+
+#: .\accounts\views.py:441
+#, python-format
+msgid ""
+"Parol o'rnatildi (%(username)s), lekin botga yuborilmadi (bot tokeni yoki "
+"chat ID yo'q). Parolni qo'lda yetkazing: %(password)s"
+msgstr ""
+"Пароль установлен (%(username)s), но не отправлен в бот (нет токена бота или"
+" chat ID). Передайте пароль вручную: %(password)s"
+
+#: .\accounts\views.py:502
+#, python-format
+msgid "Foydalanuvchi yaratildi — login: %(username)s, parol: %(password)s"
+msgstr "Пользователь создан — логин: %(username)s, пароль: %(password)s"
+
+#: .\accounts\views.py:529
+#, python-format
+msgid "%(username)s ma'lumotlari saqlandi."
+msgstr "Данные %(username)s сохранены."
+
+#: .\accounts\views.py:555
+msgid " (botga yuborildi)"
+msgstr " (отправлено в бот)"
+
+#: .\accounts\views.py:556
+#, python-format
+msgid "%(username)s uchun yangi parol: %(password)s%(suffix)s"
+msgstr "Новый пароль для %(username)s: %(password)s%(suffix)s"
+
+#: .\accounts\views.py:566
+msgid "O'zingizni o'chira olmaysiz."
+msgstr "Вы не можете удалить самого себя."
+
+#: .\accounts\views.py:570
+#, python-format
+msgid "%(name)s o'chirildi."
+msgstr "%(name)s удалён."
+
+#: .\accounts\views.py:583
+#, python-format
+msgid "Siz %(name)s hisobiga kirdingiz (admin sifatida)."
+msgstr "Вы вошли в учётную запись %(name)s (как администратор)."
+
+#: .\accounts\views.py:597
+msgid "Admin hisobingizga qaytdingiz."
+msgstr "Вы вернулись в свою учётную запись администратора."
+
+#: .\accounts\views.py:633
+msgid "Parolingiz muvaffaqiyatli o'zgartirildi."
+msgstr "Ваш пароль успешно изменён."
+
+#: .\accounts\views.py:660
+msgid "Markaz ma'lumotlari saqlandi."
+msgstr "Данные центра сохранены."
+
+#: .\accounts\views.py:684
+msgid "Profil ma'lumotlari saqlandi."
+msgstr "Данные профиля сохранены."
+
+#: .\accounts\views.py:698 .\cabinet\views.py:49
+msgid "Rasm tanlanmadi."
+msgstr "Изображение не выбрано."
+
+#: .\accounts\views.py:700 .\cabinet\views.py:51
+msgid "Rasm hajmi 5 MB dan oshmasligi kerak."
+msgstr "Размер изображения не должен превышать 5 МБ."
+
+#: .\accounts\views.py:702 .\cabinet\views.py:53
+msgid "Faqat rasm fayli yuklang."
+msgstr "Загрузите только файл изображения."
+
+#: .\accounts\views.py:706 .\cabinet\views.py:57
+msgid "Profil rasmingiz yangilandi."
+msgstr "Ваше фото профиля обновлено."
+
+#: .\accounts\views.py:712
+msgid "Tizimdan chiqdingiz."
+msgstr "Вы вышли из системы."
+
+#: .\cabinet\views.py:35
+msgid ""
+"Sizning hisobingiz hali o'quvchi profiliga bog'lanmagan. Markaz "
+"ma'muriyatiga murojaat qiling."
+msgstr ""
+"Ваша учётная запись ещё не связана с профилем ученика. Обратитесь в "
+"администрацию центра."
+
+#: .\cabinet\views.py:46
+msgid "O'quvchi profili topilmadi."
+msgstr "Профиль ученика не найден."
+
+#: .\cabinet\views.py:165 .\templates\cabinet\overview.html:66
+#: .\templates\salaries\home.html:61
+msgid "A'lo"
+msgstr "Отлично"
+
+#: .\cabinet\views.py:167 .\templates\cabinet\overview.html:67
+#: .\templates\salaries\home.html:62
+msgid "Yaxshi"
+msgstr "Хорошо"
+
+#: .\cabinet\views.py:169 .\templates\cabinet\overview.html:68
+#: .\templates\salaries\home.html:63
+msgid "Qoniqarli"
+msgstr "Удовлетворительно"
+
+#: .\cabinet\views.py:171 .\templates\cabinet\overview.html:69
+#: .\templates\salaries\home.html:64
+msgid "Past"
+msgstr "Низко"
+
+#: .\cabinet\views.py:173 .\templates\monitoring\grade_book.html:47
+#: .\templates\monitoring\student_report.html:57
+#: .\templates\students\student_detail.html:122
+msgid "Baho yo'q"
+msgstr "Нет оценок"
+
+#: .\courses\forms.py:31
+msgid "Masalan: Ingliz tili — kechki guruh"
+msgstr "Напр.: Английский — вечерняя группа"
+
+#: .\courses\models.py:10 .\monitoring\models.py:68
+msgid "Nomi"
+msgstr "Название"
+
+#: .\courses\models.py:12 .\courses\models.py:63 .\monitoring\models.py:126
+msgid "Tavsif"
+msgstr "Описание"
+
+#: .\courses\models.py:13
+msgid "Rang"
+msgstr "Цвет"
+
+#: .\courses\models.py:14
+msgid "Belgi (emoji)"
+msgstr "Значок (эмодзи)"
+
+#: .\courses\models.py:15 .\enrollments\models.py:82
+#: .\instructors\models.py:22 .\salaries\models.py:65 .\students\models.py:18
+#: .\templates\accounts\_user_table.html:29
+#: .\templates\accounts\users_list.html:59
+#: .\templates\cabinet\overview.html:127
+#: .\templates\instructors\instructor_detail.html:28
+#: .\templates\instructors\instructor_list.html:30
+#: .\templates\salaries\employee_list.html:41
+#: .\templates\students\student_list.html:15
+msgid "Faol"
+msgstr "Активен"
+
+#: .\courses\models.py:19 .\courses\models.py:53
+#: .\templates\enrollments\application_detail.html:28
+#: .\templates\enrollments\application_list.html:29
+#: .\templates\enrollments\enrollment_list.html:20
+msgid "Yo'nalish"
+msgstr "Направление"
+
+#: .\courses\models.py:20 .\templates\courses\course_list.html:8
+#: .\templates\courses\subject_list.html:3
+msgid "Yo'nalishlar"
+msgstr "Направления"
+
+#: .\courses\models.py:36
+msgid "Qabul ochiq"
+msgstr "Идёт набор"
+
+#: .\courses\models.py:37
+msgid "Davom etmoqda"
+msgstr "Идёт"
+
+#: .\courses\models.py:38 .\enrollments\models.py:84
+msgid "Yakunlangan"
+msgstr "Завершён"
+
+#: .\courses\models.py:39
+msgid "Vaqtincha to'xtatilgan"
+msgstr "Приостановлен"
+
+#: .\courses\models.py:43
+msgid "Du-Chor-Juma"
+msgstr "Пн-Ср-Пт"
+
+#: .\courses\models.py:44
+msgid "Se-Pay-Shan"
+msgstr "Вт-Чт-Сб"
+
+#: .\courses\models.py:45
+msgid "Har kuni"
+msgstr "Каждый день"
+
+#: .\courses\models.py:46
+msgid "Dam olish kunlari"
+msgstr "Выходные дни"
+
+#: .\courses\models.py:49
+msgid "Guruh nomi"
+msgstr "Название группы"
+
+#: .\courses\models.py:56
+msgid "Daraja / level"
+msgstr "Уровень"
+
+#: .\courses\models.py:57
+msgid "Masalan: Beginner, Elementary, Intermediate, A1, B2 ..."
+msgstr "Напр.: Beginner, Elementary, Intermediate, A1, B2 ..."
+
+#: .\courses\models.py:66
+msgid "Oylik to'lov (so'm)"
+msgstr "Ежемесячная оплата (сум)"
+
+#: .\courses\models.py:68
+msgid "Davomiyligi (oy)"
+msgstr "Длительность (мес.)"
+
+#: .\courses\models.py:69
+msgid "Sig'im (max o'quvchi)"
+msgstr "Вместимость (макс. учеников)"
+
+#: .\courses\models.py:72
+msgid "Dars kunlari"
+msgstr "Дни занятий"
+
+#: .\courses\models.py:74
+msgid "Boshlanish vaqti"
+msgstr "Время начала"
+
+#: .\courses\models.py:75
+msgid "Xona"
+msgstr "Кабинет"
+
+#: .\courses\models.py:76
+msgid "Boshlanish sanasi"
+msgstr "Дата начала"
+
+#: .\courses\models.py:84 .\courses\views.py:83 .\enrollments\models.py:94
+#: .\monitoring\models.py:23 .\monitoring\models.py:65
+#: .\monitoring\models.py:122 .\payments\models.py:35
+#: .\templates\enrollments\enrollment_list.html:20
+#: .\templates\monitoring\student_report.html:22
+#: .\templates\payments\invoice_list.html:29
+msgid "Guruh"
+msgstr "Группа"
+
+#: .\courses\models.py:85 .\templates\courses\course_detail.html:7
+#: .\templates\courses\course_list.html:3
+#: .\templates\courses\subject_list.html:8
+#: .\templates\dashboard\director.html:42 .\templates\partials\sidebar.html:48
+#: .\templates\partials\sidebar.html:97
+#: .\templates\salaries\record_detail.html:73
+#: .\templates\students\student_detail.html:83
+#: .\templates\students\student_list.html:31
+msgid "Guruhlar"
+msgstr "Группы"
+
+#: .\courses\views.py:58
+#, python-format
+msgid "'%(name)s' guruhi yaratildi."
+msgstr "Группа '%(name)s' создана."
+
+#: .\courses\views.py:60 .\templates\courses\course_list.html:9
+msgid "Yangi guruh"
+msgstr "Новая группа"
+
+#: .\courses\views.py:69
+msgid "Guruh ma'lumotlari yangilandi."
+msgstr "Данные группы обновлены."
+
+#: .\courses\views.py:72 .\students\views.py:142
+#, python-format
+msgid "Tahrirlash — %(name)s"
+msgstr "Редактирование — %(name)s"
+
+#: .\courses\views.py:81
+msgid "Guruh o'chirildi."
+msgstr "Группа удалена."
+
+#: .\courses\views.py:98
+msgid "Yo'nalish qo'shildi."
+msgstr "Направление добавлено."
+
+#: .\courses\views.py:100 .\templates\courses\subject_list.html:9
+msgid "Yangi yo'nalish"
+msgstr "Новое направление"
+
+#: .\courses\views.py:109
+msgid "Yo'nalish yangilandi."
+msgstr "Направление обновлено."
+
+#: .\courses\views.py:111
+msgid "Yo'nalishni tahrirlash"
+msgstr "Редактировать направление"
+
+#: .\dashboard\views.py:16
+msgid "Dushanba"
+msgstr "Понедельник"
+
+#: .\dashboard\views.py:16
+msgid "Seshanba"
+msgstr "Вторник"
+
+#: .\dashboard\views.py:16
+msgid "Chorshanba"
+msgstr "Среда"
+
+#: .\dashboard\views.py:16
+msgid "Payshanba"
+msgstr "Четверг"
+
+#: .\dashboard\views.py:17
+msgid "Juma"
+msgstr "Пятница"
+
+#: .\dashboard\views.py:17
+msgid "Shanba"
+msgstr "Суббота"
+
+#: .\dashboard\views.py:17
+msgid "Yakshanba"
+msgstr "Воскресенье"
+
+#: .\dashboard\views.py:252
+msgid "O'qituvchi panelini ko'rish uchun ro'yxatdan o'qituvchini tanlang."
+msgstr "Выберите преподавателя из списка, чтобы открыть его панель."
+
+#: .\enrollments\forms.py:19
+msgid "Ism Familiya"
+msgstr "Имя Фамилия"
+
+#: .\enrollments\forms.py:21
+msgid "+998 (ixtiyoriy)"
+msgstr "+998 (необязательно)"
+
+#: .\enrollments\forms.py:22 .\enrollments\models.py:33
+#: .\templates\enrollments\application_detail.html:27
+msgid "Yosh"
+msgstr "Возраст"
+
+#: .\enrollments\forms.py:25
+msgid "Qo'shimcha izoh"
+msgstr "Дополнительный комментарий"
+
+#: .\enrollments\forms.py:31
+msgid "Yo'nalishni tanlang"
+msgstr "Выберите направление"
+
+#: .\enrollments\models.py:15
+msgid "Yangi"
+msgstr "Новая"
+
+#: .\enrollments\models.py:16
+msgid "Bog'lanildi"
+msgstr "Связались"
+
+#: .\enrollments\models.py:17
+msgid "Sinov darsida"
+msgstr "На пробном уроке"
+
+#: .\enrollments\models.py:18
+msgid "Ro'yxatga olindi"
+msgstr "Зачислен"
+
+#: .\enrollments\models.py:22
+msgid "Veb-sayt"
+msgstr "Веб-сайт"
+
+#: .\enrollments\models.py:23
+msgid "Instagram"
+msgstr "Instagram"
+
+#: .\enrollments\models.py:24
+msgid "Telegram"
+msgstr "Telegram"
+
+#: .\enrollments\models.py:25
+msgid "Tanish/Do'st"
+msgstr "Знакомый/Друг"
+
+#: .\enrollments\models.py:26
+msgid "Reklama banneri"
+msgstr "Рекламный баннер"
+
+#: .\enrollments\models.py:27 .\salaries\models.py:31
+msgid "Boshqa"
+msgstr "Другое"
+
+#: .\enrollments\models.py:30
+msgid "F.I.O"
+msgstr "Ф.И.О"
+
+#: .\enrollments\models.py:32 .\students\models.py:33
+msgid "Ota-ona telefoni"
+msgstr "Телефон родителя"
+
+#: .\enrollments\models.py:37
+msgid "Qiziqqan yo'nalish"
+msgstr "Интересующее направление"
+
+#: .\enrollments\models.py:41
+msgid "Tanlangan guruh"
+msgstr "Выбранная группа"
+
+#: .\enrollments\models.py:44
+msgid "Qayerdan"
+msgstr "Откуда узнали"
+
+#: .\enrollments\models.py:45
+msgid "Xabar / Izoh"
+msgstr "Сообщение / Примечание"
+
+#: .\enrollments\models.py:48
+msgid ""
+"Bot orqali kelgan arizada to'ldiriladi (kabinet havolasini yuborish uchun)."
+msgstr "Заполняется для заявок из бота (для отправки ссылки на кабинет)."
+
+#: .\enrollments\models.py:54
+msgid "Mas'ul xodim"
+msgstr "Ответственный сотрудник"
+
+#: .\enrollments\models.py:58
+msgid "Yaratilgan o'quvchi"
+msgstr "Созданный ученик"
+
+#: .\enrollments\models.py:60
+msgid "Xodim izohi"
+msgstr "Комментарий сотрудника"
+
+#: .\enrollments\models.py:62
+msgid "Yuborilgan vaqt"
+msgstr "Время отправки"
+
+#: .\enrollments\models.py:66
+msgid "Onlayn ariza"
+msgstr "Онлайн-заявка"
+
+#: .\enrollments\models.py:67 .\templates\enrollments\application_list.html:3
+#: .\templates\enrollments\application_list.html:6
+#: .\templates\partials\sidebar.html:34
+msgid "Onlayn arizalar"
+msgstr "Онлайн-заявки"
+
+#: .\enrollments\models.py:83 .\students\models.py:19
+msgid "Muzlatilgan"
+msgstr "Заморожен"
+
+#: .\enrollments\models.py:85 .\payments\models.py:22
+msgid "Bekor qilingan"
+msgstr "Отменён"
+
+#: .\enrollments\models.py:96 .\templates\courses\course_detail.html:21
+msgid "Oylik to'lov"
+msgstr "Ежемесячная оплата"
+
+#: .\enrollments\models.py:97
+msgid "Chegirma (%)"
+msgstr "Скидка (%)"
+
+#: .\enrollments\models.py:99
+msgid "Boshlangan sana"
+msgstr "Дата начала"
+
+#: .\enrollments\models.py:100
+msgid "Tugagan sana"
+msgstr "Дата окончания"
+
+#: .\enrollments\models.py:105 .\enrollments\views.py:174
+#: .\payments\models.py:31
+msgid "Yozilish"
+msgstr "Зачисление"
+
+#: .\enrollments\models.py:106 .\templates\enrollments\application_list.html:9
+#: .\templates\enrollments\enrollment_list.html:3
+#: .\templates\enrollments\enrollment_list.html:6
+msgid "Yozilishlar"
+msgstr "Зачисления"
+
+#: .\enrollments\views.py:63
+msgid "Ariza holati yangilandi."
+msgstr "Статус заявки обновлён."
+
+#: .\enrollments\views.py:75
+msgid "Bu ariza allaqachon o'quvchiga aylantirilgan."
+msgstr "Эта заявка уже преобразована в ученика."
+
+#: .\enrollments\views.py:86
+#, python-format
+msgid "Onlayn arizadan (%(source)s)."
+msgstr "Из онлайн-заявки (%(source)s)."
+
+#: .\enrollments\views.py:107
+#, python-format
+msgid ""
+"%(name)s tasdiqlandi. Shaxsiy kabinet havolasi, login (%(username)s) va "
+"parol o'quvchining Telegram'iga yuborildi."
+msgstr ""
+"%(name)s подтверждён. Ссылка на кабинет, логин (%(username)s) и пароль "
+"отправлены в Telegram ученика."
+
+#: .\enrollments\views.py:114
+#, python-format
+msgid ""
+"%(name)s o'quvchilarga qo'shildi. Login: %(username)s · Parol: %(password)s "
+"(Telegram ulanmagani uchun bu ma'lumotni o'zingiz yetkazing)."
+msgstr ""
+"%(name)s добавлен в ученики. Логин: %(username)s · Пароль: %(password)s "
+"(Telegram не подключён, передайте эти данные сами)."
+
+#: .\enrollments\views.py:148
+msgid "O'quvchi guruhga yozildi."
+msgstr "Ученик записан в группу."
+
+#: .\enrollments\views.py:150 .\templates\enrollments\enrollment_list.html:8
+msgid "Yangi yozilish"
+msgstr "Новое зачисление"
+
+#: .\enrollments\views.py:159
+msgid "Yozilish yangilandi."
+msgstr "Зачисление обновлено."
+
+#: .\enrollments\views.py:162
+msgid "Yozilishni tahrirlash"
+msgstr "Редактировать зачисление"
+
+#: .\enrollments\views.py:172
+msgid "Yozilish o'chirildi."
+msgstr "Зачисление удалено."
+
+#: .\instructors\forms.py:44
+msgid "Mutaxassislik / fan"
+msgstr "Специальность / предмет"
+
+#: .\instructors\forms.py:45
+msgid "Masalan: Matematika"
+msgstr "Напр.: Математика"
+
+#: .\instructors\forms.py:47 .\instructors\models.py:18
+msgid "Tajriba (yil)"
+msgstr "Опыт (лет)"
+
+#: .\instructors\forms.py:50 .\instructors\models.py:19
+#: .\templates\salaries\home.html:146
+msgid "Oylik (so'm)"
+msgstr "Оклад (сум)"
+
+#: .\instructors\forms.py:54
+msgid "Qisqacha ma'lumot"
+msgstr "Краткая информация"
+
+#: .\instructors\forms.py:55
+msgid "Bio (ixtiyoriy)"
+msgstr "Био (необязательно)"
+
+#: .\instructors\forms.py:60 .\templates\accounts\user_form.html:25
+msgid "Login (username)"
+msgstr "Логин (username)"
+
+#: .\instructors\forms.py:61
+msgid "Bo'sh — avtomatik"
+msgstr "Пусто — автоматически"
+
+#: .\instructors\forms.py:64 .\templates\students\student_create.html:40
+msgid "Bo'sh — avtomatik xavfsiz parol"
+msgstr "Пусто — автоматический надёжный пароль"
+
+#: .\instructors\forms.py:69
+msgid "Bu login band — boshqasini tanlang yoki bo'sh qoldiring."
+msgstr "Этот логин занят — выберите другой или оставьте пустым."
+
+#: .\instructors\forms.py:88
+msgid "To‘liq ism"
+msgstr "Полное имя"
+
+#: .\instructors\forms.py:91 .\instructors\models.py:17
+msgid "Mutaxassislik"
+msgstr "Специальность"
+
+#: .\instructors\forms.py:92
+msgid "Tajriba yili"
+msgstr "Лет опыта"
+
+#: .\instructors\forms.py:93 .\templates\courses\course_detail.html:32
+#: .\templates\enrollments\enrollment_list.html:20
+#: .\templates\instructors\instructor_detail.html:27
+msgid "Oylik"
+msgstr "Оклад"
+
+#: .\instructors\forms.py:94
+msgid "Qisqacha ma’lumot"
+msgstr "Краткая информация"
+
+#: .\instructors\models.py:14
+msgid "To'liq ism"
+msgstr "Полное имя"
+
+#: .\instructors\models.py:20
+msgid "Bio"
+msgstr "Био"
+
+#: .\instructors\models.py:28 .\templates\accounts\settings.html:18
+#: .\templates\accounts\settings.html:126
+#: .\templates\dashboard\director.html:47 .\templates\dashboard\home.html:54
+#: .\templates\instructors\instructor_detail.html:7
+#: .\templates\instructors\instructor_form.html:8
+#: .\templates\instructors\instructor_list.html:3
+#: .\templates\instructors\instructor_list.html:6
+#: .\templates\partials\sidebar.html:26 .\templates\partials\sidebar.html:100
+msgid "O'qituvchilar"
+msgstr "Преподаватели"
+
+#: .\instructors\views.py:76
+#, python-format
+msgid ""
+"✅ O'qituvchi «%(name)s» qo'shildi. Kirish — Login: %(username)s · Parol: "
+"%(password)s (ushbu ma'lumotni o'qituvchiga yetkazing)."
+msgstr ""
+"✅ Преподаватель «%(name)s» добавлен. Вход — Логин: %(username)s · Пароль: "
+"%(password)s (передайте эти данные преподавателю)."
+
+#: .\instructors\views.py:103
+msgid "O'qituvchi ma'lumotlari yangilandi."
+msgstr "Данные преподавателя обновлены."
+
+#: .\instructors\views.py:117
+msgid "O'qituvchi ro'yxatdan chiqarildi."
+msgstr "Преподаватель снят с учёта."
+
+#: .\monitoring\models.py:11 .\templates\monitoring\attendance_journal.html:49
+msgid "Keldi"
+msgstr "Пришёл"
+
+#: .\monitoring\models.py:12 .\templates\monitoring\attendance_journal.html:50
+msgid "Kelmadi"
+msgstr "Не пришёл"
+
+#: .\monitoring\models.py:13 .\templates\monitoring\attendance_journal.html:51
+msgid "Kechikdi"
+msgstr "Опоздал"
+
+#: .\monitoring\models.py:14 .\templates\monitoring\attendance_journal.html:52
+msgid "Sababli"
+msgstr "По уважительной"
+
+#: .\monitoring\models.py:25 .\monitoring\models.py:69
+#: .\monitoring\models.py:124 .\templates\dashboard\director.html:157
+#: .\templates\enrollments\application_list.html:29
+#: .\templates\monitoring\attendance_take.html:18
+#: .\templates\monitoring\grade_book.html:36
+#: .\templates\payments\payment_list.html:29
+msgid "Sana"
+msgstr "Дата"
+
+#: .\monitoring\models.py:35 .\monitoring\models.py:36
+#: .\templates\cabinet\overview.html:32
+#: .\templates\courses\course_detail.html:12
+#: .\templates\dashboard\teacher.html:117 .\templates\monitoring\home.html:26
+#: .\templates\monitoring\student_report.html:22
+#: .\templates\salaries\record_detail.html:75
+#: .\templates\students\student_detail.html:26
+#: .\templates\students\student_list.html:31
+msgid "Davomat"
+msgstr "Посещаемость"
+
+#: .\monitoring\models.py:52
+msgid "Joriy baho"
+msgstr "Текущая оценка"
+
+#: .\monitoring\models.py:53
+msgid "Uy ishi"
+msgstr "Домашнее задание"
+
+#: .\monitoring\models.py:54
+msgid "Test / Quiz"
+msgstr "Тест / Викторина"
+
+#: .\monitoring\models.py:55
+msgid "Imtihon"
+msgstr "Экзамен"
+
+#: .\monitoring\models.py:56
+msgid "Og'zaki"
+msgstr "Устный"
+
+#: .\monitoring\models.py:67 .\templates\cabinet\overview.html:188
+#: .\templates\monitoring\grade_book.html:36
+#: .\templates\payments\payment_list.html:29
+msgid "Turi"
+msgstr "Тип"
+
+#: .\monitoring\models.py:70
+msgid "Ball"
+msgstr "Балл"
+
+#: .\monitoring\models.py:71
+msgid "Maksimal ball"
+msgstr "Максимальный балл"
+
+#: .\monitoring\models.py:72
+msgid "Foiz"
+msgstr "Процент"
+
+#: .\monitoring\models.py:81 .\monitoring\views.py:190
+#: .\templates\cabinet\overview.html:188
+#: .\templates\salaries\record_detail.html:87
+msgid "Baho"
+msgstr "Оценка"
+
+#: .\monitoring\models.py:82 .\templates\courses\course_detail.html:13
+#: .\templates\dashboard\teacher.html:118
+#: .\templates\monitoring\attendance_take.html:13
+#: .\templates\monitoring\home.html:27
+msgid "Baholar"
+msgstr "Оценки"
+
+#: .\monitoring\models.py:125
+msgid "Mavzu"
+msgstr "Тема"
+
+#: .\monitoring\models.py:127
+msgid "Uyga vazifa"
+msgstr "Домашнее задание"
+
+#: .\monitoring\models.py:131
+msgid "Dars"
+msgstr "Урок"
+
+#: .\monitoring\models.py:132 .\templates\monitoring\lesson_journal.html:8
+msgid "Darslar jurnali"
+msgstr "Журнал уроков"
+
+#: .\monitoring\views.py:95
+#, python-format
+msgid "%(n)s ta o'quvchi davomati saqlandi (%(day)s)."
+msgstr "Посещаемость сохранена для %(n)s учеников (%(day)s)."
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "Yanvar"
+msgstr "Январь"
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "Fevral"
+msgstr "Февраль"
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "Mart"
+msgstr "Март"
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "Aprel"
+msgstr "Апрель"
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "May"
+msgstr "Май"
+
+#: .\monitoring\views.py:137 .\payments\models.py:10 .\salaries\models.py:9
+msgid "Iyun"
+msgstr "Июнь"
+
+#: .\monitoring\views.py:137 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Iyul"
+msgstr "Июль"
+
+#: .\monitoring\views.py:138 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Avgust"
+msgstr "Август"
+
+#: .\monitoring\views.py:138 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Sentabr"
+msgstr "Сентябрь"
+
+#: .\monitoring\views.py:138 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Oktabr"
+msgstr "Октябрь"
+
+#: .\monitoring\views.py:138 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Noyabr"
+msgstr "Ноябрь"
+
+#: .\monitoring\views.py:138 .\payments\models.py:11 .\salaries\models.py:10
+msgid "Dekabr"
+msgstr "Декабрь"
+
+#: .\monitoring\views.py:176
+msgid "Baho qo'shildi."
+msgstr "Оценка добавлена."
+
+#: .\monitoring\views.py:178
+msgid "Yangi baho"
+msgstr "Новая оценка"
+
+#: .\monitoring\views.py:188
+msgid "Baho o'chirildi."
+msgstr "Оценка удалена."
+
+#: .\monitoring\views.py:201
+msgid "Dars qo'shildi."
+msgstr "Урок добавлен."
+
+#: .\payments\forms.py:60 .\payments\models.py:38 .\salaries\models.py:100
+msgid "Yil"
+msgstr "Год"
+
+#: .\payments\forms.py:64 .\payments\models.py:39 .\salaries\models.py:101
+msgid "Oy"
+msgstr "Месяц"
+
+#: .\payments\forms.py:68
+msgid "To'lov muddati (oyning kuni)"
+msgstr "Срок оплаты (день месяца)"
+
+#: .\payments\models.py:19 .\templates\cabinet\overview.html:164
+msgid "To'lanmagan"
+msgstr "Не оплачено"
+
+#: .\payments\models.py:20
+msgid "Qisman to'langan"
+msgstr "Частично оплачено"
+
+#: .\payments\models.py:21 .\payments\models.py:41
+#: .\templates\cabinet\overview.html:161
+#: .\templates\payments\invoice_list.html:29
+msgid "To'langan"
+msgstr "Оплачено"
+
+#: .\payments\models.py:40 .\payments\models.py:108
+#: .\templates\cabinet\overview.html:154
+#: .\templates\dashboard\director.html:157
+#: .\templates\payments\invoice_list.html:29
+#: .\templates\payments\payment_list.html:29
+msgid "Summa"
+msgstr "Сумма"
+
+#: .\payments\models.py:42
+msgid "To'lov muddati"
+msgstr "Срок оплаты"
+
+#: .\payments\models.py:52 .\payments\models.py:106 .\payments\views.py:208
+msgid "Hisob-faktura"
+msgstr "Счёт"
+
+#: .\payments\models.py:53 .\templates\payments\debtors.html:12
+#: .\templates\payments\finance_dashboard.html:16
+#: .\templates\payments\invoice_list.html:3
+#: .\templates\payments\invoice_list.html:6
+#: .\templates\payments\invoice_list.html:16
+#: .\templates\payments\payment_list.html:13
+msgid "Hisob-fakturalar"
+msgstr "Счета"
+
+#: .\payments\models.py:93
+msgid "Naqd"
+msgstr "Наличные"
+
+#: .\payments\models.py:94 .\salaries\models.py:63
+msgid "Plastik karta"
+msgstr "Банковская карта"
+
+#: .\payments\models.py:95
+msgid "Click"
+msgstr "Click"
+
+#: .\payments\models.py:96
+msgid "Payme"
+msgstr "Payme"
+
+#: .\payments\models.py:97
+msgid "Bank o'tkazmasi"
+msgstr "Банковский перевод"
+
+#: .\payments\models.py:109
+msgid "To'lov turi"
+msgstr "Способ оплаты"
+
+#: .\payments\models.py:110
+msgid "To'lov vaqti"
+msgstr "Время оплаты"
+
+#: .\payments\models.py:113 .\templates\payments\payment_list.html:29
+msgid "Qabul qildi"
+msgstr "Принял"
+
+#: .\payments\models.py:118 .\payments\views.py:129
+#: .\templates\dashboard\home.html:128 .\templates\payments\debtors.html:28
+#: .\templates\payments\finance_dashboard.html:60
+#: .\templates\students\student_detail.html:14
+#: .\templates\students\student_detail.html:101
+msgid "To'lov"
+msgstr "Платёж"
+
+#: .\payments\models.py:119 .\templates\dashboard\director.html:12
+#: .\templates\partials\sidebar.html:38 .\templates\payments\debtors.html:11
+#: .\templates\payments\finance_dashboard.html:15
+#: .\templates\payments\invoice_list.html:15
+#: .\templates\payments\payment_list.html:3
+#: .\templates\payments\payment_list.html:12
+msgid "To'lovlar"
+msgstr "Платежи"
+
+#: .\payments\views.py:117
+#, python-format
+msgid "%(amount)s so'm to'lov qabul qilindi."
+msgstr "Принят платёж на %(amount)s сум."
+
+#: .\payments\views.py:119 .\templates\dashboard\home.html:13
+#: .\templates\payments\finance_dashboard.html:9
+#: .\templates\payments\payment_list.html:7
+msgid "To'lov qabul qilish"
+msgstr "Принять платёж"
+
+#: .\payments\views.py:127
+msgid "To'lov o'chirildi."
+msgstr "Платёж удалён."
+
+#: .\payments\views.py:157
+msgid "Hisob-faktura yaratildi."
+msgstr "Счёт создан."
+
+#: .\payments\views.py:159
+msgid "Yangi hisob-faktura"
+msgstr "Новый счёт"
+
+#: .\payments\views.py:194
+#, python-format
+msgid ""
+"%(created)s ta hisob-faktura yaratildi. %(skipped)s ta allaqachon mavjud "
+"edi."
+msgstr "Создано счетов: %(created)s. Уже существовало: %(skipped)s."
+
+#: .\payments\views.py:206
+msgid "Hisob-faktura o'chirildi."
+msgstr "Счёт удалён."
+
+#: .\salaries\models.py:26
+msgid "Menejer / Qabul"
+msgstr "Менеджер / Ресепшн"
+
+#: .\salaries\models.py:28
+msgid "Yordamchi xodim"
+msgstr "Вспомогательный персонал"
+
+#: .\salaries\models.py:29
+msgid "Farrosh"
+msgstr "Уборщик"
+
+#: .\salaries\models.py:30
+msgid "Qorovul"
+msgstr "Охранник"
+
+#: .\salaries\models.py:35
+msgid "Belgilangan oylik"
+msgstr "Фиксированный оклад"
+
+#: .\salaries\models.py:36
+msgid "Soatbay"
+msgstr "Почасовой"
+
+#: .\salaries\models.py:37
+msgid "O'quvchi soniga qarab"
+msgstr "По числу учеников"
+
+#: .\salaries\models.py:38
+msgid "Aralash (oylik + KPI)"
+msgstr "Смешанный (оклад + KPI)"
+
+#: .\salaries\models.py:45 .\templates\salaries\employee_list.html:24
+msgid "F.I.O."
+msgstr "Ф.И.О."
+
+#: .\salaries\models.py:48 .\templates\salaries\employee_list.html:24
+msgid "Ish turi"
+msgstr "Тип занятости"
+
+#: .\salaries\models.py:51
+msgid "Belgilangan oylik (so'm)"
+msgstr "Фиксированный оклад (сум)"
+
+#: .\salaries\models.py:52
+msgid "Soatlik stavka (so'm)"
+msgstr "Почасовая ставка (сум)"
+
+#: .\salaries\models.py:53
+msgid "Har bir o'quvchi uchun (so'm)"
+msgstr "За каждого ученика (сум)"
+
+#: .\salaries\models.py:56
+msgid "KPI bonusi (oylikning %)"
+msgstr "KPI-бонус (% от оклада)"
+
+#: .\salaries\models.py:57
+msgid "Davomat va o'zlashtirishga qarab beriladigan maksimal bonus foizi."
+msgstr ""
+"Максимальный процент бонуса в зависимости от посещаемости и успеваемости."
+
+#: .\salaries\models.py:60
+msgid "Bitta kechikish jarimasi (so'm)"
+msgstr "Штраф за одно опоздание (сум)"
+
+#: .\salaries\models.py:64
+msgid "Ishga kirgan sana"
+msgstr "Дата приёма на работу"
+
+#: .\salaries\models.py:70 .\templates\salaries\home.html:89
+#: .\templates\salaries\payslip.html:62
+msgid "Xodim"
+msgstr "Сотрудник"
+
+#: .\salaries\models.py:71 .\templates\salaries\employee_list.html:3
+#: .\templates\salaries\employee_list.html:8 .\templates\salaries\home.html:12
+msgid "Xodimlar"
+msgstr "Сотрудники"
+
+#: .\salaries\models.py:96
+msgid "Qoralama"
+msgstr "Черновик"
+
+#: .\salaries\models.py:97
+msgid "Yopilgan"
+msgstr "Закрыт"
+
+#: .\salaries\models.py:110
+msgid "Oylik davri"
+msgstr "Период зарплаты"
+
+#: .\salaries\models.py:111
+msgid "Oylik davrlari"
+msgstr "Периоды зарплаты"
+
+#: .\salaries\models.py:131
+msgid "Hisoblandi"
+msgstr "Рассчитано"
+
+#: .\salaries\models.py:132
+msgid "Tasdiqlandi"
+msgstr "Утверждено"
+
+#: .\salaries\models.py:133
+msgid "To'landi"
+msgstr "Выплачено"
+
+#: .\salaries\models.py:140 .\templates\salaries\record_detail.html:71
+msgid "Ishlagan kunlar"
+msgstr "Отработанные дни"
+
+#: .\salaries\models.py:141
+msgid "Ishlagan soatlar"
+msgstr "Отработанные часы"
+
+#: .\salaries\models.py:142 .\templates\monitoring\lesson_journal.html:26
+msgid "O'tilgan darslar"
+msgstr "Проведённые уроки"
+
+#: .\salaries\models.py:143
+msgid "Guruhlar soni"
+msgstr "Число групп"
+
+#: .\salaries\models.py:144
+msgid "O'quvchilar soni"
+msgstr "Число учеников"
+
+#: .\salaries\models.py:145
+msgid "Davomat (%)"
+msgstr "Посещаемость (%)"
+
+#: .\salaries\models.py:146
+msgid "O'rtacha o'zlashtirish (%)"
+msgstr "Средняя успеваемость (%)"
+
+#: .\salaries\models.py:147 .\templates\salaries\record_detail.html:77
+msgid "Kechikishlar"
+msgstr "Опоздания"
+
+#: .\salaries\models.py:148
+msgid "Sababsiz kelmaslik"
+msgstr "Прогулы"
+
+#: .\salaries\models.py:149
+msgid "Qo'shimcha bonus (so'm)"
+msgstr "Дополнительный бонус (сум)"
+
+#: .\salaries\models.py:150
+msgid "Qo'shimcha jarima (so'm)"
+msgstr "Дополнительный штраф (сум)"
+
+#: .\salaries\models.py:160
+msgid "Jami (so'm)"
+msgstr "Итого (сум)"
+
+#: .\salaries\models.py:161
+msgid "KPI ko'rsatkichi (0-100)"
+msgstr "Показатель KPI (0-100)"
+
+#: .\salaries\models.py:162
+msgid "Tarkib"
+msgstr "Состав"
+
+#: .\salaries\models.py:165 .\templates\salaries\payslip.html:88
+msgid "AI tahlili"
+msgstr "AI-анализ"
+
+#: .\salaries\models.py:166
+msgid "AI tavsiyasi"
+msgstr "AI-рекомендация"
+
+#: .\salaries\models.py:167
+msgid "AI bahosi"
+msgstr "AI-оценка"
+
+#: .\salaries\models.py:168
+msgid "AI ishlatildi"
+msgstr "AI использован"
+
+#: .\salaries\models.py:169
+msgid "AI model"
+msgstr "AI-модель"
+
+#: .\salaries\models.py:172
+msgid "Hisoblangan vaqt"
+msgstr "Время расчёта"
+
+#: .\salaries\models.py:176
+msgid "Oylik yozuvi"
+msgstr "Запись зарплаты"
+
+#: .\salaries\models.py:177
+msgid "Oylik yozuvlari"
+msgstr "Записи зарплаты"
+
+#: .\salaries\views.py:125
+#, python-format
+msgid ""
+"%(period)s: %(created)s ta yangi hisoblandi, %(updated)s ta yangilandi."
+msgstr "%(period)s: рассчитано новых — %(created)s, обновлено — %(updated)s."
+
+#: .\salaries\views.py:139
+msgid "AI tahlili tayyor."
+msgstr "AI-анализ готов."
+
+#: .\salaries\views.py:141
+msgid "AI tahlili tuzildi (API kalitsiz, mahalliy rejim)."
+msgstr "AI-анализ создан (без API-ключа, локальный режим)."
+
+#: .\salaries\views.py:152
+msgid "Avval oylikni hisoblang."
+msgstr "Сначала рассчитайте зарплату."
+
+#: .\salaries\views.py:164
+#, python-format
+msgid "%(n)s ta xodim Claude AI bilan tahlil qilindi."
+msgstr "%(n)s сотрудников проанализированы с помощью Claude AI."
+
+#: .\salaries\views.py:168
+#, python-format
+msgid ""
+"%(n)s ta xodim mahalliy (offline) rejimda tahlil qilindi. AI uchun .env dagi"
+" GEMINI_API_KEY ni tekshiring va serverni qayta ishga tushiring."
+msgstr ""
+"%(n)s сотрудников проанализированы в локальном (офлайн) режиме. Проверьте "
+"GEMINI_API_KEY в .env и перезапустите сервер."
+
+#: .\salaries\views.py:193
+msgid "Metrikalar saqlandi va oylik qayta hisoblandi."
+msgstr "Метрики сохранены, зарплата пересчитана."
+
+#: .\salaries\views.py:205
+msgid "Metrikalar monitoring ma'lumotlaridan yangilandi."
+msgstr "Метрики обновлены из данных мониторинга."
+
+#: .\salaries\views.py:216
+#, python-format
+msgid "Holat yangilandi: %(status)s."
+msgstr "Статус обновлён: %(status)s."
+
+#: .\salaries\views.py:245
+msgid "Xodim qo'shildi."
+msgstr "Сотрудник добавлен."
+
+#: .\salaries\views.py:256
+msgid "Xodim ma'lumotlari yangilandi."
+msgstr "Данные сотрудника обновлены."
+
+#: .\salaries\views.py:266
+msgid "Xodim o'chirildi."
+msgstr "Сотрудник удалён."
+
+#: .\salaries\views.py:292
+#, python-format
+msgid "%(n)s ta xodim foydalanuvchilardan qo'shildi."
+msgstr "%(n)s сотрудников добавлены из пользователей."
+
+#: .\salaries\views.py:294
+msgid "Yangi xodim topilmadi — barchasi allaqachon mavjud."
+msgstr "Новых сотрудников не найдено — все уже существуют."
+
+#: .\students\models.py:14
+msgid "O'g'il bola"
+msgstr "Мальчик"
+
+#: .\students\models.py:15
+msgid "Qiz bola"
+msgstr "Девочка"
+
+#: .\students\models.py:20
+msgid "Bitirgan"
+msgstr "Окончил"
+
+#: .\students\models.py:21
+msgid "Tark etgan"
+msgstr "Покинул"
+
+#: .\students\models.py:30 .\templates\students\student_detail.html:36
+msgid "Otasining ismi"
+msgstr "Отчество"
+
+#: .\students\models.py:36
+msgid "Jinsi"
+msgstr "Пол"
+
+#: .\students\models.py:37 .\templates\students\student_detail.html:38
+msgid "Tug'ilgan sana"
+msgstr "Дата рождения"
+
+#: .\students\models.py:38 .\templates\accounts\settings.html:100
+#: .\templates\students\student_detail.html:40
+msgid "Manzil"
+msgstr "Адрес"
+
+#: .\students\models.py:39
+msgid "Maktab"
+msgstr "Школа"
+
+#: .\students\models.py:40
+msgid "Sinf"
+msgstr "Класс"
+
+#: .\students\models.py:45
+msgid "Balans (so'm)"
+msgstr "Баланс (сум)"
+
+#: .\students\models.py:46
+msgid "Manfiy = qarzdor"
+msgstr "Отрицательный = задолженность"
+
+#: .\students\models.py:51
+msgid ""
+"O'quvchi bot orqali ro'yxatdan o'tganda to'ldiriladi (bot xabar yuborish "
+"uchun)."
+msgstr ""
+"Заполняется при регистрации ученика через бот (для отправки сообщений "
+"ботом)."
+
+#: .\students\models.py:59 .\templates\accounts\settings.html:17
+#: .\templates\accounts\settings.html:117
+#: .\templates\courses\course_detail.html:20
+#: .\templates\monitoring\attendance_take.html:26
+#: .\templates\partials\sidebar.html:29 .\templates\partials\sidebar.html:94
+#: .\templates\salaries\record_detail.html:74
+#: .\templates\students\student_create.html:8
+#: .\templates\students\student_detail.html:7
+#: .\templates\students\student_list.html:3
+#: .\templates\students\student_list.html:6
+msgid "O'quvchilar"
+msgstr "Ученики"
+
+#: .\students\views.py:77
+msgid "yaratildi"
+msgstr "создан"
+
+#: .\students\views.py:77
+msgid "yangilandi"
+msgstr "обновлён"
+
+#: .\students\views.py:84
+#, python-format
+msgid ""
+"Kabinet logini %(action)s. Login va parol o'quvchining Telegram'iga "
+"yuborildi. Login: %(username)s · Parol: %(password)s"
+msgstr ""
+"Логин кабинета %(action)s. Логин и пароль отправлены в Telegram ученика. "
+"Логин: %(username)s · Пароль: %(password)s"
+
+#: .\students\views.py:91
+#, python-format
+msgid ""
+"Kabinet logini %(action)s. Login: %(username)s · Parol: %(password)s "
+"(Telegram ulanmagani uchun bu ma'lumotni o'quvchiga o'zingiz yetkazing)."
+msgstr ""
+"Логин кабинета %(action)s. Логин: %(username)s · Пароль: %(password)s "
+"(Telegram не подключён, передайте данные ученику сами)."
+
+#: .\students\views.py:116
+#, python-format
+msgid ""
+"%(name)s qo'shildi. Login (%(username)s) va parol o'quvchining Telegram'iga "
+"yuborildi."
+msgstr ""
+"%(name)s добавлен. Логин (%(username)s) и пароль отправлены в Telegram "
+"ученика."
+
+#: .\students\views.py:123
+#, python-format
+msgid ""
+"%(name)s qo'shildi. Kabinet logini — Login: %(username)s · Parol: "
+"%(password)s (bu ma'lumotni o'quvchiga yetkazing)."
+msgstr ""
+"%(name)s добавлен. Логин кабинета — Логин: %(username)s · Пароль: "
+"%(password)s (передайте данные ученику)."
+
+#: .\students\views.py:128
+#, python-format
+msgid "%(name)s qo'shildi."
+msgstr "%(name)s добавлен."
+
+#: .\students\views.py:130 .\templates\students\student_create.html:3
+#: .\templates\students\student_list.html:9
+msgid "Yangi o'quvchi"
+msgstr "Новый ученик"
+
+#: .\students\views.py:139
+msgid "Ma'lumotlar yangilandi."
+msgstr "Данные обновлены."
+
+#: .\students\views.py:151
+msgid "O'quvchi o'chirildi."
+msgstr "Ученик удалён."
+
+#: .\templates\accounts\_user_table.html:10
+#: .\templates\accounts\users_list.html:36
+msgid "Amallar"
+msgstr "Действия"
+
+#: .\templates\accounts\_user_table.html:25
+#: .\templates\accounts\users_list.html:51
+msgid "Ko‘rsatish"
+msgstr "Показать"
+
+#: .\templates\accounts\_user_table.html:29
+#: .\templates\accounts\users_list.html:59
+msgid "O‘chiq"
+msgstr "Выключен"
+
+#: .\templates\accounts\_user_table.html:32
+#: .\templates\accounts\user_form.html:3
+#: .\templates\accounts\users_list.html:62
+msgid "Tahrirlash"
+msgstr "Редактировать"
+
+#: .\templates\accounts\_user_table.html:33
+#: .\templates\accounts\users_list.html:63
+msgid "Parol almashtirish"
+msgstr "Сменить пароль"
+
+#: .\templates\accounts\_user_table.html:35
+msgid "Sahifasiga kirish"
+msgstr "Войти в учётную запись"
+
+#: .\templates\accounts\_user_table.html:36
+#: .\templates\accounts\users_list.html:66
+msgid "O‘chirish"
+msgstr "Удалить"
+
+#: .\templates\accounts\_user_table.html:42
+msgid "Hozircha yo‘q"
+msgstr "Пока нет"
+
+#: .\templates\accounts\auth_base.html:8 .\templates\accounts\login.html:3
+#: .\templates\accounts\login.html:62 .\templates\accounts\register.html:129
+msgid "Kirish"
+msgstr "Вход"
+
+#: .\templates\accounts\auth_base.html:49
+msgid "O'quv Markazi CRM"
+msgstr "CRM учебного центра"
+
+#: .\templates\accounts\auth_base.html:50
+msgid ""
+"Onlayn ro'yxat, to'lovlar boshqaruvi, o'quv jarayoni monitoringi va xodimlar"
+" oyligini sun'iy intellekt bilan hisoblashning yagona professional tizimi."
+msgstr ""
+"Единая профессиональная система онлайн-записи, управления платежами, "
+"мониторинга учебного процесса и расчёта зарплаты сотрудников с помощью ИИ."
+
+#: .\templates\accounts\auth_base.html:52
+msgid "Rolga asoslangan xavfsiz kirish"
+msgstr "Безопасный вход на основе ролей"
+
+#: .\templates\accounts\auth_base.html:53
+msgid "To'lovlar va qarzdorlik monitoringi"
+msgstr "Мониторинг платежей и задолженностей"
+
+#: .\templates\accounts\auth_base.html:54
+msgid "Davomat, baholar va reyting"
+msgstr "Посещаемость, оценки и рейтинг"
+
+#: .\templates\accounts\auth_base.html:55
+msgid "AI bilan oylik hisoblash"
+msgstr "Расчёт зарплаты с помощью ИИ"
+
+#: .\templates\accounts\auth_base.html:58
+msgid "barcha huquqlar himoyalangan"
+msgstr "все права защищены"
+
+#: .\templates\accounts\auth_base.html:63
+msgid "Xavfsiz kirish"
+msgstr "Безопасный вход"
+
+#: .\templates\accounts\auth_base.html:64 .\templates\accounts\login.html:4
+#: .\templates\enrollments\apply_public.html:68
+msgid "Tizimga kirish"
+msgstr "Вход в систему"
+
+#: .\templates\accounts\force_password.html:4
+msgid "Yangi parol o'rnating"
+msgstr "Установите новый пароль"
+
+#: .\templates\accounts\force_password.html:5
+msgid ""
+"Xavfsizlik uchun yangi parol yarating. Parolni ikki marta kiriting — keyin "
+"shu parol bilan tizimga kirasiz."
+msgstr ""
+"Создайте новый пароль для безопасности. Введите его дважды — затем вы будете"
+" входить с ним."
+
+#: .\templates\accounts\force_password.html:33
+#: .\templates\accounts\settings.html:78
+msgid "Parolni saqlash"
+msgstr "Сохранить пароль"
+
+#: .\templates\accounts\force_password.html:38
+msgid "Bekor qilib chiqish"
+msgstr "Отменить и выйти"
+
+#: .\templates\accounts\login.html:5
+msgid "Rolingizni tanlang, so'ng login va parolingiz bilan kiring."
+msgstr "Выберите свою роль, затем войдите по логину и паролю."
+
+#: .\templates\accounts\login.html:11
+msgid "Kim sifatida kirasiz?"
+msgstr "Войти как?"
+
+#: .\templates\accounts\login.html:28 .\templates\accounts\register.html:44
+msgid "To'liq tizim nazorati"
+msgstr "Полный контроль над системой"
+
+#: .\templates\accounts\login.html:29 .\templates\accounts\register.html:43
+msgid "Boshqaruv va monitoring"
+msgstr "Управление и мониторинг"
+
+#: .\templates\accounts\login.html:30
+msgid "Davomat, baholar, oylik"
+msgstr "Посещаемость, оценки, зарплата"
+
+#: .\templates\accounts\login.html:31
+msgid "Baholar, davomat, to'lovlar"
+msgstr "Оценки, посещаемость, платежи"
+
+#: .\templates\accounts\login.html:52
+msgid "Parolni unutdingizmi?"
+msgstr "Забыли пароль?"
+
+#: .\templates\accounts\login.html:68
+msgid "Administrator yoki direktor hisobi kerakmi?"
+msgstr "Нужна учётная запись администратора или директора?"
+
+#: .\templates\accounts\login.html:72
+msgid "O'qituvchi yoki o'quvchimisiz? Parolni tiklash"
+msgstr "Вы преподаватель или ученик? Сбросить пароль"
+
+#: .\templates\accounts\profile.html:3
+msgid "Mening profilim"
+msgstr "Мой профиль"
+
+#: .\templates\accounts\profile.html:19 .\templates\accounts\settings.html:48
+msgid "Ro'yxatdan o'tgan"
+msgstr "Зарегистрирован"
+
+#: .\templates\accounts\profile.html:25
+msgid "Ma'lumotlarni tahrirlash"
+msgstr "Редактировать данные"
+
+#: .\templates\accounts\profile.html:31 .\templates\accounts\settings.html:107
+#: .\templates\accounts\user_form.html:41
+#: .\templates\enrollments\application_detail.html:40
+#: .\templates\monitoring\attendance_take.html:29
+#: .\templates\monitoring\lesson_journal.html:20
+#: .\templates\salaries\employee_form.html:26
+#: .\templates\shared\object_form.html:18
+#: .\templates\students\student_create.html:48
+msgid "Saqlash"
+msgstr "Сохранить"
+
+#: .\templates\accounts\profile.html:32
+#: .\templates\cabinet\base_cabinet.html:86
+#: .\templates\cabinet\not_linked.html:12
+#: .\templates\partials\sidebar.html:122
+msgid "Chiqish"
+msgstr "Выйти"
+
+#: .\templates\accounts\register.html:6
+msgid ""
+"Faqat <b>Administrator</b> va <b>Direktor</b> o'zini ro'yxatdan o'tkaza "
+"oladi. Tasdiqlash kodi siz tanlagan usul — <b>Telegram bot</b> yoki "
+"<b>Gmail</b> — orqali yuboriladi."
+msgstr ""
+"Зарегистрироваться могут только <b>Администратор</b> и <b>Директор</b>. Код "
+"подтверждения отправляется выбранным способом — через <b>Telegram-бот</b> "
+"или <b>Gmail</b>."
+
+#: .\templates\accounts\register.html:28
+msgid "Lavozimni tanlang"
+msgstr "Выберите должность"
+
+#: .\templates\accounts\register.html:57
+msgid ""
+"Telegram botni oching, <b>«🆔 ID raqamim»</b> tugmasini bosing va chiqqan "
+"raqamni quyiga kiriting."
+msgstr ""
+"Откройте Telegram-бот, нажмите <b>«🆔 Мой ID»</b> и введите показанный номер "
+"ниже."
+
+#: .\templates\accounts\register.html:69
+msgid "6 xonali tasdiqlash kodi shu manzilga yuboriladi."
+msgstr "6-значный код подтверждения будет отправлен на этот адрес."
+
+#: .\templates\accounts\register.html:118
+msgid "Botga kod yuborish"
+msgstr "Отправить код в бот"
+
+#: .\templates\accounts\register.html:123
+msgid ""
+"Hozircha yangi Administrator yoki Direktor uchun bo'sh joy yo'q. O'qituvchi "
+"va o'quvchilarni Administrator yaratadi."
+msgstr ""
+"Сейчас нет свободных мест для нового Администратора или Директора. "
+"Преподавателей и учеников создаёт Администратор."
+
+#: .\templates\accounts\register.html:129
+msgid "Hisobingiz bormi?"
+msgstr "Уже есть учётная запись?"
+
+#: .\templates\accounts\reset_help.html:5
+msgid ""
+"O'qituvchi va o'quvchilar parolni Telegram bot orqali administratordan "
+"tiklaydi."
+msgstr ""
+"Преподаватели и ученики сбрасывают пароль через Telegram-бот у "
+"администратора."
+
+#: .\templates\accounts\reset_help.html:11
+msgid "Telegram botni oching"
+msgstr "Откройте Telegram-бот"
+
+#: .\templates\accounts\reset_help.html:11
+msgid "Quyidagi tugma orqali markaz botiga o'ting."
+msgstr "Перейдите в бот центра по кнопке ниже."
+
+#: .\templates\accounts\reset_help.html:15
+msgid "<b>«🔑 Parolni tiklash»</b> tugmasini bosing"
+msgstr "Нажмите кнопку <b>«🔑 Сбросить пароль»</b>"
+
+#: .\templates\accounts\reset_help.html:15
+msgid "So'ng <b>O'qituvchi</b> yoki <b>O'quvchi</b> ni tanlang."
+msgstr "Затем выберите <b>Преподаватель</b> или <b>Ученик</b>."
+
+#: .\templates\accounts\reset_help.html:19
+msgid "<b>«Adminga murojaat»</b> ni bosing"
+msgstr "Нажмите <b>«Обращение к админу»</b>"
+
+#: .\templates\accounts\reset_help.html:19
+msgid "Murojaat administratorga tushadi."
+msgstr "Обращение поступит администратору."
+
+#: .\templates\accounts\reset_help.html:23
+msgid "Yangi parolni kuting"
+msgstr "Дождитесь нового пароля"
+
+#: .\templates\accounts\reset_help.html:23
+msgid "Administrator yangi parol o'rnatadi va bot sizga yuboradi."
+msgstr "Администратор установит новый пароль, и бот отправит его вам."
+
+#: .\templates\accounts\reset_help.html:29
+msgid "Telegram botni ochish"
+msgstr "Открыть Telegram-бот"
+
+#: .\templates\accounts\reset_help.html:32
+msgid "Markaz Telegram boti administrator tomonidan ulanadi."
+msgstr "Telegram-бот центра подключается администратором."
+
+#: .\templates\accounts\reset_help.html:49
+msgid "Kirish sahifasiga qaytish"
+msgstr "Вернуться на страницу входа"
+
+#: .\templates\accounts\reset_requests.html:9
+msgid "O'qituvchi va o'quvchilar Telegram bot orqali yuborgan murojaatlar"
+msgstr ""
+"Обращения, отправленные преподавателями и учениками через Telegram-бот"
+
+#: .\templates\accounts\reset_requests.html:14
+msgid "Yangi murojaatlar"
+msgstr "Новые обращения"
+
+#: .\templates\accounts\reset_requests.html:28
+msgid "Login/tel"
+msgstr "Логин/тел"
+
+#: .\templates\accounts\reset_requests.html:30
+msgid "Topildi"
+msgstr "Найдено"
+
+#: .\templates\accounts\reset_requests.html:32
+msgid "Avto-topilmadi — login kiriting"
+msgstr "Не найдено автоматически — введите логин"
+
+#: .\templates\accounts\reset_requests.html:44
+msgid "Tasodifiy parol"
+msgstr "Случайный пароль"
+
+#: .\templates\accounts\reset_requests.html:46
+msgid "Saqlash + yuborish"
+msgstr "Сохранить + отправить"
+
+#: .\templates\accounts\reset_requests.html:48
+msgid "Murojaatni rad etasizmi?"
+msgstr "Отклонить обращение?"
+
+#: .\templates\accounts\reset_requests.html:52
+msgid "Yangi murojaat yo'q"
+msgstr "Нет новых обращений"
+
+#: .\templates\accounts\reset_requests.html:58
+msgid "Tarix"
+msgstr "История"
+
+#: .\templates\accounts\reset_requests.html:76
+msgid "Tarix bo'sh"
+msgstr "История пуста"
+
+#: .\templates\accounts\settings.html:3 .\templates\accounts\settings.html:8
+#: .\templates\base.html:99 .\templates\partials\sidebar.html:69
+msgid "Sozlamalar"
+msgstr "Настройки"
+
+#: .\templates\accounts\settings.html:9
+msgid "Hisobingiz, markaz ma'lumotlari va foydalanuvchilar loginlari"
+msgstr "Ваша учётная запись, данные центра и логины пользователей"
+
+#: .\templates\accounts\settings.html:15
+msgid "Hisob & Parol"
+msgstr "Аккаунт и пароль"
+
+#: .\templates\accounts\settings.html:16
+msgid "Markaz ma'lumotlari"
+msgstr "Данные центра"
+
+#: .\templates\accounts\settings.html:19
+msgid "Direktor & Admin"
+msgstr "Директор и Админ"
+
+#: .\templates\accounts\settings.html:26
+msgid "Mening hisobim"
+msgstr "Моя учётная запись"
+
+#: .\templates\accounts\settings.html:37
+msgid "Rasm yuklash"
+msgstr "Загрузить фото"
+
+#: .\templates\accounts\settings.html:50
+msgid "Profilni tahrirlash"
+msgstr "Редактировать профиль"
+
+#: .\templates\accounts\settings.html:55
+msgid "Parolni o'zgartirish"
+msgstr "Изменить пароль"
+
+#: .\templates\accounts\settings.html:89
+msgid "O'quv markazi ma'lumotlari"
+msgstr "Данные учебного центра"
+
+#: .\templates\accounts\settings.html:90
+msgid "Sayt, bot va cheklarda ishlatiladi"
+msgstr "Используется на сайте, в боте и чеках"
+
+#: .\templates\accounts\settings.html:95
+msgid "Markaz nomi"
+msgstr "Название центра"
+
+#: .\templates\accounts\settings.html:97
+msgid "Shior"
+msgstr "Слоган"
+
+#: .\templates\accounts\settings.html:101
+msgid "Ish vaqti"
+msgstr "Рабочее время"
+
+#: .\templates\accounts\settings.html:102
+msgid "Telegram bot (@siz)"
+msgstr "Telegram-бот (без @)"
+
+#: .\templates\accounts\settings.html:103
+msgid "Logo"
+msgstr "Логотип"
+
+#: .\templates\accounts\settings.html:104
+msgid "Markaz haqida"
+msgstr "О центре"
+
+#: .\templates\accounts\settings.html:117
+#: .\templates\accounts\settings.html:126
+msgid "login va parollar"
+msgstr "логины и пароли"
+
+#: .\templates\accounts\settings.html:118
+#: .\templates\accounts\settings.html:127
+msgid "To'liq ro'yxat"
+msgstr "Полный список"
+
+#: .\templates\accounts\settings.html:135
+msgid "Direktorlar"
+msgstr "Директора"
+
+#: .\templates\accounts\settings.html:139
+msgid "Administratorlar"
+msgstr "Администраторы"
+
+#: .\templates\accounts\user_form.html:3 .\templates\accounts\user_form.html:8
+#: .\templates\accounts\users_list.html:12
+msgid "Yangi foydalanuvchi"
+msgstr "Новый пользователь"
+
+#: .\templates\accounts\user_form.html:9
+msgid "O'qituvchi, o'quvchi, direktor yoki administrator hisobini boshqaring"
+msgstr ""
+"Управляйте учётной записью преподавателя, ученика, директора или "
+"администратора"
+
+#: .\templates\accounts\user_form.html:12
+#: .\templates\cabinet\base_cabinet.html:84
+#: .\templates\salaries\payslip.html:44 .\templates\shared\object_form.html:8
+msgid "Orqaga"
+msgstr "Назад"
+
+#: .\templates\accounts\user_form.html:37
+msgid "Faol hisob"
+msgstr "Активная учётная запись"
+
+#: .\templates\accounts\user_form.html:42
+#: .\templates\enrollments\application_convert.html:15
+#: .\templates\instructors\instructor_form.html:87
+#: .\templates\payments\invoice_generate.html:16
+#: .\templates\salaries\employee_confirm_delete.html:12
+#: .\templates\salaries\employee_form.html:27
+#: .\templates\salaries\record_metrics.html:26
+#: .\templates\shared\confirm_delete.html:14
+#: .\templates\shared\object_form.html:19
+#: .\templates\students\student_create.html:49
+msgid "Bekor qilish"
+msgstr "Отмена"
+
+#: .\templates\accounts\users_list.html:9
+msgid "Barcha hisoblar — login va parollar, tahrirlash, hisobiga kirish"
+msgstr "Все учётные записи — логины и пароли, редактирование, вход"
+
+#: .\templates\accounts\users_list.html:19
+msgid "Hammasi"
+msgstr "Все"
+
+#: .\templates\accounts\users_list.html:25
+msgid "Login, ism, telefon..."
+msgstr "Логин, имя, телефон..."
+
+#: .\templates\accounts\users_list.html:26
+#: .\templates\enrollments\application_list.html:23
+msgid "Qidirish"
+msgstr "Поиск"
+
+#: .\templates\accounts\users_list.html:65
+msgid "Hisobiga kirish"
+msgstr "Войти в учётную запись"
+
+#: .\templates\accounts\users_list.html:72
+msgid "Foydalanuvchi topilmadi"
+msgstr "Пользователи не найдены"
+
+#: .\templates\accounts\users_list.html:104
+msgid "Yangi parol kiriting (bo‘sh = tasodifiy):"
+msgstr "Введите новый пароль (пусто = случайный):"
+
+#: .\templates\accounts\users_list.html:112
+msgid "foydalanuvchini o‘chirasizmi?"
+msgstr "удалить пользователя?"
+
+#: .\templates\base.html:66
+#, python-format
+msgid "Siz <b>%(name)s</b> (%(role)s) hisobini ko'ryapsiz"
+msgstr "Вы просматриваете учётную запись <b>%(name)s</b> (%(role)s)"
+
+#: .\templates\base.html:67
+msgid "Admin hisobiga qaytish"
+msgstr "Вернуться в учётную запись администратора"
+
+#: .\templates\base.html:95
+#, python-format
+msgid "%(counter)s yangi ariza"
+msgid_plural "%(counter)s ta yangi ariza"
+msgstr[0] "%(counter)s новая заявка"
+msgstr[1] "%(counter)s новые заявки"
+msgstr[2] "%(counter)s новых заявок"
+msgstr[3] "%(counter)s новых заявок"
+
+#: .\templates\cabinet\base_cabinet.html:16
+msgid "Mening kabinetim"
+msgstr "Мой кабинет"
+
+#: .\templates\cabinet\base_cabinet.html:41
+msgid "O'quvchi kabineti"
+msgstr "Кабинет ученика"
+
+#: .\templates\cabinet\base_cabinet.html:51
+#: .\templates\enrollments\apply_public.html:39
+msgid "Til"
+msgstr "Язык"
+
+#: .\templates\cabinet\base_cabinet.html:60
+msgid "Tungi/kunduzgi rejim"
+msgstr "Тёмный/светлый режим"
+
+#: .\templates\cabinet\base_cabinet.html:69
+#: .\templates\dashboard\teacher.html:8
+msgid "Admin ko'rinishi"
+msgstr "Просмотр администратора"
+
+#: .\templates\cabinet\base_cabinet.html:84
+#: .\templates\instructors\instructor_list.html:27
+#: .\templates\partials\sidebar.html:119
+msgid "Profil"
+msgstr "Профиль"
+
+#: .\templates\cabinet\base_cabinet.html:93
+#, python-format
+msgid ""
+"<b>Admin ko'rinishi.</b> Siz <b>%(name)s</b> o'quvchining shaxsiy kabinetini"
+" ko'rib turibsiz."
+msgstr ""
+"<b>Просмотр администратора.</b> Вы просматриваете личный кабинет ученика "
+"<b>%(name)s</b>."
+
+#: .\templates\cabinet\base_cabinet.html:104
+msgid "o'quvchi shaxsiy kabineti"
+msgstr "личный кабинет ученика"
+
+#: .\templates\cabinet\not_linked.html:8
+msgid "Hisob hali bog'lanmagan"
+msgstr "Учётная запись ещё не связана"
+
+#: .\templates\cabinet\not_linked.html:10
+msgid ""
+"Sizning foydalanuvchi hisobingiz hali o'quvchi profiliga bog'lanmagan. "
+"Iltimos, markaz ma'muriyatiga murojaat qiling."
+msgstr ""
+"Ваша учётная запись ещё не связана с профилем ученика. Пожалуйста, "
+"обратитесь в администрацию центра."
+
+#: .\templates\cabinet\overview.html:12
+#, python-format
+msgid "Assalomu alaykum, %(name)s! 👋"
+msgstr "Здравствуйте, %(name)s! 👋"
+
+#: .\templates\cabinet\overview.html:13
+msgid ""
+"Bu sizning shaxsiy kabinetingiz — kurslaringiz, baholaringiz va "
+"to'lovlaringizni shu yerda kuzating."
+msgstr ""
+"Это ваш личный кабинет — следите здесь за курсами, оценками и платежами."
+
+#: .\templates\cabinet\overview.html:15
+#: .\templates\salaries\record_detail.html:76
+msgid "O'zlashtirish"
+msgstr "Успеваемость"
+
+#: .\templates\cabinet\overview.html:17
+#, python-format
+msgid "Qarz: %(amount)s so'm"
+msgstr "Долг: %(amount)s сум"
+
+#: .\templates\cabinet\overview.html:17
+msgid "To'lovlar joyida"
+msgstr "Платежи в порядке"
+
+#: .\templates\cabinet\overview.html:27 .\templates\dashboard\home.html:56
+#: .\templates\monitoring\student_report.html:14
+#: .\templates\monitoring\student_report.html:22
+#: .\templates\students\student_detail.html:27
+msgid "O'rtacha baho"
+msgstr "Средний балл"
+
+#: .\templates\cabinet\overview.html:37
+msgid "Faol kurslar"
+msgstr "Активные курсы"
+
+#: .\templates\cabinet\overview.html:39
+#, python-format
+msgid "Jami %(n)s ta yozilish"
+msgstr "Всего зачислений: %(n)s"
+
+#: .\templates\cabinet\overview.html:42
+#: .\templates\students\student_detail.html:22
+#: .\templates\students\student_list.html:31
+msgid "Balans"
+msgstr "Баланс"
+
+#: .\templates\cabinet\overview.html:44
+#: .\templates\dashboard\director.html:163
+#: .\templates\instructors\instructor_detail.html:27
+#: .\templates\payments\debtors.html:6
+#: .\templates\payments\invoice_list.html:6
+#: .\templates\payments\payment_list.html:6 .\templates\salaries\home.html:42
+#: .\templates\salaries\payslip.html:56 .\templates\salaries\payslip.html:74
+#: .\templates\salaries\payslip.html:83
+#: .\templates\salaries\record_detail.html:37
+#: .\templates\salaries\record_detail.html:45
+msgid "so'm"
+msgstr "сум"
+
+#: .\templates\cabinet\overview.html:44
+msgid "qarzdorlik"
+msgstr "задолженность"
+
+#: .\templates\cabinet\overview.html:51
+#, python-format
+msgid "Fanlar bo'yicha o'zlashtirish (%%)"
+msgstr "Успеваемость по предметам (%%)"
+
+#: .\templates\cabinet\overview.html:56 .\templates\cabinet\overview.html:72
+msgid "Hali baholar mavjud emas"
+msgstr "Оценок пока нет"
+
+#: .\templates\cabinet\overview.html:61
+msgid "Baholar taqsimoti"
+msgstr "Распределение оценок"
+
+#: .\templates\cabinet\overview.html:66 .\templates\cabinet\overview.html:67
+#: .\templates\cabinet\overview.html:68 .\templates\cabinet\overview.html:69
+#: .\templates\students\student_list.html:40
+#, python-format
+msgid "%(n)s ta"
+msgstr "%(n)s"
+
+#: .\templates\cabinet\overview.html:81
+msgid "Guruhdagi reytingim"
+msgstr "Мой рейтинг в группе"
+
+#: .\templates\cabinet\overview.html:82
+msgid "Guruhdoshlar orasida o'zlashtirish bo'yicha o'rin"
+msgstr "Место по успеваемости среди одногруппников"
+
+#: .\templates\cabinet\overview.html:93
+#, python-format
+msgid "<b>%(rank)s</b>-o'rin / %(total)s o'quvchi"
+msgstr "<b>%(rank)s</b>-е место / %(total)s учеников"
+
+#: .\templates\cabinet\overview.html:93
+msgid "Reyting yo'q"
+msgstr "Нет рейтинга"
+
+#: .\templates\cabinet\overview.html:94 .\templates\dashboard\teacher.html:33
+msgid "o'rtacha"
+msgstr "в среднем"
+
+#: .\templates\cabinet\overview.html:117
+msgid "Mening kurslarim va jadvalim"
+msgstr "Мои курсы и расписание"
+
+#: .\templates\cabinet\overview.html:135
+#, python-format
+msgid "%(fee)s so'm/oy"
+msgstr "%(fee)s сум/мес"
+
+#: .\templates\cabinet\overview.html:142
+msgid "Siz hali birorta kursga yozilmagansiz"
+msgstr "Вы пока не записаны ни на один курс"
+
+#: .\templates\cabinet\overview.html:150
+msgid "To'lovlarim"
+msgstr "Мои платежи"
+
+#: .\templates\cabinet\overview.html:150
+#, python-format
+msgid "Jami to'langan: <b>%(paid)s</b> so'm"
+msgstr "Всего оплачено: <b>%(paid)s</b> сум"
+
+#: .\templates\cabinet\overview.html:154
+msgid "Oy / Kurs"
+msgstr "Месяц / Курс"
+
+#: .\templates\cabinet\overview.html:162
+msgid "Qisman"
+msgstr "Частично"
+
+#: .\templates\cabinet\overview.html:163
+msgid "Bekor"
+msgstr "Отменён"
+
+#: .\templates\cabinet\overview.html:169
+#: .\templates\payments\payment_list.html:40
+#: .\templates\students\student_detail.html:107
+msgid "Chek (PDF)"
+msgstr "Чек (PDF)"
+
+#: .\templates\cabinet\overview.html:169
+msgid "Chek"
+msgstr "Чек"
+
+#: .\templates\cabinet\overview.html:175
+msgid "Hisob-fakturalar yo'q"
+msgstr "Нет счетов"
+
+#: .\templates\cabinet\overview.html:184
+#: .\templates\monitoring\grade_book.html:33
+#: .\templates\monitoring\student_report.html:50
+#: .\templates\students\student_detail.html:115
+msgid "So'nggi baholar"
+msgstr "Последние оценки"
+
+#: .\templates\cabinet\overview.html:184
+#, python-format
+msgid "%(n)s ta baho"
+msgstr "Оценок: %(n)s"
+
+#: .\templates\cabinet\overview.html:188
+msgid "Sana / Fan"
+msgstr "Дата / Предмет"
+
+#: .\templates\cabinet\overview.html:188
+#: .\templates\monitoring\grade_book.html:36
+msgid "Natija"
+msgstr "Результат"
+
+#: .\templates\cabinet\overview.html:198
+msgid "Hali baholar yo'q"
+msgstr "Оценок пока нет"
+
+#: .\templates\cabinet\overview.html:241
+msgid "A'lo (5)"
+msgstr "Отлично (5)"
+
+#: .\templates\cabinet\overview.html:241
+msgid "Yaxshi (4)"
+msgstr "Хорошо (4)"
+
+#: .\templates\cabinet\overview.html:241
+msgid "Qoniqarli (3)"
+msgstr "Удовлетворительно (3)"
+
+#: .\templates\cabinet\overview.html:241
+msgid "Past (2)"
+msgstr "Низко (2)"
+
+#: .\templates\courses\course_detail.html:14
+#: .\templates\courses\subject_list.html:20
+#: .\templates\instructors\instructor_detail.html:13
+#: .\templates\instructors\instructor_list.html:28
+#: .\templates\students\student_detail.html:16
+msgid "Tahrir"
+msgstr "Изм."
+
+#: .\templates\courses\course_detail.html:22
+msgid "Davomiyligi"
+msgstr "Длительность"
+
+#: .\templates\courses\course_detail.html:22
+#, python-format
+msgid "%(n)s oy"
+msgstr "%(n)s мес."
+
+#: .\templates\courses\course_detail.html:23
+msgid "Bo'sh joy"
+msgstr "Свободных мест"
+
+#: .\templates\courses\course_detail.html:27
+msgid "O'quvchilar ro'yxati"
+msgstr "Список учеников"
+
+#: .\templates\courses\course_detail.html:28
+msgid "O'quvchi yozish"
+msgstr "Записать ученика"
+
+#: .\templates\courses\course_detail.html:32
+#: .\templates\enrollments\enrollment_list.html:20
+msgid "Boshlangan"
+msgstr "Начато"
+
+#: .\templates\courses\course_detail.html:44
+msgid "Bu guruhda hali o'quvchi yo'q"
+msgstr "В этой группе пока нет учеников"
+
+#: .\templates\courses\course_list.html:6
+msgid "O'quv guruhlari"
+msgstr "Учебные группы"
+
+#: .\templates\courses\course_list.html:6
+msgid "Barcha guruhlar va ularning to'ldirilishi"
+msgstr "Все группы и их заполненность"
+
+#: .\templates\courses\course_list.html:14
+msgid "Guruh yoki yo'nalish..."
+msgstr "Группа или направление..."
+
+#: .\templates\courses\course_list.html:16
+msgid "Barcha yo'nalish"
+msgstr "Все направления"
+
+#: .\templates\courses\course_list.html:20
+#: .\templates\students\student_list.html:22
+msgid "Barcha holat"
+msgstr "Все статусы"
+
+#: .\templates\courses\course_list.html:23
+#: .\templates\payments\payment_list.html:23
+#: .\templates\students\student_list.html:25
+msgid "Filtr"
+msgstr "Фильтр"
+
+#: .\templates\courses\course_list.html:39
+msgid "O'qituvchi tayinlanmagan"
+msgstr "Преподаватель не назначен"
+
+#: .\templates\courses\course_list.html:41
+#, python-format
+msgid "%(fee)s so'm / oy"
+msgstr "%(fee)s сум / мес"
+
+#: .\templates\courses\course_list.html:44
+msgid "To'ldirilgan"
+msgstr "Заполнено"
+
+#: .\templates\courses\course_list.html:51
+msgid "Guruh topilmadi."
+msgstr "Группы не найдены."
+
+#: .\templates\courses\course_list.html:51
+msgid "Yangi guruh qo'shing"
+msgstr "Добавьте новую группу"
+
+#: .\templates\courses\subject_list.html:6
+msgid "O'quv yo'nalishlari"
+msgstr "Учебные направления"
+
+#: .\templates\courses\subject_list.html:6
+msgid "Fanlar va yo'nalishlar ro'yxati"
+msgstr "Список предметов и направлений"
+
+#: .\templates\courses\subject_list.html:19
+#, python-format
+msgid "%(n)s ta guruh"
+msgstr "Групп: %(n)s"
+
+#: .\templates\courses\subject_list.html:21
+#: .\templates\instructors\instructor_detail.html:28
+#: .\templates\instructors\instructor_list.html:30
+#: .\templates\salaries\employee_list.html:41
+msgid "Nofaol"
+msgstr "Неактивен"
+
+#: .\templates\courses\subject_list.html:25
+msgid "Yo'nalish yo'q."
+msgstr "Нет направлений."
+
+#: .\templates\courses\subject_list.html:25
+msgid "Birinchisini qo'shing"
+msgstr "Добавьте первое"
+
+#: .\templates\dashboard\director.html:3 .\templates\partials\sidebar.html:58
+#: .\templates\partials\sidebar.html:83
+msgid "Direktor paneli"
+msgstr "Панель директора"
+
+#: .\templates\dashboard\director.html:8 .\templates\dashboard\home.html:8
+#: .\templates\dashboard\teacher.html:14
+#, python-format
+msgid "Salom, %(name)s! 👋"
+msgstr "Здравствуйте, %(name)s! 👋"
+
+#: .\templates\dashboard\director.html:9
+#, python-format
+msgid "%(brand)s — boshqaruv va monitoring"
+msgstr "%(brand)s — управление и мониторинг"
+
+#: .\templates\dashboard\director.html:13 .\templates\partials\sidebar.html:43
+#: .\templates\partials\sidebar.html:91
+msgid "O'quv jarayoni"
+msgstr "Учебный процесс"
+
+#: .\templates\dashboard\director.html:19 .\templates\dashboard\home.html:21
+msgid "Faol o'quvchilar"
+msgstr "Активные ученики"
+
+#: .\templates\dashboard\director.html:21
+#, python-format
+msgid "Jami %(total)s ta"
+msgstr "Всего: %(total)s"
+
+#: .\templates\dashboard\director.html:24 .\templates\dashboard\home.html:29
+#: .\templates\payments\finance_dashboard.html:21
+msgid "Shu oy tushum"
+msgstr "Доход за этот месяц"
+
+#: .\templates\dashboard\director.html:26 .\templates\dashboard\home.html:32
+msgid "so'm — joriy oy"
+msgstr "сум — текущий месяц"
+
+#: .\templates\dashboard\director.html:29 .\templates\dashboard\home.html:37
+#: .\templates\payments\finance_dashboard.html:25
+msgid "Qarzdorlik"
+msgstr "Задолженность"
+
+#: .\templates\dashboard\director.html:31 .\templates\payments\debtors.html:6
+#, python-format
+msgid "%(n)s ta qarzdor"
+msgstr "Должников: %(n)s"
+
+#: .\templates\dashboard\director.html:34 .\templates\dashboard\home.html:55
+#: .\templates\dashboard\teacher.html:31
+msgid "Davomat (hafta)"
+msgstr "Посещаемость (неделя)"
+
+#: .\templates\dashboard\director.html:36
+#, python-format
+msgid "O'rtacha baho %(score)s%%"
+msgstr "Средний балл %(score)s%%"
+
+#: .\templates\dashboard\director.html:44
+msgid "Faol guruhlar soni"
+msgstr "Число активных групп"
+
+#: .\templates\dashboard\director.html:49
+msgid "Faol o'qituvchilar"
+msgstr "Активные преподаватели"
+
+#: .\templates\dashboard\director.html:52 .\templates\dashboard\home.html:45
+msgid "Yangi arizalar"
+msgstr "Новые заявки"
+
+#: .\templates\dashboard\director.html:54
+#, python-format
+msgid "%(n)s ta ko'rilmagan"
+msgstr "Не просмотрено: %(n)s"
+
+#: .\templates\dashboard\director.html:57
+msgid "To'lov yig'ilishi"
+msgstr "Собираемость платежей"
+
+#: .\templates\dashboard\director.html:59
+#, python-format
+msgid "%(n)s to'lanmagan hisob"
+msgstr "Неоплаченных счетов: %(n)s"
+
+#: .\templates\dashboard\director.html:65 .\templates\dashboard\home.html:61
+#: .\templates\payments\finance_dashboard.html:33
+msgid "Oxirgi 6 oy tushumi"
+msgstr "Доход за последние 6 месяцев"
+
+#: .\templates\dashboard\director.html:69
+msgid "Yo'nalishlar bo'yicha o'quvchilar"
+msgstr "Ученики по направлениям"
+
+#: .\templates\dashboard\director.html:76
+msgid "O'qituvchilar (o'quv jarayoni)"
+msgstr "Преподаватели (учебный процесс)"
+
+#: .\templates\dashboard\director.html:77
+#: .\templates\dashboard\director.html:95
+#: .\templates\dashboard\director.html:116
+#: .\templates\dashboard\director.html:133 .\templates\dashboard\home.html:75
+#: .\templates\dashboard\home.html:95 .\templates\dashboard\home.html:117
+#: .\templates\enrollments\application_list.html:14
+#: .\templates\enrollments\enrollment_list.html:13
+#: .\templates\payments\finance_dashboard.html:38
+#: .\templates\payments\finance_dashboard.html:54
+#: .\templates\payments\invoice_list.html:21
+msgid "Barchasi"
+msgstr "Все"
+
+#: .\templates\dashboard\director.html:87
+#, python-format
+msgid "%(n)s guruh"
+msgstr "Групп: %(n)s"
+
+#: .\templates\dashboard\director.html:89
+msgid "O'qituvchilar yo'q"
+msgstr "Нет преподавателей"
+
+#: .\templates\dashboard\director.html:94 .\templates\dashboard\home.html:116
+#: .\templates\payments\finance_dashboard.html:54
+msgid "Eng katta qarzdorlar"
+msgstr "Крупнейшие должники"
+
+#: .\templates\dashboard\director.html:107
+msgid "Qarzdorlar yo'q"
+msgstr "Нет должников"
+
+#: .\templates\dashboard\director.html:115
+msgid "Guruhlar to'ldirilganligi"
+msgstr "Заполненность групп"
+
+#: .\templates\dashboard\director.html:128
+msgid "Guruhlar yo'q"
+msgstr "Нет групп"
+
+#: .\templates\dashboard\director.html:132
+msgid "Eng yaxshi o'zlashtirgan o'quvchilar"
+msgstr "Лучшие по успеваемости ученики"
+
+#: .\templates\dashboard\director.html:145
+msgid "Baholar yo'q"
+msgstr "Нет оценок"
+
+#: .\templates\dashboard\director.html:152 .\templates\dashboard\home.html:94
+#: .\templates\payments\finance_dashboard.html:37
+#: .\templates\students\student_detail.html:100
+msgid "So'nggi to'lovlar"
+msgstr "Последние платежи"
+
+#: .\templates\dashboard\director.html:153
+msgid "Moliya"
+msgstr "Финансы"
+
+#: .\templates\dashboard\director.html:166
+msgid "To'lovlar yo'q"
+msgstr "Нет платежей"
+
+#: .\templates\dashboard\home.html:3 .\templates\partials\sidebar.html:21
+msgid "Boshqaruv paneli"
+msgstr "Панель управления"
+
+#: .\templates\dashboard\home.html:9
+#, python-format
+msgid "%(brand)s o'quv markazi — umumiy holat"
+msgstr "Учебный центр %(brand)s — общая картина"
+
+#: .\templates\dashboard\home.html:12
+#: .\templates\enrollments\application_detail.html:7
+msgid "Arizalar"
+msgstr "Заявки"
+
+#: .\templates\dashboard\home.html:24
+#, python-format
+msgid "Jami %(total)s ta ro'yxatda"
+msgstr "Всего в списке: %(total)s"
+
+#: .\templates\dashboard\home.html:40
+#, python-format
+msgid "%(n)s ta qarzdor o'quvchi"
+msgstr "Учеников с долгом: %(n)s"
+
+#: .\templates\dashboard\home.html:48
+#, python-format
+msgid "Bu oy %(n)s ta keldi"
+msgstr "В этом месяце пришло: %(n)s"
+
+#: .\templates\dashboard\home.html:53
+#: .\templates\monitoring\student_report.html:15
+#: .\templates\students\student_detail.html:28
+msgid "Faol guruhlar"
+msgstr "Активные группы"
+
+#: .\templates\dashboard\home.html:65
+msgid "Arizalar holati (funnel)"
+msgstr "Статусы заявок (воронка)"
+
+#: .\templates\dashboard\home.html:74
+msgid "So'nggi arizalar"
+msgstr "Последние заявки"
+
+#: .\templates\dashboard\home.html:88
+msgid "Hozircha ariza yo'q"
+msgstr "Заявок пока нет"
+
+#: .\templates\dashboard\home.html:108
+msgid "Hozircha to'lov yo'q"
+msgstr "Платежей пока нет"
+
+#: .\templates\dashboard\home.html:121
+msgid "Qarz (so'm)"
+msgstr "Долг (сум)"
+
+#: .\templates\dashboard\teacher.html:3 .\templates\partials\sidebar.html:61
+msgid "O'qituvchi paneli"
+msgstr "Панель преподавателя"
+
+#: .\templates\dashboard\teacher.html:8
+#, python-format
+msgid "siz <b>%(name)s</b> o'qituvchi panelini ko'rib turibsiz."
+msgstr "вы просматриваете панель преподавателя <b>%(name)s</b>."
+
+#: .\templates\dashboard\teacher.html:9
+msgid "Profilga qaytish"
+msgstr "Вернуться в профиль"
+
+#: .\templates\dashboard\teacher.html:15
+msgid "Guruhlaringiz, jadvalingiz, davomat va baholar"
+msgstr "Ваши группы, расписание, посещаемость и оценки"
+
+#: .\templates\dashboard\teacher.html:21
+msgid "Guruhlarim"
+msgstr "Мои группы"
+
+#: .\templates\dashboard\teacher.html:23
+msgid "faol guruhlar"
+msgstr "активные группы"
+
+#: .\templates\dashboard\teacher.html:26
+msgid "O'quvchilarim"
+msgstr "Мои ученики"
+
+#: .\templates\dashboard\teacher.html:28
+msgid "jami faol"
+msgstr "всего активных"
+
+#: .\templates\dashboard\teacher.html:36
+msgid "Oyligim"
+msgstr "Моя зарплата"
+
+#: .\templates\dashboard\teacher.html:38
+msgid "batafsil"
+msgstr "подробнее"
+
+#: .\templates\dashboard\teacher.html:38
+msgid "belgilanmagan"
+msgstr "не указано"
+
+#: .\templates\dashboard\teacher.html:46
+msgid "Bugungi darslarim"
+msgstr "Мои уроки на сегодня"
+
+#: .\templates\dashboard\teacher.html:59
+#: .\templates\dashboard\teacher.html:113
+#: .\templates\salaries\employee_list.html:37
+msgid "o'quvchi"
+msgstr "ученики"
+
+#: .\templates\dashboard\teacher.html:63
+#: .\templates\monitoring\attendance_journal.html:16
+msgid "Davomat olish"
+msgstr "Отметить посещаемость"
+
+#: .\templates\dashboard\teacher.html:68
+msgid "Bugun darsingiz yo'q. Dam oling!"
+msgstr "Сегодня уроков нет. Отдыхайте!"
+
+#: .\templates\dashboard\teacher.html:76
+msgid "Haftalik jadvalim"
+msgstr "Моё расписание на неделю"
+
+#: .\templates\dashboard\teacher.html:82
+msgid "bugun"
+msgstr "сегодня"
+
+#: .\templates\dashboard\teacher.html:92
+msgid "Jadval hali tuzilmagan."
+msgstr "Расписание ещё не составлено."
+
+#: .\templates\dashboard\teacher.html:101
+msgid "Mening guruhlarim"
+msgstr "Мои группы"
+
+#: .\templates\dashboard\teacher.html:123
+msgid "Sizga hali guruh biriktirilmagan. Administratorga murojaat qiling."
+msgstr "Вам пока не назначена группа. Обратитесь к администратору."
+
+#: .\templates\enrollments\application_convert.html:3
+#: .\templates\enrollments\application_detail.html:15
+msgid "O'quvchiga aylantirish"
+msgstr "Преобразовать в ученика"
+
+#: .\templates\enrollments\application_convert.html:9
+msgid "Arizani o'quvchiga aylantirish"
+msgstr "Преобразовать заявку в ученика"
+
+#: .\templates\enrollments\application_convert.html:10
+msgid "Quyidagi ariza asosida yangi o'quvchi profili yaratiladi:"
+msgstr "На основе заявки ниже будет создан новый профиль ученика:"
+
+#: .\templates\enrollments\application_convert.html:12
+#, python-format
+msgid "%(course)s guruhiga yoziladi"
+msgstr "будет записан в группу %(course)s"
+
+#: .\templates\enrollments\application_convert.html:16
+msgid "Tasdiqlash"
+msgstr "Подтвердить"
+
+#: .\templates\enrollments\application_detail.html:3
+#, python-format
+msgid "Ariza — %(name)s"
+msgstr "Заявка — %(name)s"
+
+#: .\templates\enrollments\application_detail.html:13
+msgid "O'quvchini ko'rish"
+msgstr "Посмотреть ученика"
+
+#: .\templates\enrollments\application_detail.html:22
+msgid "Ariza ma'lumotlari"
+msgstr "Данные заявки"
+
+#: .\templates\enrollments\application_detail.html:26
+#: .\templates\payments\debtors.html:19
+#: .\templates\students\student_detail.html:37
+msgid "Ota-ona tel."
+msgstr "Тел. родителя"
+
+#: .\templates\enrollments\application_detail.html:29
+#: .\templates\enrollments\application_list.html:29
+msgid "Manba"
+msgstr "Источник"
+
+#: .\templates\enrollments\application_detail.html:30
+msgid "Xabar"
+msgstr "Сообщение"
+
+#: .\templates\enrollments\application_detail.html:35
+msgid "Holatni boshqarish"
+msgstr "Управление статусом"
+
+#: .\templates\enrollments\application_list.html:6
+msgid "Potensial o'quvchilar — lead funnel boshqaruvi"
+msgstr "Потенциальные ученики — управление воронкой лидов"
+
+#: .\templates\enrollments\application_list.html:8
+msgid "Ommaviy forma"
+msgstr "Публичная форма"
+
+#: .\templates\enrollments\application_list.html:22
+#: .\templates\students\student_list.html:20
+msgid "Ism yoki telefon..."
+msgstr "Имя или телефон..."
+
+#: .\templates\enrollments\application_list.html:40
+msgid "Ko'rish"
+msgstr "Просмотр"
+
+#: .\templates\enrollments\application_list.html:43
+msgid "Ariza topilmadi"
+msgstr "Заявки не найдены"
+
+#: .\templates\enrollments\apply_public.html:8
+msgid "Onlayn ro'yxatdan o'tish"
+msgstr "Онлайн-регистрация"
+
+#: .\templates\enrollments\apply_public.html:47
+#, python-format
+msgid "%(BRAND_NAME)s o'quv markazi"
+msgstr "Учебный центр %(BRAND_NAME)s"
+
+#: .\templates\enrollments\apply_public.html:48
+msgid ""
+"Bilim sari birinchi qadam! Quyidagi shaklni to'ldiring — "
+"administratorlarimiz siz bilan tez orada bog'lanadi."
+msgstr ""
+"Первый шаг к знаниям! Заполните форму ниже — наши администраторы скоро "
+"свяжутся с вами."
+
+#: .\templates\enrollments\apply_public.html:50
+msgid "Tajribali o'qituvchilar"
+msgstr "Опытные преподаватели"
+
+#: .\templates\enrollments\apply_public.html:51
+msgid "Zamonaviy metodika"
+msgstr "Современная методика"
+
+#: .\templates\enrollments\apply_public.html:52
+msgid "Natijaga yo'naltirilgan"
+msgstr "Ориентация на результат"
+
+#: .\templates\enrollments\apply_public.html:58
+msgid "Ro'yxatdan o'tish arizasi"
+msgstr "Заявка на регистрацию"
+
+#: .\templates\enrollments\apply_public.html:59
+msgid "Barcha maydonlarni to'ldiring. Maxfiyligingiz kafolatlanadi."
+msgstr "Заполните все поля. Конфиденциальность гарантируется."
+
+#: .\templates\enrollments\apply_public.html:64
+msgid "Arizani yuborish"
+msgstr "Отправить заявку"
+
+#: .\templates\enrollments\apply_public.html:68
+msgid "Allaqachon ro'yxatdan o'tganmisiz?"
+msgstr "Уже зарегистрированы?"
+
+#: .\templates\enrollments\apply_success.html:8
+msgid "Ariza qabul qilindi"
+msgstr "Заявка принята"
+
+#: .\templates\enrollments\apply_success.html:18
+msgid "Arizangiz qabul qilindi!"
+msgstr "Ваша заявка принята!"
+
+#: .\templates\enrollments\apply_success.html:19
+msgid ""
+"Rahmat! Tez orada administratorlarimiz siz bilan ko'rsatilgan telefon raqami"
+" orqali bog'lanadi."
+msgstr ""
+"Спасибо! Наши администраторы скоро свяжутся с вами по указанному номеру "
+"телефона."
+
+#: .\templates\enrollments\apply_success.html:20
+msgid "Yana ariza qoldirish"
+msgstr "Оставить ещё одну заявку"
+
+#: .\templates\enrollments\enrollment_list.html:6
+#, python-format
+msgid "%(n)s ta faol yozilish"
+msgstr "Активных зачислений: %(n)s"
+
+#: .\templates\enrollments\enrollment_list.html:37
+msgid "Yozilish yo'q"
+msgstr "Нет зачислений"
+
+#: .\templates\instructors\instructor_detail.html:12
+msgid "Panelini ko'rish"
+msgstr "Открыть панель"
+
+#: .\templates\instructors\instructor_detail.html:26
+msgid "Tajriba"
+msgstr "Опыт"
+
+#: .\templates\instructors\instructor_detail.html:26
+#, python-format
+msgid "%(n)s yil"
+msgstr "%(n)s лет"
+
+#: .\templates\instructors\instructor_detail.html:35
+msgid "Yuritayotgan guruhlar"
+msgstr "Ведёт группы"
+
+#: .\templates\instructors\instructor_detail.html:42
+#: .\templates\monitoring\home.html:23
+#: .\templates\payments\finance_dashboard.html:26
+#, python-format
+msgid "%(n)s o'quvchi"
+msgstr "Учеников: %(n)s"
+
+#: .\templates\instructors\instructor_detail.html:44
+msgid "Guruh biriktirilmagan"
+msgstr "Группа не назначена"
+
+#: .\templates\instructors\instructor_form.html:3
+#: .\templates\instructors\instructor_list.html:8
+msgid "Yangi o'qituvchi"
+msgstr "Новый преподаватель"
+
+#: .\templates\instructors\instructor_form.html:9
+msgid "Yangi o'qituvchi qo'shish"
+msgstr "Добавить нового преподавателя"
+
+#: .\templates\instructors\instructor_form.html:10
+msgid ""
+"Ma'lumotlarni to'ldiring — tizim avtomatik <b>o'qituvchi profili</b> va "
+"<b>kabinet logini</b> yaratadi."
+msgstr ""
+"Заполните данные — система автоматически создаст <b>профиль "
+"преподавателя</b> и <b>логин кабинета</b>."
+
+#: .\templates\instructors\instructor_form.html:22
+#: .\templates\students\student_create.html:18
+#: .\templates\students\student_detail.html:34
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Личные данные"
+
+#: .\templates\instructors\instructor_form.html:67
+#: .\templates\students\student_create.html:25
+msgid "Kabinet logini (username / parol)"
+msgstr "Логин кабинета (username / пароль)"
+
+#: .\templates\instructors\instructor_form.html:74
+msgid "Bo'sh qoldirsangiz tizim unikal login tavsiya qiladi."
+msgstr "Если оставить пустым, система предложит уникальный логин."
+
+#: .\templates\instructors\instructor_form.html:79
+msgid ""
+"Bo'sh — avtomatik xavfsiz parol. Login va parol bir marta ko'rsatiladi."
+msgstr ""
+"Пусто — автоматический надёжный пароль. Логин и пароль показываются один "
+"раз."
+
+#: .\templates\instructors\instructor_form.html:86
+msgid "O'qituvchini saqlash"
+msgstr "Сохранить преподавателя"
+
+#: .\templates\instructors\instructor_list.html:6
+#, python-format
+msgid "Markaz o'qituvchilari (%(active)s faol / %(total)s)"
+msgstr "Преподаватели центра (%(active)s активных / %(total)s)"
+
+#: .\templates\instructors\instructor_list.html:23
+#, python-format
+msgid "%(n)s ta faol guruh"
+msgstr "Активных групп: %(n)s"
+
+#: .\templates\instructors\instructor_list.html:24
+#, python-format
+msgid "%(n)s yil tajriba"
+msgstr "%(n)s лет опыта"
+
+#: .\templates\instructors\instructor_list.html:29
+msgid "O'chirish"
+msgstr "Удалить"
+
+#: .\templates\instructors\instructor_list.html:35
+msgid "O'qituvchi yo'q."
+msgstr "Нет преподавателей."
+
+#: .\templates\instructors\instructor_list.html:35
+msgid "Birinchi o'qituvchini qo'shing"
+msgstr "Добавьте первого преподавателя"
+
+#: .\templates\monitoring\attendance_journal.html:3
+#, python-format
+msgid "Davomat jurnali — %(name)s"
+msgstr "Журнал посещаемости — %(name)s"
+
+#: .\templates\monitoring\attendance_journal.html:12
+#: .\templates\monitoring\attendance_take.html:7
+#: .\templates\monitoring\grade_book.html:7
+#: .\templates\monitoring\lesson_journal.html:7
+#: .\templates\partials\sidebar.html:45 .\templates\partials\sidebar.html:86
+msgid "Monitoring"
+msgstr "Мониторинг"
+
+#: .\templates\monitoring\attendance_journal.html:13
+msgid "Davomat jurnali"
+msgstr "Журнал посещаемости"
+
+#: .\templates\monitoring\attendance_journal.html:42
+msgid "Bu oy uchun davomat yo'q"
+msgstr "Нет посещаемости за этот месяц"
+
+#: .\templates\monitoring\attendance_take.html:3
+#: .\templates\monitoring\attendance_take.html:8
+#, python-format
+msgid "Davomat — %(name)s"
+msgstr "Посещаемость — %(name)s"
+
+#: .\templates\monitoring\attendance_take.html:12
+#: .\templates\monitoring\home.html:28
+msgid "Jurnal"
+msgstr "Журнал"
+
+#: .\templates\monitoring\attendance_take.html:28
+msgid "Hammasi keldi"
+msgstr "Все пришли"
+
+#: .\templates\monitoring\attendance_take.html:50
+msgid "Bu guruhda faol o'quvchi yo'q"
+msgstr "В этой группе нет активных учеников"
+
+#: .\templates\monitoring\attendance_take.html:56
+msgid "Davomatni saqlash"
+msgstr "Сохранить посещаемость"
+
+#: .\templates\monitoring\grade_book.html:3
+#, python-format
+msgid "Baholar — %(name)s"
+msgstr "Оценки — %(name)s"
+
+#: .\templates\monitoring\grade_book.html:8
+msgid "Baholar jurnali"
+msgstr "Журнал оценок"
+
+#: .\templates\monitoring\grade_book.html:11
+msgid "Baho qo'shish"
+msgstr "Добавить оценку"
+
+#: .\templates\monitoring\grade_book.html:16
+msgid "O'quvchilar reytingi"
+msgstr "Рейтинг учеников"
+
+#: .\templates\monitoring\grade_book.html:27
+msgid "O'quvchi yo'q"
+msgstr "Нет учеников"
+
+#: .\templates\monitoring\home.html:3
+msgid "O'quv monitoring"
+msgstr "Мониторинг обучения"
+
+#: .\templates\monitoring\home.html:6
+msgid "O'quv jarayoni monitoringi"
+msgstr "Мониторинг учебного процесса"
+
+#: .\templates\monitoring\home.html:6
+msgid "Davomat, baholar va dars jurnallari bo'yicha nazorat"
+msgstr "Контроль посещаемости, оценок и журналов уроков"
+
+#: .\templates\monitoring\home.html:10
+msgid "Davomat (7 kun)"
+msgstr "Посещаемость (7 дней)"
+
+#: .\templates\monitoring\home.html:11
+msgid "Kelganlar"
+msgstr "Пришедшие"
+
+#: .\templates\monitoring\home.html:12
+msgid "Baholar (7 kun)"
+msgstr "Оценки (7 дней)"
+
+#: .\templates\monitoring\home.html:13
+msgid "Darslar (7 kun)"
+msgstr "Уроки (7 дней)"
+
+#: .\templates\monitoring\home.html:16
+msgid "Guruhni tanlang"
+msgstr "Выберите группу"
+
+#: .\templates\monitoring\home.html:29
+msgid "Darslar"
+msgstr "Уроки"
+
+#: .\templates\monitoring\home.html:34
+msgid "Faol guruh yo'q."
+msgstr "Нет активных групп."
+
+#: .\templates\monitoring\home.html:34
+msgid "Guruh yarating"
+msgstr "Создайте группу"
+
+#: .\templates\monitoring\lesson_journal.html:3
+#, python-format
+msgid "Darslar jurnali — %(name)s"
+msgstr "Журнал уроков — %(name)s"
+
+#: .\templates\monitoring\lesson_journal.html:9
+msgid "O'tilgan mavzular va uy vazifalari"
+msgstr "Пройденные темы и домашние задания"
+
+#: .\templates\monitoring\lesson_journal.html:15
+msgid "Yangi dars qo'shish"
+msgstr "Добавить новый урок"
+
+#: .\templates\monitoring\lesson_journal.html:34
+msgid "Uy vazifa"
+msgstr "Домашнее задание"
+
+#: .\templates\monitoring\lesson_journal.html:37
+msgid "Hali dars kiritilmagan"
+msgstr "Уроки ещё не внесены"
+
+#: .\templates\monitoring\student_report.html:3
+#, python-format
+msgid "Hisobot — %(name)s"
+msgstr "Отчёт — %(name)s"
+
+#: .\templates\monitoring\student_report.html:7
+msgid "O'quvchi profili"
+msgstr "Профиль ученика"
+
+#: .\templates\monitoring\student_report.html:8
+#, python-format
+msgid "O'quv hisoboti — %(name)s"
+msgstr "Учебный отчёт — %(name)s"
+
+#: .\templates\monitoring\student_report.html:13
+msgid "Umumiy davomat"
+msgstr "Общая посещаемость"
+
+#: .\templates\monitoring\student_report.html:19
+msgid "Guruhlar bo'yicha ko'rsatkichlar"
+msgstr "Показатели по группам"
+
+#: .\templates\monitoring\student_report.html:30
+msgid "Faol guruh yo'q"
+msgstr "Нет активных групп"
+
+#: .\templates\monitoring\student_report.html:38
+msgid "So'nggi davomat"
+msgstr "Последняя посещаемость"
+
+#: .\templates\monitoring\student_report.html:45
+msgid "Davomat yo'q"
+msgstr "Нет посещаемости"
+
+#: .\templates\partials\sidebar.html:12
+msgid "CRM Tizimi"
+msgstr "CRM-система"
+
+#: .\templates\partials\sidebar.html:19 .\templates\partials\sidebar.html:105
+msgid "Asosiy"
+msgstr "Основное"
+
+#: .\templates\partials\sidebar.html:24
+msgid "Sahifalar"
+msgstr "Страницы"
+
+#: .\templates\partials\sidebar.html:40
+#: .\templates\payments\finance_dashboard.html:6
+msgid "Moliya / To'lovlar"
+msgstr "Финансы / Платежи"
+
+#: .\templates\partials\sidebar.html:51
+msgid "Markaz"
+msgstr "Центр"
+
+#: .\templates\partials\sidebar.html:53 .\templates\salaries\home.html:3
+msgid "Oyliklar (AI)"
+msgstr "Зарплаты (ИИ)"
+
+#: .\templates\partials\sidebar.html:56
+msgid "Ko'rinishlar"
+msgstr "Виды"
+
+#: .\templates\partials\sidebar.html:64 .\templates\partials\sidebar.html:81
+msgid "Boshqaruv"
+msgstr "Администрирование"
+
+#: .\templates\partials\sidebar.html:72
+msgid "Parol murojaatlari"
+msgstr "Запросы пароля"
+
+#: .\templates\partials\sidebar.html:76
+msgid "Ommaviy ariza"
+msgstr "Публичная заявка"
+
+#: .\templates\partials\sidebar.html:88
+msgid "To'lovlar monitoringi"
+msgstr "Мониторинг платежей"
+
+#: .\templates\partials\sidebar.html:107
+msgid "Mening panelim"
+msgstr "Моя панель"
+
+#: .\templates\partials\sidebar.html:110
+msgid "Davomat va baholar"
+msgstr "Посещаемость и оценки"
+
+#: .\templates\partials\sidebar.html:113
+msgid "Mening oyligim"
+msgstr "Моя зарплата"
+
+#: .\templates\partials\sidebar.html:117
+msgid "Hisob"
+msgstr "Аккаунт"
+
+#: .\templates\payments\debtors.html:3 .\templates\payments\debtors.html:13
+#: .\templates\payments\finance_dashboard.html:17
+#: .\templates\payments\invoice_list.html:17
+#: .\templates\payments\payment_list.html:14
+#: .\templates\students\student_list.html:8
+#: .\templates\students\student_list.html:16
+msgid "Qarzdorlar"
+msgstr "Должники"
+
+#: .\templates\payments\debtors.html:6
+msgid "Qarzdor o'quvchilar"
+msgstr "Ученики с задолженностью"
+
+#: .\templates\payments\debtors.html:6
+msgid "Jami"
+msgstr "Итого"
+
+#: .\templates\payments\debtors.html:10
+#: .\templates\payments\finance_dashboard.html:14
+#: .\templates\payments\invoice_list.html:14
+#: .\templates\payments\payment_list.html:11
+msgid "Umumiy"
+msgstr "Общее"
+
+#: .\templates\payments\debtors.html:19
+msgid "Qarz miqdori"
+msgstr "Сумма долга"
+
+#: .\templates\payments\debtors.html:31
+msgid "Qarzdorlar yo'q — barcha to'lovlar joyida!"
+msgstr "Должников нет — все платежи в порядке!"
+
+#: .\templates\payments\finance_dashboard.html:3
+msgid "Moliya boshqaruvi"
+msgstr "Управление финансами"
+
+#: .\templates\payments\finance_dashboard.html:6
+msgid "To'lovlar, hisob-fakturalar va qarzdorlik nazorati"
+msgstr "Контроль платежей, счетов и задолженности"
+
+#: .\templates\payments\finance_dashboard.html:8
+#: .\templates\payments\invoice_generate.html:3
+#: .\templates\payments\invoice_generate.html:6
+msgid "Oylik hisob-fakturalar"
+msgstr "Ежемесячные счета"
+
+#: .\templates\payments\finance_dashboard.html:22
+#, python-format
+msgid "%(n)s ta to'lov"
+msgstr "Платежей: %(n)s"
+
+#: .\templates\payments\finance_dashboard.html:23
+msgid "Jami tushum"
+msgstr "Общий доход"
+
+#: .\templates\payments\finance_dashboard.html:24
+msgid "Butun davr"
+msgstr "За весь период"
+
+#: .\templates\payments\finance_dashboard.html:27
+msgid "To'lanmagan faktura"
+msgstr "Неоплаченные счета"
+
+#: .\templates\payments\finance_dashboard.html:46
+#: .\templates\students\student_detail.html:109
+msgid "To'lov yo'q"
+msgstr "Нет платежей"
+
+#: .\templates\payments\finance_dashboard.html:56
+msgid "Qarz"
+msgstr "Долг"
+
+#: .\templates\payments\invoice_generate.html:7
+msgid ""
+"Tanlangan oy uchun barcha faol yozilishlarga avtomatik hisob-faktura "
+"yaratiladi."
+msgstr ""
+"Счета автоматически создаются для всех активных зачислений за выбранный "
+"месяц."
+
+#: .\templates\payments\invoice_generate.html:10
+msgid ""
+"Har bir faol o'quvchi uchun guruh oylik to'lovi (chegirma hisobga olingan "
+"holda) bo'yicha faktura yaratiladi. Takroriy fakturalar yaratilmaydi."
+msgstr ""
+"Для каждого активного ученика создаётся счёт по ежемесячной оплате группы (с"
+" учётом скидки). Повторные счета не создаются."
+
+#: .\templates\payments\invoice_generate.html:15
+msgid "Fakturalarni yaratish"
+msgstr "Создать счета"
+
+#: .\templates\payments\invoice_list.html:6
+msgid "To'lanmagan jami"
+msgstr "Всего не оплачено"
+
+#: .\templates\payments\invoice_list.html:8
+msgid "Yangi faktura"
+msgstr "Новый счёт"
+
+#: .\templates\payments\invoice_list.html:9
+msgid "Oylik generatsiya"
+msgstr "Месячная генерация"
+
+#: .\templates\payments\invoice_list.html:23
+msgid "Muddati o'tgan"
+msgstr "Просрочено"
+
+#: .\templates\payments\invoice_list.html:29
+#: .\templates\salaries\payslip.html:64
+msgid "Davr"
+msgstr "Период"
+
+#: .\templates\payments\invoice_list.html:29
+msgid "Muddat"
+msgstr "Срок"
+
+#: .\templates\payments\invoice_list.html:41
+msgid "To'lash"
+msgstr "Оплатить"
+
+#: .\templates\payments\invoice_list.html:46
+msgid "Hisob-faktura yo'q."
+msgstr "Нет счетов."
+
+#: .\templates\payments\invoice_list.html:46
+msgid "Oylik generatsiya qiling"
+msgstr "Выполните месячную генерацию"
+
+#: .\templates\payments\payment_list.html:6
+msgid "To'lovlar tarixi"
+msgstr "История платежей"
+
+#: .\templates\payments\payment_list.html:6
+msgid "Jami ko'rsatilgan"
+msgstr "Всего показано"
+
+#: .\templates\payments\payment_list.html:18
+msgid "O'quvchi ismi..."
+msgstr "Имя ученика..."
+
+#: .\templates\payments\payment_list.html:20
+msgid "Barcha turi"
+msgstr "Все способы"
+
+#: .\templates\payments\payment_list.html:45
+msgid "To'lov topilmadi"
+msgstr "Платежи не найдены"
+
+#: .\templates\salaries\employee_confirm_delete.html:3
+#: .\templates\salaries\employee_confirm_delete.html:7
+msgid "Xodimni o'chirish"
+msgstr "Удалить сотрудника"
+
+#: .\templates\salaries\employee_confirm_delete.html:8
+#, python-format
+msgid ""
+"<b>%(name)s</b> ni va unga tegishli barcha oylik yozuvlarini "
+"o'chirmoqchimisiz? Bu amalni qaytarib bo'lmaydi."
+msgstr ""
+"Удалить <b>%(name)s</b> и все связанные записи зарплаты? Это действие "
+"необратимо."
+
+#: .\templates\salaries\employee_confirm_delete.html:11
+#: .\templates\shared\confirm_delete.html:15
+msgid "Ha, o'chirish"
+msgstr "Да, удалить"
+
+#: .\templates\salaries\employee_form.html:3
+#: .\templates\salaries\employee_list.html:16
+msgid "Yangi xodim"
+msgstr "Новый сотрудник"
+
+#: .\templates\salaries\employee_form.html:3
+msgid "Xodimni tahrirlash"
+msgstr "Редактировать сотрудника"
+
+#: .\templates\salaries\employee_form.html:7
+msgid "Yangi xodim qo'shish"
+msgstr "Добавить нового сотрудника"
+
+#: .\templates\salaries\employee_form.html:8
+msgid ""
+"Oylik turi va stavkalarni belgilang. KPI bonusi davomat va o'zlashtirishga "
+"qarab beriladi."
+msgstr ""
+"Укажите тип зарплаты и ставки. KPI-бонус зависит от посещаемости и "
+"успеваемости."
+
+#: .\templates\salaries\employee_list.html:9
+#, python-format
+msgid ""
+"Oylik hisoblanadigan barcha xodimlar va ularning stavkalari. Faol: "
+"%(active)s"
+msgstr ""
+"Все сотрудники с расчётной зарплатой и их ставки. Активных: %(active)s"
+
+#: .\templates\salaries\employee_list.html:14
+msgid "Foydalanuvchilardan import"
+msgstr "Импорт из пользователей"
+
+#: .\templates\salaries\employee_list.html:25
+msgid "Oylik / stavka"
+msgstr "Оклад / ставка"
+
+#: .\templates\salaries\employee_list.html:25
+#, python-format
+msgid "KPI %%"
+msgstr "KPI %%"
+
+#: .\templates\salaries\employee_list.html:36
+msgid "soat"
+msgstr "час"
+
+#: .\templates\salaries\employee_list.html:48
+#: .\templates\salaries\home.html:116
+msgid "Hali xodim yo'q."
+msgstr "Сотрудников пока нет."
+
+#: .\templates\salaries\home.html:8
+#, python-format
+msgid "Xodimlar oyligi — %(m)s %(y)s"
+msgstr "Зарплата сотрудников — %(m)s %(y)s"
+
+#: .\templates\salaries\home.html:9
+msgid ""
+"Oylik suniy intellekt yordamida davomat, guruhlar va KPI asosida "
+"hisoblanadi."
+msgstr ""
+"Зарплата рассчитывается с помощью ИИ на основе посещаемости, групп и KPI."
+
+#: .\templates\salaries\home.html:24
+msgid "Ko'rsatish"
+msgstr "Показать"
+
+#: .\templates\salaries\home.html:29
+msgid "Faol xodimlar"
+msgstr "Активные сотрудники"
+
+#: .\templates\salaries\home.html:33
+msgid "Hisoblangan"
+msgstr "Рассчитано"
+
+#: .\templates\salaries\home.html:37
+msgid "AI tahlil qilingan"
+msgstr "Проанализировано ИИ"
+
+#: .\templates\salaries\home.html:41
+msgid "Jami oylik fondi"
+msgstr "Общий фонд зарплаты"
+
+#: .\templates\salaries\home.html:43
+#, python-format
+msgid "O'rtacha KPI: %(k)s/100"
+msgstr "Средний KPI: %(k)s/100"
+
+#: .\templates\salaries\home.html:50
+#| msgid "Jami oylik fondi"
+msgid "Xodimlar bo'yicha oylik fondi"
+msgstr "Фонд зарплаты по сотрудникам"
+
+#: .\templates\salaries\home.html:53
+#| msgid "Hali tahlil qilinmagan. <b>AI tahlil</b> tugmasini bosing."
+msgid "Hali hisoblanmagan — «Oylikni hisoblash» tugmasini bosing"
+msgstr "Ещё не рассчитано — нажмите «Рассчитать зарплату»"
+
+#: .\templates\salaries\home.html:57
+#| msgid "Baholar taqsimoti"
+msgid "AI baholar taqsimoti"
+msgstr "Распределение AI-оценок"
+
+#: .\templates\salaries\home.html:72
+msgid "Oylik jadvali"
+msgstr "Таблица зарплат"
+
+#: .\templates\salaries\home.html:77
+msgid "Oylikni hisoblash"
+msgstr "Рассчитать зарплату"
+
+#: .\templates\salaries\home.html:82
+msgid "AI bilan tahlil qilish"
+msgstr "Анализ с помощью ИИ"
+
+#: .\templates\salaries\home.html:89 .\templates\salaries\payslip.html:65
+msgid "KPI"
+msgstr "KPI"
+
+#: .\templates\salaries\home.html:90
+msgid "Jami oylik"
+msgstr "Итого зарплата"
+
+#: .\templates\salaries\home.html:90
+msgid "AI"
+msgstr "ИИ"
+
+#: .\templates\salaries\home.html:105
+msgid "Batafsil"
+msgstr "Подробнее"
+
+#: .\templates\salaries\home.html:108
+msgid "Hisoblanmagan"
+msgstr "Не рассчитано"
+
+#: .\templates\salaries\home.html:116
+msgid "Xodim qo'shing"
+msgstr "Добавьте сотрудника"
+
+#: .\templates\salaries\home.html:116
+msgid "yoki foydalanuvchilardan import qiling."
+msgstr "или импортируйте из пользователей."
+
+#: .\templates\salaries\home.html:125
+#| msgid ""
+#| "Hozir AI mahalliy (offline) rejimda ishlamoqda. To'liq Claude AI tahlili "
+#| "uchun <code>.env</code> fayliga <code>ANTHROPIC_API_KEY</code> ni qo'shing."
+msgid ""
+"Hozir AI mahalliy (offline) rejimda ishlamoqda. To'liq AI tahlili uchun "
+"<code>.env</code> fayliga <code>GEMINI_API_KEY</code> ni qo'shing."
+msgstr ""
+"Сейчас ИИ работает в локальном (офлайн) режиме. Для полного AI-анализа "
+"добавьте <code>GEMINI_API_KEY</code> в файл <code>.env</code>."
+
+#: .\templates\salaries\payslip.html:8
+#: .\templates\salaries\record_detail.html:12
+msgid "Hisob-varaqa"
+msgstr "Расчётный лист"
+
+#: .\templates\salaries\payslip.html:45
+msgid "Chop etish"
+msgstr "Печать"
+
+#: .\templates\salaries\payslip.html:52
+msgid "Oylik hisob-varaqasi"
+msgstr "Расчётный лист зарплаты"
+
+#: .\templates\salaries\payslip.html:55
+msgid "Jami to'lov"
+msgstr "Итого к выплате"
+
+#: .\templates\salaries\payslip.html:82
+#: .\templates\salaries\record_detail.html:44
+msgid "JAMI"
+msgstr "ИТОГО"
+
+#: .\templates\salaries\payslip.html:94
+msgid "Karta"
+msgstr "Карта"
+
+#: .\templates\salaries\record_detail.html:3
+#, python-format
+msgid "Oylik — %(name)s"
+msgstr "Зарплата — %(name)s"
+
+#: .\templates\salaries\record_detail.html:13
+msgid "Metrikalar"
+msgstr "Метрики"
+
+#: .\templates\salaries\record_detail.html:15
+msgid "Avto yangilash"
+msgstr "Автообновление"
+
+#: .\templates\salaries\record_detail.html:18
+msgid "AI tahlil"
+msgstr "AI-анализ"
+
+#: .\templates\salaries\record_detail.html:26
+msgid "Oylik tarkibi"
+msgstr "Состав зарплаты"
+
+#: .\templates\salaries\record_detail.html:49
+msgid "KPI ko'rsatkichi"
+msgstr "Показатель KPI"
+
+#: .\templates\salaries\record_detail.html:60
+msgid "Holatni saqlash"
+msgstr "Сохранить статус"
+
+#: .\templates\salaries\record_detail.html:68
+msgid "Davr ko'rsatkichlari"
+msgstr "Показатели за период"
+
+#: .\templates\salaries\record_detail.html:72
+msgid "Ishlagan soat"
+msgstr "Отработано часов"
+
+#: .\templates\salaries\record_detail.html:78
+msgid "Sababsiz"
+msgstr "Без причины"
+
+#: .\templates\salaries\record_detail.html:85
+msgid "Suniy intellekt tahlili"
+msgstr "Анализ искусственного интеллекта"
+
+#: .\templates\salaries\record_detail.html:95
+msgid "Tavsiya"
+msgstr "Рекомендация"
+
+#: .\templates\salaries\record_detail.html:99
+#, python-format
+msgid "✨ Claude AI (%(model)s)"
+msgstr "✨ Claude AI (%(model)s)"
+
+#: .\templates\salaries\record_detail.html:99
+msgid "Mahalliy tahlil (API kalitsiz)"
+msgstr "Локальный анализ (без API-ключа)"
+
+#: .\templates\salaries\record_detail.html:102
+msgid "Hali tahlil qilinmagan. <b>AI tahlil</b> tugmasini bosing."
+msgstr "Ещё не проанализировано. Нажмите кнопку <b>AI-анализ</b>."
+
+#: .\templates\salaries\record_detail.html:109
+msgid "Jadvalga qaytish"
+msgstr "Вернуться к таблице"
+
+#: .\templates\salaries\record_metrics.html:3
+#, python-format
+msgid "Metrikalar — %(name)s"
+msgstr "Метрики — %(name)s"
+
+#: .\templates\salaries\record_metrics.html:7
+msgid "Metrikalarni tahrirlash"
+msgstr "Редактировать метрики"
+
+#: .\templates\salaries\record_metrics.html:8
+#, python-format
+msgid "%(name)s · %(period)s. Saqlangach oylik avtomatik qayta hisoblanadi."
+msgstr ""
+"%(name)s · %(period)s. После сохранения зарплата пересчитывается "
+"автоматически."
+
+#: .\templates\salaries\record_metrics.html:25
+msgid "Saqlash va qayta hisoblash"
+msgstr "Сохранить и пересчитать"
+
+#: .\templates\shared\confirm_delete.html:3
+msgid "O'chirishni tasdiqlash"
+msgstr "Подтверждение удаления"
+
+#: .\templates\shared\confirm_delete.html:9
+msgid "Rostdan o'chirilsinmi?"
+msgstr "Действительно удалить?"
+
+#: .\templates\shared\confirm_delete.html:10
+msgid "Ob'ekt"
+msgstr "Объект"
+
+#: .\templates\shared\object_form.html:3
+msgid "Forma"
+msgstr "Форма"
+
+#: .\templates\shared\object_form.html:9
+msgid "Ma'lumotlarni kiritish"
+msgstr "Ввод данных"
+
+#: .\templates\students\student_create.html:9
+msgid "Yangi o'quvchi qo'shish"
+msgstr "Добавить нового ученика"
+
+#: .\templates\students\student_create.html:10
+msgid ""
+"Ma'lumotlarni to'ldiring va xohlasangiz darhol kabinet logini yarating."
+msgstr "Заполните данные и при желании сразу создайте логин кабинета."
+
+#: .\templates\students\student_create.html:30
+msgid "O'quvchi uchun shaxsiy kabinet logini yaratilsin"
+msgstr "Создать личный логин кабинета для ученика"
+
+#: .\templates\students\student_create.html:34
+msgid "Username (login)"
+msgstr "Username (логин)"
+
+#: .\templates\students\student_create.html:35
+msgid "Bo'sh — avtomatik (ism+familiya)"
+msgstr "Пусто — автоматически (имя+фамилия)"
+
+#: .\templates\students\student_create.html:36
+msgid "Bo'sh qoldirsangiz tizim o'zi unikal login tavsiya qiladi."
+msgstr "Если оставить пустым, система сама предложит уникальный логин."
+
+#: .\templates\students\student_create.html:41
+msgid "Telegram ulangan bo'lsa, login va parol botga yuboriladi."
+msgstr "Если Telegram подключён, логин и пароль отправляются в бот."
+
+#: .\templates\students\student_detail.html:12
+msgid "Kabinet"
+msgstr "Кабинет"
+
+#: .\templates\students\student_detail.html:13
+msgid "Hisobot"
+msgstr "Отчёт"
+
+#: .\templates\students\student_detail.html:15
+msgid "Guruhga yozish"
+msgstr "Записать в группу"
+
+#: .\templates\students\student_detail.html:24
+msgid "Qarzdor"
+msgstr "Должник"
+
+#: .\templates\students\student_detail.html:24
+msgid "Joriy balans"
+msgstr "Текущий баланс"
+
+#: .\templates\students\student_detail.html:39
+msgid "Maktab / sinf"
+msgstr "Школа / класс"
+
+#: .\templates\students\student_detail.html:45
+msgid "O'quvchi kabineti (login)"
+msgstr "Кабинет ученика (логин)"
+
+#: .\templates\students\student_detail.html:49
+msgid "Login mavjud"
+msgstr "Логин есть"
+
+#: .\templates\students\student_detail.html:51
+msgid "Telegram ulangan"
+msgstr "Telegram подключён"
+
+#: .\templates\students\student_detail.html:51
+msgid "Telegram ulanmagan"
+msgstr "Telegram не подключён"
+
+#: .\templates\students\student_detail.html:54
+msgid "Parolni yangilash / qayta yuborish"
+msgstr "Обновить / повторно отправить пароль"
+
+#: .\templates\students\student_detail.html:60
+msgid "Bo'sh qoldirsangiz — avtomatik yaratiladi"
+msgstr "Если оставить пустым — создаётся автоматически"
+
+#: .\templates\students\student_detail.html:61
+msgid "Yangilash va yuborish"
+msgstr "Обновить и отправить"
+
+#: .\templates\students\student_detail.html:66
+msgid ""
+"O'quvchi uchun shaxsiy kabinet logini yarating. Telegram ulangan bo'lsa, "
+"login va parol avtomatik botga yuboriladi."
+msgstr ""
+"Создайте личный логин кабинета для ученика. Если Telegram подключён, логин и"
+" пароль отправляются в бот автоматически."
+
+#: .\templates\students\student_detail.html:74
+msgid "Avtomatik yaratiladi"
+msgstr "Создаётся автоматически"
+
+#: .\templates\students\student_detail.html:76
+msgid "Login yaratish"
+msgstr "Создать логин"
+
+#: .\templates\students\student_detail.html:92
+msgid "Guruhga yozilmagan"
+msgstr "Не записан ни в одну группу"
+
+#: .\templates\students\student_list.html:6
+msgid "Markazning barcha o'quvchilari"
+msgstr "Все ученики центра"
+
+#: .\templates\students\student_list.html:14
+msgid "Jami o'quvchi"
+msgstr "Всего учеников"
+
+#: .\templates\students\student_list.html:46
+msgid "O'quvchi topilmadi"
+msgstr "Ученики не найдены"
+
+#~ msgid "Hisobingiz yo'qmi?"
+#~ msgstr "Нет аккаунта?"

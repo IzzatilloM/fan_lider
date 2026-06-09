@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% blocktrans with name=record.employee.full_name %}Oylik — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+
+<div class="page-head">
+    <div>
+        <h1>{{ record.employee.full_name }}</h1>
+        <div class="sub">{{ record.employee.get_position_display }} · {{ record.period.label }}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'salaries:payslip' record.pk %}" class="btn btn-light" target="_blank">🧾 {% trans "Hisob-varaqa" %}</a>
+        <a href="{% url 'salaries:record_metrics' record.pk %}" class="btn btn-light">✏️ {% trans "Metrikalar" %}</a>
+        <form method="post" action="{% url 'salaries:record_refresh' record.pk %}" style="display:inline;">
+            {% csrf_token %}<button class="btn btn-light">🔄 {% trans "Avto yangilash" %}</button>
+        </form>
+        <form method="post" action="{% url 'salaries:record_ai' record.pk %}" style="display:inline;">
+            {% csrf_token %}<button class="btn btn-primary">🤖 {% trans "AI tahlil" %}</button>
+        </form>
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <!-- Hisob-kitob -->
+    <div class="card">
+        <div class="card__head"><h3>{% trans "Oylik tarkibi" %}</h3>
+            <div class="right"><span class="badge {{ record.status_badge }}">{{ record.get_status_display }}</span></div>
+        </div>
+        <div class="card__body">
+            <table class="tbl">
+                <tbody>
+                {% for line in record.breakdown.lines %}
+                    {% if line.amount %}
+                    <tr>
+                        <td>{{ line.label }}</td>
+                        <td class="num money {% if line.amount < 0 %}text-danger{% endif %}">
+                            {{ line.amount|floatformat:0|intcomma }} {% trans "so'm" %}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:2px solid var(--line);">
+                <span style="font-weight:800;font-size:16px;">{% trans "JAMI" %}</span>
+                <span class="money" style="font-size:24px;font-weight:800;color:var(--brand);">{{ record.total_amount|floatformat:0|intcomma }} {% trans "so'm" %}</span>
+            </div>
+
+            <div style="margin-top:18px;">
+                <div class="help" style="margin-bottom:6px;">{% trans "KPI ko'rsatkichi" %}: <b>{{ record.kpi_score|floatformat:0 }}/100</b></div>
+                <div class="bar {% if record.kpi_score >= 70 %}green{% elif record.kpi_score < 50 %}red{% endif %}">
+                    <span style="width:{{ record.kpi_score }}%;"></span>
+                </div>
+            </div>
+
+            <form method="post" action="{% url 'salaries:record_status' record.pk %}" style="display:flex;gap:8px;margin-top:18px;">
+                {% csrf_token %}
+                <select name="status" class="form-select" style="max-width:200px;">
+                    {% for v,l in record.STATUS_CHOICES %}<option value="{{ v }}" {% if record.status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+                </select>
+                <button class="btn btn-soft btn-sm">{% trans "Holatni saqlash" %}</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Metrikalar + AI -->
+    <div style="display:flex;flex-direction:column;gap:18px;">
+        <div class="card">
+            <div class="card__head"><h3>{% trans "Davr ko'rsatkichlari" %}</h3></div>
+            <div class="card__body">
+                <div class="grid cols-2" style="gap:10px;">
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Ishlagan kunlar" %}</div><div class="li__title">{{ record.worked_days }}</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Ishlagan soat" %}</div><div class="li__title">{{ record.worked_hours }}</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Guruhlar" %}</div><div class="li__title">{{ record.groups_count }}</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "O'quvchilar" %}</div><div class="li__title">{{ record.students_count }}</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Davomat" %}</div><div class="li__title">{{ record.attendance_rate }}%</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "O'zlashtirish" %}</div><div class="li__title">{{ record.avg_score }}%</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Kechikishlar" %}</div><div class="li__title">{{ record.late_count }}</div></div></div>
+                    <div class="li"><div class="li__main"><div class="li__sub">{% trans "Sababsiz" %}</div><div class="li__title">{{ record.absence_count }}</div></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__head">
+                <h3>🤖 {% trans "Suniy intellekt tahlili" %}</h3>
+                <div class="right">
+                    {% if record.ai_rating %}<span class="badge brand">{% trans "Baho" %}: {{ record.ai_rating }}</span>{% endif %}
+                </div>
+            </div>
+            <div class="card__body">
+                {% if record.ai_analysis %}
+                    <p style="line-height:1.7;">{{ record.ai_analysis }}</p>
+                    {% if record.ai_recommendation %}
+                    <div style="margin-top:14px;padding:14px;background:var(--brand-soft);border-radius:12px;">
+                        <b style="color:var(--brand-700);">💡 {% trans "Tavsiya" %}:</b> {{ record.ai_recommendation }}
+                    </div>
+                    {% endif %}
+                    <div class="help" style="margin-top:12px;">
+                        {% if record.ai_generated %}{% blocktrans with model=record.ai_model %}✨ Claude AI ({{ model }}){% endblocktrans %}{% else %}🧮 {% trans "Mahalliy tahlil (API kalitsiz)" %}{% endif %}
+                    </div>
+                {% else %}
+                    <div class="empty"><div class="ico">🤖</div>{% blocktrans %}Hali tahlil qilinmagan. <b>AI tahlil</b> tugmasini bosing.{% endblocktrans %}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top:18px;"><a href="{% url 'salaries:home' %}?year={{ record.period.year }}&month={{ record.period.month }}" class="btn btn-light">← {% trans "Jadvalga qaytish" %}</a></div>
+{% endblock %}

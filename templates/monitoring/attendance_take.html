@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=course.name %}Davomat — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'monitoring:home' %}" class="text-muted" style="font-size:13px;">← {% trans "Monitoring" %}</a>
+        <h1>✅ {% blocktrans with name=course.name %}Davomat — {{ name }}{% endblocktrans %}</h1>
+        <div class="sub">{{ course.subject.name }}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'monitoring:attendance_journal' course.slug %}" class="btn btn-light">📅 {% trans "Jurnal" %}</a>
+        <a href="{% url 'monitoring:grade_book' course.slug %}" class="btn btn-light">📊 {% trans "Baholar" %}</a>
+    </div>
+</div>
+
+<form method="get" class="toolbar">
+    <label style="font-weight:700;">{% trans "Sana" %}:</label>
+    <input type="date" name="date" value="{{ day|date:'Y-m-d' }}" class="form-control" style="max-width:200px;" onchange="this.form.submit()">
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="date" value="{{ day|date:'Y-m-d' }}">
+    <div class="card">
+        <div class="card__head"><h3>{% trans "O'quvchilar" %} — {{ day|date:"d.m.Y" }}</h3>
+            <div class="right" style="display:flex;gap:8px;">
+                <button type="button" class="btn btn-soft btn-sm" onclick="markAll('present')">{% trans "Hammasi keldi" %}</button>
+                <button class="btn btn-primary btn-sm">💾 {% trans "Saqlash" %}</button>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="tbl">
+                <thead><tr><th>#</th><th>{% trans "O'quvchi" %}</th><th>{% trans "Holat" %}</th></tr></thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><div class="cell"><span class="avatar">{{ row.student.initials }}</span><span class="cell__name">{{ row.student.full_name }}</span></div></td>
+                        <td>
+                            <div class="statuspick" data-sid="{{ row.student.id }}">
+                                {% for v,l in status_choices %}
+                                <input type="radio" id="s{{ row.student.id }}_{{ v }}" name="status_{{ row.student.id }}" value="{{ v }}" {% if row.current == v %}checked{% endif %}>
+                                <label for="s{{ row.student.id }}_{{ v }}">{{ l }}</label>
+                                {% endfor %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3"><div class="empty"><div class="ico">👥</div>{% trans "Bu guruhda faol o'quvchi yo'q" %}</div></td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if rows %}<div class="form-actions"><button class="btn btn-primary">💾 {% trans "Davomatni saqlash" %}</button></div>{% endif %}
+</form>
+
+<script>
+function markAll(status){
+    document.querySelectorAll('.statuspick').forEach(p=>{
+        const sid=p.dataset.sid;
+        const r=document.getElementById('s'+sid+'_'+status);
+        if(r) r.checked=true;
+    });
+}
+</script>
+{% endblock %}

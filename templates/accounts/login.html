@@ -1,0 +1,91 @@
+{% extends 'accounts/auth_base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Kirish" %}{% endblock %}
+{% block heading %}{% trans "Tizimga kirish" %}{% endblock %}
+{% block subtitle %}{% trans "Rolingizni tanlang, so'ng login va parolingiz bilan kiring." %}{% endblock %}
+
+{% block content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    <label class="form-label">{% trans "Kim sifatida kirasiz?" %}</label>
+    <div class="role-grid role-grid--4">
+        {% for radio in form.role %}
+            <div>
+                <input type="radio" class="role-radio" name="{{ radio.data.name }}"
+                       id="{{ radio.id_for_label }}" value="{{ radio.data.value }}"
+                       {% if radio.data.selected %}checked{% endif %}>
+                <label class="role-card" for="{{ radio.id_for_label }}">
+                    <span class="rc-ic">
+                        {% if radio.data.value == 'admin' %}<i class="bi bi-shield-shaded"></i>
+                        {% elif radio.data.value == 'director' %}<i class="bi bi-person-badge"></i>
+                        {% elif radio.data.value == 'teacher' %}<i class="bi bi-person-workspace"></i>
+                        {% else %}<i class="bi bi-mortarboard"></i>{% endif %}
+                    </span>
+                    <span>
+                        <span class="rc-t d-block">{{ radio.choice_label }}</span>
+                        <span class="rc-s">
+                            {% if radio.data.value == 'admin' %}{% trans "To'liq tizim nazorati" %}
+                            {% elif radio.data.value == 'director' %}{% trans "Boshqaruv va monitoring" %}
+                            {% elif radio.data.value == 'teacher' %}{% trans "Davomat, baholar, oylik" %}
+                            {% else %}{% trans "Baholar, davomat, to'lovlar" %}{% endif %}
+                        </span>
+                    </span>
+                </label>
+            </div>
+        {% endfor %}
+    </div>
+    {% for e in form.role.errors %}<div class="errorlist mb-2">{{ e }}</div>{% endfor %}
+
+    <div class="mb-3 mt-3">
+        <label class="form-label">{% trans "Login" %}</label>
+        <div class="input-icon">
+            <i class="bi bi-person"></i>
+            {{ form.identifier }}
+        </div>
+        {% for e in form.identifier.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+    </div>
+
+    <div class="mb-2">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <label class="form-label mb-0">{% trans "Parol" %}</label>
+            <a href="{% url 'accounts:forgot_password' %}" class="link-muted">{% trans "Parolni unutdingizmi?" %}</a>
+        </div>
+        <div class="input-icon">
+            <i class="bi bi-lock"></i>
+            {{ form.password }}
+            <button type="button" class="pw-toggle"><i class="bi bi-eye"></i></button>
+        </div>
+        {% for e in form.password.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+    </div>
+
+    <button type="submit" class="btn-brand mt-4"><i class="bi bi-box-arrow-in-right"></i> {% trans "Kirish" %}</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+    <span id="registerHint" style="display:none;">
+        {% trans "Administrator yoki direktor hisobi kerakmi?" %}
+        <a href="{% url 'accounts:register' %}">{% trans "Ro'yxatdan o'tish" %}</a>
+    </span>
+    <div class="mt-2"><a href="{% url 'accounts:reset_help' %}" class="link-muted">
+        {% trans "O'qituvchi yoki o'quvchimisiz? Parolni tiklash" %}</a></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Faqat admin/direktor uchun «Ro'yxatdan o'tish» havolasini ko'rsatamiz.
+    (function () {
+        var hint = document.getElementById('registerHint');
+        function update() {
+            var sel = document.querySelector('input[name="role"]:checked');
+            var show = sel && (sel.value === 'admin' || sel.value === 'director');
+            if (hint) hint.style.display = show ? 'inline' : 'none';
+        }
+        document.querySelectorAll('input[name="role"]').forEach(function (r) {
+            r.addEventListener('change', update);
+        });
+        update();
+    })();
+</script>
+{% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Sozlamalar" %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>⚙️ {% trans "Sozlamalar" %}</h1>
+        <div class="sub">{% trans "Hisobingiz, markaz ma'lumotlari va foydalanuvchilar loginlari" %}</div>
+    </div>
+</div>
+
+<!-- Tablar -->
+<div class="set-tabs" id="setTabs">
+    <button class="chip" data-tab="account">👤 {% trans "Hisob & Parol" %}</button>
+    <button class="chip" data-tab="center">🏫 {% trans "Markaz ma'lumotlari" %}</button>
+    <button class="chip" data-tab="students">🎓 {% trans "O'quvchilar" %} <span class="n">{{ students.count }}</span></button>
+    <button class="chip" data-tab="teachers">👨‍🏫 {% trans "O'qituvchilar" %} <span class="n">{{ teachers.count }}</span></button>
+    <button class="chip" data-tab="staff">🛡️ {% trans "Direktor & Admin" %} <span class="n">{{ directors.count|add:admins.count }}</span></button>
+</div>
+
+<!-- ============ HISOB & PAROL ============ -->
+<section class="set-panel" data-panel="account">
+    <div class="grid cols-2">
+        <div class="card">
+            <div class="card__head"><h3>👤 {% trans "Mening hisobim" %}</h3></div>
+            <div class="card__body" style="text-align:center;">
+                {% if user.avatar_url %}
+                    <img class="avatar xl" src="{{ user.avatar_url }}" alt="" style="margin:0 auto;object-fit:cover;">
+                {% else %}
+                    <span class="avatar xl" style="margin:0 auto;">{{ user.initials }}</span>
+                {% endif %}
+                <form method="post" action="{% url 'accounts:upload_avatar' %}" enctype="multipart/form-data" style="margin-top:10px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{% url 'accounts:settings_home' %}">
+                    <label class="btn btn-light btn-sm" style="cursor:pointer;">
+                        📷 {% trans "Rasm yuklash" %}
+                        <input type="file" name="avatar" accept="image/*" style="display:none;"
+                               onchange="this.form.submit()">
+                    </label>
+                </form>
+                <h2 style="margin-top:12px;font-size:19px;">{{ user.display_name }}</h2>
+                <p class="text-muted" style="margin:2px 0;">@{{ user.username }}</p>
+                <span class="badge danger" style="margin-top:6px;">{{ user.get_role_display }}</span>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);text-align:left;font-size:13.5px;">
+                    <p style="margin:6px 0;"><b>{% trans "Telefon" %}:</b> {{ user.phone|default:"—" }}</p>
+                    <p style="margin:6px 0;"><b>{% trans "Telegram ID" %}:</b> {{ user.telegram_chat_id|default:"—" }}</p>
+                    <p style="margin:6px 0;"><b>{% trans "Ro'yxatdan o'tgan" %}:</b> {{ user.created_at|date:"d.m.Y" }}</p>
+                </div>
+                <a href="{% url 'accounts:profile' %}" class="btn btn-light btn-sm" style="margin-top:14px;">✏️ {% trans "Profilni tahrirlash" %}</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__head"><h3>🔒 {% trans "Parolni o'zgartirish" %}</h3></div>
+            <div class="card__body">
+                <form method="post" action="{% url 'accounts:settings_password' %}">
+                    {% csrf_token %}
+                    {% if password_form.non_field_errors %}<div class="alert danger">{{ password_form.non_field_errors }}</div>{% endif %}
+                    <div style="display:flex;flex-direction:column;gap:14px;">
+                        <div>
+                            <label class="form-label">{% trans "Joriy parol" %}</label>
+                            {{ password_form.current_password }}
+                            {% for e in password_form.current_password.errors %}<div class="field-err">{{ e }}</div>{% endfor %}
+                        </div>
+                        <div>
+                            <label class="form-label">{% trans "Yangi parol" %}</label>
+                            {{ password_form.new_password1 }}
+                            {% for e in password_form.new_password1.errors %}<div class="field-err">{{ e }}</div>{% endfor %}
+                        </div>
+                        <div>
+                            <label class="form-label">{% trans "Yangi parolni takrorlang" %}</label>
+                            {{ password_form.new_password2 }}
+                            {% for e in password_form.new_password2.errors %}<div class="field-err">{{ e }}</div>{% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary">💾 {% trans "Parolni saqlash" %}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ MARKAZ ============ -->
+<section class="set-panel" data-panel="center">
+    <div class="card">
+        <div class="card__head"><h3>🏫 {% trans "O'quv markazi ma'lumotlari" %}</h3>
+            <span class="right text-muted" style="font-size:12px;">{% trans "Sayt, bot va cheklarda ishlatiladi" %}</span></div>
+        <div class="card__body">
+            <form method="post" action="{% url 'accounts:settings_center' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div><label class="form-label">{% trans "Markaz nomi" %}</label>{{ center_form.name }}
+                        {% for e in center_form.name.errors %}<div class="field-err">{{ e }}</div>{% endfor %}</div>
+                    <div><label class="form-label">{% trans "Shior" %}</label>{{ center_form.tagline }}</div>
+                    <div><label class="form-label">{% trans "Telefon" %}</label>{{ center_form.phone }}</div>
+                    <div><label class="form-label">{% trans "Email" %}</label>{{ center_form.email }}</div>
+                    <div><label class="form-label">{% trans "Manzil" %}</label>{{ center_form.address }}</div>
+                    <div><label class="form-label">{% trans "Ish vaqti" %}</label>{{ center_form.working_hours }}</div>
+                    <div><label class="form-label">{% trans "Telegram bot (@siz)" %}</label>{{ center_form.telegram_bot_username }}</div>
+                    <div><label class="form-label">{% trans "Logo" %}</label>{{ center_form.logo }}</div>
+                    <div style="grid-column:1 / -1;"><label class="form-label">{% trans "Markaz haqida" %}</label>{{ center_form.about }}</div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary">💾 {% trans "Saqlash" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ============ O'QUVCHILAR ============ -->
+<section class="set-panel" data-panel="students">
+    <div class="card">
+        <div class="card__head"><h3>🎓 {% trans "O'quvchilar" %} — {% trans "login va parollar" %}</h3>
+            <a href="{% url 'accounts:user_list' %}?role=student" class="right btn btn-soft btn-sm">{% trans "To'liq ro'yxat" %} →</a></div>
+        <div class="card__body" style="padding:0;">{% include 'accounts/_user_table.html' with rows=students %}</div>
+    </div>
+</section>
+
+<!-- ============ O'QITUVCHILAR ============ -->
+<section class="set-panel" data-panel="teachers">
+    <div class="card">
+        <div class="card__head"><h3>👨‍🏫 {% trans "O'qituvchilar" %} — {% trans "login va parollar" %}</h3>
+            <a href="{% url 'accounts:user_list' %}?role=teacher" class="right btn btn-soft btn-sm">{% trans "To'liq ro'yxat" %} →</a></div>
+        <div class="card__body" style="padding:0;">{% include 'accounts/_user_table.html' with rows=teachers %}</div>
+    </div>
+</section>
+
+<!-- ============ DIREKTOR & ADMIN ============ -->
+<section class="set-panel" data-panel="staff">
+    <div class="card" style="margin-bottom:18px;">
+        <div class="card__head"><h3>🧭 {% trans "Direktorlar" %}</h3></div>
+        <div class="card__body" style="padding:0;">{% include 'accounts/_user_table.html' with rows=directors %}</div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>🛡️ {% trans "Administratorlar" %}</h3></div>
+        <div class="card__body" style="padding:0;">{% include 'accounts/_user_table.html' with rows=admins %}</div>
+    </div>
+</section>
+
+<form id="pwForm" method="post" style="display:none;">{% csrf_token %}<input type="hidden" name="password" id="pwInput"></form>
+<form id="delForm" method="post" style="display:none;">{% csrf_token %}</form>
+
+<style>
+    .set-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+    .set-panel{display:none;}
+    .set-panel.active{display:block;animation:fadeIn .25s ease;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+    .field-err{color:var(--danger,#dc2626);font-size:12px;font-weight:600;margin-top:4px;}
+    .pw-cell{display:inline-flex;align-items:center;gap:8px;}
+    .pw-dots{letter-spacing:2px;color:var(--muted,#8a91a4);}
+    .cell__name{font-weight:700;}
+    .cell__meta{font-size:12px;color:var(--muted,#8a91a4);}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // ---- Tablar ----
+    (function(){
+        var tabs = document.querySelectorAll('#setTabs .chip');
+        var panels = document.querySelectorAll('.set-panel');
+        function activate(name){
+            tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
+            panels.forEach(function(p){ p.classList.toggle('active', p.dataset.panel===name); });
+            try { history.replaceState(null,'', '?tab='+name); } catch(e){}
+        }
+        tabs.forEach(function(t){ t.addEventListener('click', function(){ activate(t.dataset.tab); }); });
+        var initial = "{{ active_tab|escapejs }}" || 'account';
+        if(![].some.call(tabs, function(t){return t.dataset.tab===initial;})) initial='account';
+        activate(initial);
+    })();
+    // ---- Parolni ko'rsatish ----
+    document.querySelectorAll('.pw-eye').forEach(function(b){
+        b.addEventListener('click', function(){
+            var cell=b.closest('.pw-cell');
+            var dots=cell.querySelector('.pw-dots'), real=cell.querySelector('.pw-real');
+            var show=real.style.display==='none';
+            real.style.display=show?'inline':'none';
+            dots.style.display=show?'none':'inline';
+            b.textContent=show?'🙈':'👁';
+        });
+    });
+    // ---- Parol almashtirish ----
+    document.querySelectorAll('.setpw').forEach(function(b){
+        b.addEventListener('click', function(){
+            var p=prompt("Yangi parol kiriting (bo'sh = tasodifiy):","");
+            if(p===null) return;
+            var f=document.getElementById('pwForm');
+            f.action=b.dataset.url; document.getElementById('pwInput').value=p; f.submit();
+        });
+    });
+    // ---- O'chirish ----
+    document.querySelectorAll('.del').forEach(function(b){
+        b.addEventListener('click', function(){
+            if(!confirm('"'+b.dataset.name+'" foydalanuvchini o\'chirasizmi?')) return;
+            var f=document.getElementById('delForm'); f.action=b.dataset.url; f.submit();
+        });
+    });
+</script>
+{% endblock %}

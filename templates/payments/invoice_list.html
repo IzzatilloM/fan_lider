@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Hisob-fakturalar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "Hisob-fakturalar" %}</h1><div class="sub">{% trans "To'lanmagan jami" %}: <b class="text-danger">{{ unpaid_total|floatformat:0|intcomma }}</b> {% trans "so'm" %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'payments:invoice_create' %}" class="btn btn-light">➕ {% trans "Yangi faktura" %}</a>
+        <a href="{% url 'payments:invoice_generate' %}" class="btn btn-primary">🧾 {% trans "Oylik generatsiya" %}</a>
+    </div>
+</div>
+
+<div class="tabs">
+    <a href="{% url 'payments:dashboard' %}">{% trans "Umumiy" %}</a>
+    <a href="{% url 'payments:payment_list' %}">{% trans "To'lovlar" %}</a>
+    <a href="{% url 'payments:invoice_list' %}" class="active">{% trans "Hisob-fakturalar" %}</a>
+    <a href="{% url 'payments:debtors' %}">{% trans "Qarzdorlar" %}</a>
+</div>
+
+<div class="chips" style="margin-bottom:18px;">
+    <a href="?" class="chip {% if not status %}active{% endif %}">{% trans "Barchasi" %}</a>
+    {% for v,l in status_choices %}<a href="?status={{ v }}" class="chip {% if status == v %}active{% endif %}">{{ l }}</a>{% endfor %}
+    <a href="?status=overdue" class="chip {% if status == 'overdue' %}active{% endif %}">⏰ {% trans "Muddati o'tgan" %}</a>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Guruh" %}</th><th>{% trans "Davr" %}</th><th class="num">{% trans "Summa" %}</th><th class="num">{% trans "To'langan" %}</th><th>{% trans "Muddat" %}</th><th>{% trans "Holat" %}</th><th></th></tr></thead>
+            <tbody>
+                {% for inv in invoices %}
+                <tr>
+                    <td><a href="{% url 'students:detail' inv.student.slug %}" class="cell__name">{{ inv.student.full_name }}</a></td>
+                    <td>{{ inv.course.name|default:"—" }}</td>
+                    <td>{{ inv.month_name }} {{ inv.year }}</td>
+                    <td class="num money">{{ inv.amount|floatformat:0|intcomma }}</td>
+                    <td class="num money">{{ inv.paid_amount|floatformat:0|intcomma }}</td>
+                    <td>{{ inv.due_date|date:"d.m.Y"|default:"—" }}</td>
+                    <td><span class="badge {% if inv.status == 'paid' %}success{% elif inv.status == 'partial' %}warning{% elif inv.status == 'cancelled' %}muted{% else %}danger{% endif %}">{{ inv.get_status_display }}</span></td>
+                    <td class="num">
+                        {% if inv.status != 'paid' %}<a href="{% url 'payments:payment_create' %}?invoice={{ inv.pk }}" class="btn btn-soft btn-sm">{% trans "To'lash" %}</a>{% endif %}
+                        <a href="{% url 'payments:invoice_delete' inv.pk %}" class="btn btn-ghost btn-sm">🗑️</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="8"><div class="empty"><div class="ico">🧾</div>{% trans "Hisob-faktura yo'q." %} <a href="{% url 'payments:invoice_generate' %}" style="color:var(--brand);">{% trans "Oylik generatsiya qiling" %}</a>.</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

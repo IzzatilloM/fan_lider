@@ -1,0 +1,66 @@
+# Render.com Blueprint — Fan Lider CRM
+# Bu fayl web servis va PostgreSQL bazasini avtomatik yaratib, o'zaro ulaydi.
+# Render panelida: Blueprints -> New Blueprint Instance -> shu repo.
+
+databases:
+  - name: fanlider-db
+    plan: free
+    region: frankfurt
+    databaseName: fanlider
+    user: fanlider
+
+services:
+  - type: web
+    name: fanlider
+    runtime: python
+    plan: free
+    region: frankfurt
+    branch: main
+    buildCommand: "bash ./build.sh"
+    startCommand: "gunicorn core.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+      - key: DEBUG
+        value: "False"
+      # SECRET_KEY ni Render o'zi tasodifiy yaratadi
+      - key: SECRET_KEY
+        generateValue: true
+
+      # --- PostgreSQL (yuqoridagi bazadan avtomatik ulanadi) ---
+      - key: DB_ENGINE
+        value: postgres
+      - key: DB_NAME
+        fromDatabase:
+          name: fanlider-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: fanlider-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: fanlider-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: fanlider-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: fanlider-db
+          property: port
+
+      # --- Quyidagilarni Render panelida QO'LDA to'ldirasiz (maxfiy) ---
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_BOT_USERNAME
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        value: fanlider-webhook-2026
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false

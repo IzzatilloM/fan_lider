@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{{ instructor.full_name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'instructors:list' %}" class="text-muted" style="font-size:13px;">← {% trans "O'qituvchilar" %}</a>
+        <h1>{{ instructor.full_name }}</h1>
+        <div class="sub">{{ instructor.specialty|default:_("O'qituvchi") }}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'dashboard:teacher_preview' instructor.pk %}" class="btn btn-light">👁️ {% trans "Panelini ko'rish" %}</a>
+        <a href="{% url 'instructors:edit' instructor.pk %}" class="btn btn-primary">✏️ {% trans "Tahrir" %}</a>
+        <a href="{% url 'instructors:delete' instructor.pk %}" class="btn btn-ghost">🗑️</a>
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__body" style="text-align:center;">
+            {% if instructor.photo_url %}<img class="avatar xl" src="{{ instructor.photo_url }}" style="margin:0 auto;">{% else %}<span class="avatar xl" style="margin:0 auto;">{{ instructor.full_name|slice:":2"|upper }}</span>{% endif %}
+            <h2 style="margin-top:12px;">{{ instructor.full_name }}</h2>
+            <p class="text-muted">{{ instructor.email|default:"" }}</p>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);text-align:left;font-size:13.5px;line-height:2;">
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Telefon" %}</span><b>{{ instructor.phone|default:"—" }}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Tajriba" %}</span><b>{% blocktrans with n=instructor.experience_years %}{{ n }} yil{% endblocktrans %}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Oylik" %}</span><b>{{ instructor.salary|floatformat:0|intcomma }} {% trans "so'm" %}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Holat" %}</span><b>{% if instructor.is_active %}{% trans "Faol" %}{% else %}{% trans "Nofaol" %}{% endif %}</b></div>
+            </div>
+            {% if instructor.bio %}<p style="margin-top:14px;text-align:left;font-size:13.5px;color:var(--ink-soft);">{{ instructor.bio }}</p>{% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>{% trans "Yuritayotgan guruhlar" %}</h3></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for g in groups %}
+                <a href="{% url 'courses:detail' g.slug %}" class="li">
+                    <span class="stat__ico" style="background:{{ g.subject.color }}22;color:{{ g.subject.color }};width:40px;height:40px;">{{ g.subject.icon }}</span>
+                    <div class="li__main"><div class="li__title">{{ g.name }}</div>
+                        <div class="li__sub">{% blocktrans with n=g.active_students_count %}{{ n }} o'quvchi{% endblocktrans %} · {{ g.get_status_display }}</div></div>
+                </a>
+                {% empty %}<div class="empty"><div class="ico">📚</div>{% trans "Guruh biriktirilmagan" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

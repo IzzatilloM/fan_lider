@@ -1,0 +1,205 @@
+/* ========================================================================== *
+ *  Fan Lider CRM — kirish / ro'yxatdan o'tish oynalari (auth)
+ *  Ixcham, zamonaviy va yagona uslub. auth_base.html shu faylga tayanadi.
+ * ========================================================================== */
+:root{
+    --brand:#D4640F; --brand-600:#bd5510; --brand-700:#9c4509; --brand-800:#7d3707;
+    --brand-soft:#fdf1ea; --ink:#161b26; --muted:#7a8294; --line:#e8ebf1;
+    --ok:#16a34a; --warn:#d97706; --danger:#dc2626;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+    font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink); margin:0; min-height:100vh; overflow-x:hidden; overflow-y:auto;
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(16px,4vh,36px) 20px;
+    background:#0e1420; position:relative;
+}
+
+/* ---- Animatsion fon ---- */
+.bg-fx{position:fixed;inset:0;z-index:0;overflow:hidden;
+    background:
+        radial-gradient(820px 640px at 12% 8%, rgba(212,100,15,.20), transparent 60%),
+        radial-gradient(720px 640px at 92% 92%, rgba(212,100,15,.14), transparent 55%),
+        linear-gradient(135deg,#0e1420 0%,#161e2e 55%,#0e1420 100%);
+}
+.blob{position:absolute;border-radius:50%;filter:blur(42px);opacity:.45;
+    background:radial-gradient(circle at 30% 30%, var(--brand), transparent 70%);
+    animation:float 18s ease-in-out infinite;}
+.blob.b1{width:360px;height:360px;top:-110px;left:-90px;animation-delay:0s;}
+.blob.b2{width:300px;height:300px;bottom:-110px;right:-70px;animation-delay:-6s;opacity:.35;}
+.blob.b3{width:200px;height:200px;top:50%;left:62%;animation-delay:-11s;opacity:.28;}
+@keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(36px,-26px) scale(1.07);}
+    66%{transform:translate(-26px,22px) scale(.96);}
+}
+.grid-fx{position:absolute;inset:0;opacity:.22;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:44px 44px;
+    -webkit-mask-image:radial-gradient(circle at 50% 50%,#000,transparent 72%);
+    mask-image:radial-gradient(circle at 50% 50%,#000,transparent 72%);}
+
+/* ---- Asosiy karta (ixcham) ---- */
+.auth-shell{
+    position:relative; z-index:2; width:100%; max-width:860px;
+    max-height:calc(100vh - 32px);                 /* hech qachon ekran balandligidan oshmaydi */
+    background:#fff; border:1px solid rgba(255,255,255,.5);
+    border-radius:20px; overflow:hidden;
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,480px);  /* chap brend + o'ng forma (≤480px) */
+    box-shadow:0 24px 64px rgba(0,0,0,.40), 0 3px 10px rgba(0,0,0,.16);
+    animation:rise .55s cubic-bezier(.2,.8,.2,1) both;
+}
+/* Ro'yxatdan o'tish — maydon ko'p, brend paneli sal kengroq */
+.auth-shell--wide{max-width:920px;}
+@keyframes rise{from{opacity:0;transform:translateY(22px) scale(.99);}to{opacity:1;transform:none;}}
+
+/* ---- Brend paneli ---- */
+.auth-brand{
+    position:relative; overflow:hidden; color:#fff; padding:30px 28px;
+    background:
+        radial-gradient(420px 420px at 84% 10%, rgba(255,255,255,.16), transparent 62%),
+        linear-gradient(155deg, var(--brand) 0%, var(--brand-700) 55%, var(--brand-800) 100%);
+    display:flex; flex-direction:column;
+}
+.auth-brand::after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;
+    background:rgba(255,255,255,.07);bottom:-130px;right:-120px;}
+.auth-brand::before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;
+    background:rgba(255,255,255,.06);top:-80px;left:-60px;}
+.brand-logo{
+    width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.18);
+    display:grid;place-items:center;font-weight:900;font-size:16px;overflow:hidden;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.28);position:relative;
+    box-shadow:0 8px 22px rgba(0,0,0,.16);
+}
+.brand-logo img{width:100%;height:100%;object-fit:cover;border-radius:14px;}
+.auth-brand h1{font-size:20px;font-weight:900;line-height:1.18;margin:14px 0 7px;
+    letter-spacing:-.4px;position:relative;}
+.auth-brand .lead{font-size:12px;opacity:.93;line-height:1.55;max-width:280px;position:relative;}
+.feat{position:relative;display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+.feat .row-i{display:flex;gap:10px;align-items:center;font-weight:600;font-size:12px;
+    opacity:0;transform:translateX(-12px);animation:slideIn .5s ease forwards;}
+.feat .row-i:nth-child(1){animation-delay:.22s;}
+.feat .row-i:nth-child(2){animation-delay:.34s;}
+.feat .row-i:nth-child(3){animation-delay:.46s;}
+.feat .row-i:nth-child(4){animation-delay:.58s;}
+@keyframes slideIn{to{opacity:1;transform:none;}}
+.feat .ic{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.16);
+    display:grid;place-items:center;font-size:13px;flex:none;border:1px solid rgba(255,255,255,.22);
+    transition:transform .2s, background .2s;}
+.feat .row-i:hover .ic{transform:scale(1.12) rotate(-6deg);background:rgba(255,255,255,.28);}
+.auth-brand .copyr{font-size:11px;opacity:.75;position:relative;margin-top:auto;padding-top:14px;}
+
+/* ---- Forma paneli ---- */
+.auth-form{padding:28px 32px;display:flex;flex-direction:column;
+    justify-content:center;justify-content:safe center;  /* uzun forma tepasi kesilmaydi */
+    min-height:0;max-height:calc(100vh - 32px);overflow-y:auto;}
+.auth-badge{
+    display:inline-flex;align-self:flex-start;gap:7px;align-items:center;
+    background:var(--brand-soft);color:var(--brand-700);font-weight:700;font-size:11.5px;
+    padding:5px 11px;border-radius:30px;margin-bottom:11px;border:1px solid #f6e0d2;
+}
+.auth-form h2{font-size:19px;font-weight:800;letter-spacing:-.4px;margin:0;}
+.auth-form .sub{color:var(--muted);margin:5px 0 14px;font-size:12px;line-height:1.5;}
+
+.form-label{font-weight:700;font-size:12px;color:#3a4254;margin-bottom:5px;}
+.form-control,.form-select{
+    border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;
+    transition:border .18s, box-shadow .18s;
+}
+.form-control:focus,.form-select:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-soft);outline:none;}
+.input-icon{position:relative;}
+.input-icon > .bi{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);
+    font-size:15px;pointer-events:none;transition:color .18s;}
+.input-icon:focus-within > .bi{color:var(--brand);}
+.input-icon .form-control{padding-left:42px;}
+.input-icon:has(.pw-toggle) .form-control{padding-right:44px;}
+.pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:none;
+    color:var(--muted);cursor:pointer;padding:6px;font-size:15px;line-height:1;display:flex;align-items:center;}
+.pw-toggle .bi{position:static;}
+.pw-toggle:hover{color:var(--brand-700);}
+
+.btn-brand{
+    background:linear-gradient(135deg,var(--brand),var(--brand-700));border:none;color:#fff;
+    font-weight:700;font-size:14px;padding:10px;border-radius:10px;width:100%;cursor:pointer;
+    box-shadow:0 10px 22px rgba(212,100,15,.28);transition:all .18s;position:relative;overflow:hidden;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-brand::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);transition:left .6s;}
+.btn-brand:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(212,100,15,.40);}
+.btn-brand:hover::after{left:130%;}
+.btn-brand:active{transform:translateY(0);}
+
+.auth-foot{margin-top:15px;font-size:12px;color:var(--muted);text-align:center;}
+.auth-foot a{color:var(--brand-700);font-weight:700;text-decoration:none;}
+.auth-foot a:hover{text-decoration:underline;}
+.link-muted{color:var(--muted);font-size:12.5px;text-decoration:none;}
+.link-muted:hover{color:var(--brand-700);}
+
+/* ---- Kanal tanlash (Telegram / Gmail) ---- */
+.channel-seg{display:grid;grid-template-columns:1fr 1fr;gap:5px;background:#f1f3f8;
+    border:1px solid var(--line);border-radius:12px;padding:5px;margin-bottom:13px;}
+.channel-radio{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
+.channel-seg label{display:flex;align-items:center;justify-content:center;gap:7px;
+    padding:8px 8px;border-radius:9px;font-weight:700;font-size:12.5px;color:var(--muted);
+    cursor:pointer;transition:all .18s;margin:0;}
+.channel-seg label .bi{font-size:15px;}
+.channel-radio:checked + label{background:#fff;color:var(--brand-700);
+    box-shadow:0 3px 10px rgba(0,0,0,.08);}
+.channel-radio:focus-visible + label{outline:2px solid var(--brand);outline-offset:1px;}
+
+/* ---- Rol tanlash kartalari (ixcham) ---- */
+.role-radio{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px;}
+.role-card{border:1.5px solid var(--line);border-radius:13px;padding:11px 12px;cursor:pointer;
+    display:flex;gap:10px;align-items:center;transition:all .18s;background:#fff;}
+.role-card:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 8px 18px rgba(212,100,15,.12);}
+.role-card .rc-ic{width:36px;height:36px;border-radius:10px;background:var(--brand-soft);
+    color:var(--brand-700);display:grid;place-items:center;font-size:17px;flex:none;}
+.role-card .rc-t{font-weight:800;font-size:13px;}
+.role-card .rc-s{font-size:10.5px;color:var(--muted);line-height:1.3;}
+.role-radio:checked + .role-card{border-color:var(--brand);background:var(--brand-soft);
+    box-shadow:0 0 0 3px var(--brand-soft);}
+.role-radio:checked + .role-card .rc-ic{background:var(--brand);color:#fff;}
+
+/* ---- Parol kuchi ---- */
+.pw-meter{height:4px;border-radius:6px;background:#edf0f5;margin-top:6px;overflow:hidden;}
+.pw-meter > span{display:block;height:100%;width:0;border-radius:6px;transition:width .25s,background .25s;}
+.pw-hint{font-size:11px;color:var(--muted);margin-top:4px;}
+
+/* ---- Tasdiqlash kodi maydoni ---- */
+.code-input{
+    text-align:center;letter-spacing:.55em;font-size:28px;font-weight:800;
+    padding:14px 12px;font-variant-numeric:tabular-nums;
+}
+
+.errorlist{list-style:none;margin:5px 0 0;padding:0;color:#d63b34;font-size:12px;font-weight:600;}
+.invalid-feedback.d-block{font-size:12px;font-weight:600;}
+.alert{animation:rise .4s ease both;}
+
+/* ---- Telegram ko'rsatmasi ---- */
+.tg-hint{display:flex;gap:9px;align-items:flex-start;background:#eaf3fb;border:1px solid #cfe4f6;
+    color:#1d5d8c;border-radius:11px;padding:9px 11px;font-size:11.5px;line-height:1.45;margin-bottom:8px;}
+.tg-hint .bi{font-size:15px;color:#229ed9;flex:none;margin-top:1px;}
+.tg-hint a{color:#1565a8;font-weight:800;text-decoration:none;}
+.tg-hint a:hover{text-decoration:underline;}
+
+/* ---- Til almashtirgich (auth) ---- */
+.auth-lang{position:absolute;top:14px;right:14px;z-index:5;display:flex;align-items:center;gap:5px;
+    background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:30px;padding:4px 11px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);}
+.auth-lang .bi{color:var(--brand-700);font-size:13px;}
+.auth-lang select{border:none;background:transparent;font-weight:800;font-size:12px;color:var(--ink);
+    cursor:pointer;outline:none;letter-spacing:.4px;}
+
+/* ---- Mobil ---- */
+@media (max-width:900px){
+    .auth-shell,.auth-shell--wide{grid-template-columns:1fr;max-width:460px;}
+    .auth-brand{display:none;}
+    .auth-form{padding:30px 24px;}
+    .auth-lang{top:12px;right:12px;}
+}

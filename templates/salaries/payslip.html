@@ -1,0 +1,99 @@
+{% load humanize i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Hisob-varaqa" %} — {{ record.employee.full_name }} — {{ record.period.label }}</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;}
+        body{background:#eef0f5;color:#1d2230;padding:30px;}
+        .sheet{max-width:720px;margin:0 auto;background:#fff;border-radius:16px;overflow:hidden;
+            box-shadow:0 20px 60px rgba(0,0,0,.12);}
+        .head{background:linear-gradient(150deg,#D4640F,#9c4509);color:#fff;padding:30px 36px;
+            display:flex;justify-content:space-between;align-items:center;}
+        .head h1{font-size:22px;}
+        .head .sub{opacity:.9;font-size:13px;margin-top:4px;}
+        .head .total{text-align:right;}
+        .head .total .lbl{font-size:12px;opacity:.85;}
+        .head .total .val{font-size:26px;font-weight:800;}
+        .body{padding:30px 36px;}
+        .row{display:flex;justify-content:space-between;gap:12px;margin-bottom:18px;}
+        .meta{font-size:13px;}
+        .meta b{display:block;color:#8a91a4;font-weight:600;font-size:11px;text-transform:uppercase;}
+        table{width:100%;border-collapse:collapse;margin-top:10px;}
+        td{padding:11px 0;border-bottom:1px solid #eef0f5;font-size:14px;}
+        td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;}
+        .neg{color:#d63b34;}
+        .grand{display:flex;justify-content:space-between;margin-top:18px;padding-top:16px;
+            border-top:2px solid #1d2230;font-size:18px;font-weight:800;}
+        .grand .val{color:#D4640F;}
+        .foot{padding:20px 36px;border-top:1px solid #eef0f5;font-size:12px;color:#8a91a4;
+            display:flex;justify-content:space-between;}
+        .actions{max-width:720px;margin:0 auto 18px;display:flex;gap:10px;justify-content:flex-end;}
+        .btn{padding:9px 16px;border-radius:9px;border:none;font-weight:700;cursor:pointer;
+            text-decoration:none;font-size:13px;}
+        .btn-print{background:#D4640F;color:#fff;}
+        .btn-back{background:#fff;color:#1d2230;border:1px solid #e9ecf2;}
+        @media print{body{background:#fff;padding:0;}.actions{display:none;}.sheet{box-shadow:none;}}
+    </style>
+</head>
+<body>
+<div class="actions">
+    <a href="{% url 'salaries:record_detail' record.pk %}" class="btn btn-back">← {% trans "Orqaga" %}</a>
+    <button class="btn btn-print" onclick="window.print()">🖨️ {% trans "Chop etish" %}</button>
+</div>
+
+<div class="sheet">
+    <div class="head">
+        <div>
+            <h1>{{ BRAND_NAME }} CRM</h1>
+            <div class="sub">{% trans "Oylik hisob-varaqasi" %} · {{ record.period.label }}</div>
+        </div>
+        <div class="total">
+            <div class="lbl">{% trans "Jami to'lov" %}</div>
+            <div class="val">{{ record.total_amount|floatformat:0|intcomma }} {% trans "so'm" %}</div>
+        </div>
+    </div>
+
+    <div class="body">
+        <div class="row">
+            <div class="meta"><b>{% trans "Xodim" %}</b>{{ record.employee.full_name }}</div>
+            <div class="meta"><b>{% trans "Lavozim" %}</b>{{ record.employee.get_position_display }}</div>
+            <div class="meta"><b>{% trans "Davr" %}</b>{{ record.period.label }}</div>
+            <div class="meta"><b>{% trans "KPI" %}</b>{{ record.kpi_score|floatformat:0 }}/100</div>
+        </div>
+
+        <table>
+            <tbody>
+            {% for line in record.breakdown.lines %}
+                {% if line.amount %}
+                <tr>
+                    <td>{{ line.label }}</td>
+                    <td class="num {% if line.amount < 0 %}neg{% endif %}">{{ line.amount|floatformat:0|intcomma }} {% trans "so'm" %}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="grand">
+            <span>{% trans "JAMI" %}</span>
+            <span class="val">{{ record.total_amount|floatformat:0|intcomma }} {% trans "so'm" %}</span>
+        </div>
+
+        {% if record.ai_analysis %}
+        <div style="margin-top:22px;padding:16px;background:#fdf1ea;border-radius:12px;font-size:13px;line-height:1.6;">
+            <b>🤖 {% trans "AI tahlili" %}:</b> {{ record.ai_analysis }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="foot">
+        <span>{% if record.employee.card_number %}{% trans "Karta" %}: {{ record.employee.card_number }}{% endif %}</span>
+        <span>{% trans "Holat" %}: {{ record.get_status_display }} · {{ record.computed_at|date:"d.m.Y H:i" }}</span>
+    </div>
+</div>
+</body>
+</html>

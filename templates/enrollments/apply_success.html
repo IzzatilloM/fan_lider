@@ -1,0 +1,24 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Ariza qabul qilindi" %} — {{ BRAND_NAME }}</title>
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+<body style="background:#f5f6f9;display:grid;place-items:center;min-height:100vh;padding:20px;">
+<div class="card" style="max-width:480px;text-align:center;">
+    <div class="card__body" style="padding:46px 36px;">
+        <div style="width:88px;height:88px;border-radius:50%;background:var(--success-soft);display:grid;place-items:center;margin:0 auto 20px;font-size:42px;">✅</div>
+        <h1 style="font-size:24px;">{% trans "Arizangiz qabul qilindi!" %}</h1>
+        <p style="color:var(--muted);margin:12px 0 26px;line-height:1.7;">{% trans "Rahmat! Tez orada administratorlarimiz siz bilan ko'rsatilgan telefon raqami orqali bog'lanadi." %}</p>
+        <a href="{% url 'enrollments:apply' %}" class="btn btn-primary">{% trans "Yana ariza qoldirish" %}</a>
+    </div>
+</div>
+</body>
+</html>

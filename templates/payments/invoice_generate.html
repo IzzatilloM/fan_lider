@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Oylik hisob-fakturalar" %}{% endblock %}
+{% block content %}
+<div style="max-width:560px;margin:0 auto;">
+    <div class="page-head"><div><h1>{% trans "Oylik hisob-fakturalar" %}</h1>
+        <div class="sub">{% trans "Tanlangan oy uchun barcha faol yozilishlarga avtomatik hisob-faktura yaratiladi." %}</div></div></div>
+    <div class="card">
+        <div class="card__body">
+            <div class="alert info" style="margin-bottom:18px;">ℹ️ {% trans "Har bir faol o'quvchi uchun guruh oylik to'lovi (chegirma hisobga olingan holda) bo'yicha faktura yaratiladi. Takroriy fakturalar yaratilmaydi." %}</div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-grid">{% include 'partials/form_fields.html' %}</div>
+                <div class="form-actions">
+                    <button class="btn btn-primary">🧾 {% trans "Fakturalarni yaratish" %}</button>
+                    <a href="{% url 'payments:invoice_list' %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

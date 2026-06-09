@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Parol tiklash murojaatlari" %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>🔑 {% trans "Parol tiklash murojaatlari" %}</h1>
+        <div class="sub">{% trans "O'qituvchi va o'quvchilar Telegram bot orqali yuborgan murojaatlar" %}</div>
+    </div>
+</div>
+
+<div class="card" style="margin-bottom:18px;">
+    <div class="card__head"><h3>⏳ {% trans "Yangi murojaatlar" %}
+        {% if pending_count %}<span class="badge red">{{ pending_count }}</span>{% endif %}</h3></div>
+    <div class="card__body">
+        {% for r in pending %}
+        <form method="post" action="{% url 'accounts:reset_request_resolve' r.pk %}" class="reset-row">
+            {% csrf_token %}
+            <div class="rr-info">
+                <span class="avatar">{% if r.role == 'teacher' %}👨‍🏫{% else %}🎓{% endif %}</span>
+                <div>
+                    <div class="rr-title">
+                        {{ r.full_name|default:r.identifier }}
+                        <span class="badge {% if r.role == 'teacher' %}brand{% else %}amber{% endif %}">{{ r.get_role_display }}</span>
+                    </div>
+                    <div class="rr-sub">
+                        {% trans "Login/tel" %}: <code>{{ r.identifier }}</code> ·
+                        {% if r.matched_user %}
+                            <span style="color:#16a34a;">✓ {% trans "Topildi" %}: <b>{{ r.matched_user.username }}</b></span>
+                        {% else %}
+                            <span style="color:#dc2626;">✗ {% trans "Avto-topilmadi — login kiriting" %}</span>
+                        {% endif %}
+                        · {{ r.created_at|date:"d.m.Y H:i" }}
+                    </div>
+                </div>
+            </div>
+            <div class="rr-actions">
+                {% if not r.matched_user %}
+                <input type="text" name="username" class="rr-input" placeholder="username" style="width:130px;">
+                {% endif %}
+                <div class="rr-pw">
+                    <input type="text" name="new_password" class="rr-input pw-field" placeholder="{% trans 'Yangi parol' %}" required minlength="6">
+                    <button type="button" class="btn btn-soft btn-sm gen-pw" title="{% trans 'Tasodifiy parol' %}">🎲</button>
+                </div>
+                <button type="submit" name="action" value="resolve" class="btn btn-primary btn-sm">✅ {% trans "Saqlash + yuborish" %}</button>
+                <button type="submit" name="action" value="reject" class="btn btn-ghost btn-sm"
+                        onclick="return confirm('{% trans "Murojaatni rad etasizmi?" %}')">✖</button>
+            </div>
+        </form>
+        {% empty %}
+        <div class="empty"><div class="ico">📭</div>{% trans "Yangi murojaat yo'q" %}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card__head"><h3>📜 {% trans "Tarix" %}</h3></div>
+    <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+        <div class="list-divided">
+            {% for r in history %}
+            <div class="li">
+                <span class="avatar">{% if r.role == 'teacher' %}👨‍🏫{% else %}🎓{% endif %}</span>
+                <div class="li__main">
+                    <div class="li__title">{{ r.full_name|default:r.identifier }}
+                        <code style="font-size:12px;">{{ r.identifier }}</code></div>
+                    <div class="li__sub">
+                        {{ r.resolved_at|date:"d.m.Y H:i" }}
+                        {% if r.resolved_by %}· {{ r.resolved_by.display_name }}{% endif %}
+                    </div>
+                </div>
+                <div class="li__right">
+                    <span class="badge {% if r.status == 'resolved' %}green{% else %}red{% endif %}">{{ r.get_status_display }}</span>
+                </div>
+            </div>
+            {% empty %}<div class="empty"><div class="ico">🕘</div>{% trans "Tarix bo'sh" %}</div>{% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .reset-row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+        padding:14px 4px;border-bottom:1px solid var(--line,#e9ecf2);flex-wrap:wrap;}
+    .reset-row:last-child{border-bottom:none;}
+    .rr-info{display:flex;gap:12px;align-items:center;min-width:260px;}
+    .rr-title{font-weight:700;font-size:14.5px;display:flex;gap:8px;align-items:center;}
+    .rr-sub{font-size:12.5px;color:var(--muted,#8a91a4);margin-top:3px;}
+    .rr-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .rr-pw{display:flex;gap:4px;align-items:center;}
+    .rr-input{border:1.5px solid var(--line,#e9ecf2);border-radius:10px;padding:8px 11px;font-size:13.5px;}
+    .rr-input:focus{outline:none;border-color:var(--brand,#D4640F);}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function randPw(){
+        const c='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+        let s=''; for(let i=0;i<8;i++) s+=c[Math.floor(Math.random()*c.length)];
+        return s;
+    }
+    document.querySelectorAll('.gen-pw').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            var f = btn.parentElement.querySelector('.pw-field');
+            f.value = randPw(); f.type='text';
+        });
+    });
+</script>
+{% endblock %}

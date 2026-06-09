@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Yangi o'qituvchi" %}{% endblock %}
+{% block content %}
+<div style="max-width:860px;margin:0 auto;">
+    <div class="page-head">
+        <div>
+            <a href="{% url 'instructors:list' %}" class="text-muted" style="font-size:13px;">← {% trans "O'qituvchilar" %}</a>
+            <h1>{% trans "Yangi o'qituvchi qo'shish" %}</h1>
+            <div class="sub">{% blocktrans %}Ma'lumotlarni to'ldiring — tizim avtomatik <b>o'qituvchi profili</b> va <b>kabinet logini</b> yaratadi.{% endblocktrans %}</div>
+        </div>
+    </div>
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" style="margin-bottom:16px;">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>👤 {% trans "Shaxsiy ma'lumotlar" %}</h3></div>
+            <div class="card__body">
+                <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+                    <div class="field">
+                        <label>{{ form.first_name.label }}</label>
+                        {{ form.first_name }}
+                        {% for e in form.first_name.errors %}<span class="help" style="color:var(--danger,#dc2626);">{{ e }}</span>{% endfor %}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.last_name.label }}</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.phone.label }}</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.specialty.label }}</label>
+                        {{ form.specialty }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.experience_years.label }}</label>
+                        {{ form.experience_years }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.salary.label }}</label>
+                        {{ form.salary }}
+                    </div>
+                    <div class="field">
+                        <label>{{ form.image.label }}</label>
+                        {{ form.image }}
+                    </div>
+                    <div class="field" style="grid-column:1/-1;">
+                        <label>{{ form.bio.label }}</label>
+                        {{ form.bio }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>🔐 {% trans "Kabinet logini (username / parol)" %}</h3></div>
+            <div class="card__body">
+                <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+                    <div class="field">
+                        <label>{{ form.username.label }}</label>
+                        {{ form.username }}
+                        {% for e in form.username.errors %}<span class="help" style="color:var(--danger,#dc2626);">{{ e }}</span>{% endfor %}
+                        <span class="help">{% trans "Bo'sh qoldirsangiz tizim unikal login tavsiya qiladi." %}</span>
+                    </div>
+                    <div class="field">
+                        <label>{{ form.password.label }}</label>
+                        {{ form.password }}
+                        <span class="help">{% trans "Bo'sh — avtomatik xavfsiz parol. Login va parol bir marta ko'rsatiladi." %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary">💾 {% trans "O'qituvchini saqlash" %}</button>
+            <a href="{% url 'instructors:list' %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

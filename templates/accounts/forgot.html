@@ -1,0 +1,66 @@
+{% extends 'accounts/auth_base.html' %}
+{% block title %}Parolni tiklash{% endblock %}
+{% block heading %}Parolni tiklash{% endblock %}
+{% block subtitle %}Administrator/Direktor: ro'yxatdan o'tgan usulingizni tanlang — tasdiqlash kodi shu orqali yuboriladi.{% endblock %}
+
+{% block content %}
+<form method="post" novalidate id="forgotForm">
+    {% csrf_token %}
+
+    {# --- Usul: Telegram / Gmail --- #}
+    <label class="form-label">Tasdiqlash usuli</label>
+    <div class="channel-seg">
+        {% for radio in form.channel %}
+            <input type="radio" class="channel-radio" name="{{ radio.data.name }}"
+                   id="{{ radio.id_for_label }}" value="{{ radio.data.value }}"
+                   {% if radio.data.selected %}checked{% endif %}>
+            <label for="{{ radio.id_for_label }}">
+                {% if radio.data.value == 'email' %}<i class="bi bi-google"></i>{% else %}<i class="bi bi-telegram"></i>{% endif %}
+                {{ radio.choice_label }}
+            </label>
+        {% endfor %}
+    </div>
+
+    {# --- Telegram ID --- #}
+    <div class="mb-2 chan-field" data-chan="telegram">
+        <label class="form-label">Telegram ID</label>
+        <div class="input-icon"><i class="bi bi-telegram"></i>{{ form.telegram_chat_id }}</div>
+        {% for e in form.telegram_chat_id.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+        <div class="pw-hint">Botni oching va <b>«🆔 ID raqamim»</b> tugmasidan ID raqamingizni oling.</div>
+    </div>
+
+    {# --- Email --- #}
+    <div class="mb-2 chan-field" data-chan="email">
+        <label class="form-label">Email (Gmail)</label>
+        <div class="input-icon"><i class="bi bi-envelope"></i>{{ form.email }}</div>
+        {% for e in form.email.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+    </div>
+
+    <button type="submit" class="btn-brand mt-2"><i class="bi bi-send"></i> Kod yuborish</button>
+</form>
+{% endblock %}
+
+{% block footer %}
+    <a href="{% url 'accounts:login_page' %}"><i class="bi bi-arrow-left"></i> Kirishga qaytish</a>
+    <div class="mt-2"><a href="{% url 'accounts:reset_help' %}" class="link-muted">O'qituvchi yoki o'quvchimisiz? Parolni tiklash</a></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    (function () {
+        var form = document.getElementById('forgotForm');
+        if (!form) return;
+        function apply() {
+            var sel = form.querySelector('input[name="channel"]:checked');
+            var ch = sel ? sel.value : 'telegram';
+            form.querySelectorAll('.chan-field').forEach(function (el) {
+                el.style.display = (el.getAttribute('data-chan') === ch) ? '' : 'none';
+            });
+        }
+        form.querySelectorAll('input[name="channel"]').forEach(function (r) {
+            r.addEventListener('change', apply);
+        });
+        apply();
+    })();
+</script>
+{% endblock %}

@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Oyliklar (AI)" %}{% endblock %}
+{% block content %}
+
+<div class="page-head">
+    <div>
+        <h1>{% blocktrans with m=month_label y=year %}Xodimlar oyligi — {{ m }} {{ y }}{% endblocktrans %}</h1>
+        <div class="sub">{% trans "Oylik suniy intellekt yordamida davomat, guruhlar va KPI asosida hisoblanadi." %}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'salaries:employees' %}" class="btn btn-light">👥 {% trans "Xodimlar" %}</a>
+    </div>
+</div>
+
+<!-- Davr tanlash + amallar -->
+<form method="get" class="toolbar">
+    <select name="year" class="form-select" style="max-width:130px;">
+        {% for y in years %}<option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>{% endfor %}
+    </select>
+    <select name="month" class="form-select" style="max-width:160px;">
+        {% for v,l in months %}<option value="{{ v }}" {% if v == month %}selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-light">{% trans "Ko'rsatish" %}</button>
+</form>
+
+<div class="grid cols-4" style="margin-bottom:20px;">
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico">👥</div><div class="stat__label">{% trans "Faol xodimlar" %}</div></div>
+        <div class="stat__value">{{ employees_count }}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico green">🧮</div><div class="stat__label">{% trans "Hisoblangan" %}</div></div>
+        <div class="stat__value">{{ computed_count }}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico blue">🤖</div><div class="stat__label">{% trans "AI tahlil qilingan" %}</div></div>
+        <div class="stat__value">{{ ai_count }}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico amber">💰</div><div class="stat__label">{% trans "Jami oylik fondi" %}</div></div>
+        <div class="stat__value" style="font-size:21px;">{{ total_payout|floatformat:0|intcomma }}<span style="font-size:13px;color:var(--muted);"> {% trans "so'm" %}</span></div>
+        <div class="stat__hint">{% blocktrans with k=avg_kpi %}O'rtacha KPI: {{ k }}/100{% endblocktrans %}</div>
+    </div>
+</div>
+
+<!-- Grafiklar -->
+<div class="grid cols-2" style="margin-bottom:20px;">
+    <div class="card">
+        <div class="card__head"><h3>📊 {% trans "Xodimlar bo'yicha oylik fondi" %}</h3></div>
+        <div class="card__body">
+            <div style="position:relative;height:230px;"><canvas id="payoutChart"></canvas></div>
+            <div id="payoutEmpty" class="empty" style="display:none;"><div class="ico">📊</div>{% trans "Hali hisoblanmagan — «Oylikni hisoblash» tugmasini bosing" %}</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>🤖 {% trans "AI baholar taqsimoti" %}</h3></div>
+        <div class="card__body" style="display:flex;align-items:center;gap:18px;min-height:230px;">
+            <div style="position:relative;height:170px;width:170px;flex:none;"><canvas id="ratingChart"></canvas></div>
+            <div style="flex:1;">
+                <div class="li"><span class="badge success" style="width:34px;text-align:center;">A</span><div class="li__main"><div class="li__title">{% trans "A'lo" %}</div></div><div class="li__right" id="rA">0</div></div>
+                <div class="li"><span class="badge info" style="width:34px;text-align:center;">B</span><div class="li__main"><div class="li__title">{% trans "Yaxshi" %}</div></div><div class="li__right" id="rB">0</div></div>
+                <div class="li"><span class="badge warning" style="width:34px;text-align:center;">C</span><div class="li__main"><div class="li__title">{% trans "Qoniqarli" %}</div></div><div class="li__right" id="rC">0</div></div>
+                <div class="li"><span class="badge danger" style="width:34px;text-align:center;">D</span><div class="li__main"><div class="li__title">{% trans "Past" %}</div></div><div class="li__right" id="rD">0</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card__head">
+        <h3>{% trans "Oylik jadvali" %}</h3>
+        <div class="right" style="display:flex;gap:8px;">
+            <form method="post" action="{% url 'salaries:compute' %}" id="computeForm">
+                {% csrf_token %}
+                <input type="hidden" name="year" value="{{ year }}"><input type="hidden" name="month" value="{{ month }}">
+                <button type="submit" class="btn btn-soft btn-sm" id="computeBtn">🧮 {% trans "Oylikni hisoblash" %}</button>
+            </form>
+            <form method="post" action="{% url 'salaries:ai_all' %}">
+                {% csrf_token %}
+                <input type="hidden" name="year" value="{{ year }}"><input type="hidden" name="month" value="{{ month }}">
+                <button class="btn btn-primary btn-sm">🤖 {% trans "AI bilan tahlil qilish" %}</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr>
+                <th>{% trans "Xodim" %}</th><th>{% trans "Lavozim" %}</th><th class="num">{% trans "KPI" %}</th>
+                <th class="num">{% trans "Jami oylik" %}</th><th>{% trans "AI" %}</th><th>{% trans "Holat" %}</th><th></th>
+            </tr></thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td><div class="cell">
+                        <span class="avatar">{{ row.employee.initials }}</span>
+                        <span class="cell__name">{{ row.employee.full_name }}</span>
+                    </div></td>
+                    <td>{{ row.employee.get_position_display }}</td>
+                    {% if row.record %}
+                        <td class="num">{{ row.record.kpi_score|floatformat:0 }}</td>
+                        <td class="num money">{{ row.record.total_amount|floatformat:0|intcomma }}</td>
+                        <td>{% if row.record.ai_rating %}<span class="badge brand">{{ row.record.ai_rating }}</span>{% else %}<span class="text-muted">—</span>{% endif %}</td>
+                        <td><span class="badge {{ row.record.status_badge }}">{{ row.record.get_status_display }}</span></td>
+                        <td><a href="{% url 'salaries:record_detail' row.record.pk %}" class="btn btn-light btn-sm">{% trans "Batafsil" %}</a></td>
+                    {% else %}
+                        <td class="num text-muted">—</td>
+                        <td class="num text-muted">{% trans "Hisoblanmagan" %}</td>
+                        <td class="text-muted">—</td>
+                        <td><span class="badge muted">—</span></td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr><td colspan="7"><div class="empty"><div class="ico">👥</div>
+                    {% trans "Hali xodim yo'q." %} <a href="{% url 'salaries:employees' %}" style="color:var(--brand-700);font-weight:700;">{% trans "Xodim qo'shing" %}</a> {% trans "yoki foydalanuvchilardan import qiling." %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if not has_anthropic %}
+<p class="help" style="margin-top:14px;">
+    ℹ️ {% blocktrans %}Hozir AI mahalliy (offline) rejimda ishlamoqda. To'liq AI tahlili uchun <code>.env</code> fayliga <code>GEMINI_API_KEY</code> ni qo'shing.{% endblocktrans %}
+</p>
+{% endif %}
+
+<!-- ===== Oylikni hisoblash — modal ===== -->
+<style>
+  .sal-modal-overlay{
+    position:fixed;inset:0;z-index:1000;display:none;
+    align-items:flex-start;justify-content:center;padding:48px 16px;
+    background:rgba(17,24,39,.55);backdrop-filter:blur(4px);overflow-y:auto;
+  }
+  .sal-modal-overlay.open{display:flex;}
+  .sal-modal{
+    width:100%;max-width:860px;background:var(--card,#fff);color:var(--ink,#1d2230);
+    border:1px solid var(--line,#e9ecf2);border-radius:16px;
+    box-shadow:var(--shadow-lg,0 24px 60px rgba(17,24,39,.30));overflow:hidden;
+    animation:salIn .22s ease;
+  }
+  @keyframes salIn{from{opacity:0;transform:translateY(-14px) scale(.98);}to{opacity:1;transform:none;}}
+  .sal-modal__head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:18px 22px;border-bottom:1px solid var(--line,#e9ecf2);
+  }
+  .sal-modal__head h3{color:var(--ink,#1d2230);}
+  .sal-modal__close{
+    background:none;border:none;font-size:26px;line-height:1;cursor:pointer;
+    color:var(--muted,#6b7280);
+  }
+  .sal-modal__body{padding:8px 22px 18px;max-height:60vh;overflow-y:auto;color:var(--ink,#1d2230);}
+  .sal-modal__foot{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:14px 22px;border-top:1px solid var(--line,#e9ecf2);background:var(--bg,#fafbfc);
+    color:var(--ink,#1d2230);
+  }
+  .sal-modal .tbl td{color:var(--ink,#1d2230);}
+  .sal-modal .tbl{width:100%;}
+  .cm-spin{display:inline-block;width:18px;height:18px;border:3px solid #e5e7eb;
+    border-top-color:#D4640F;border-radius:50%;animation:cmspin .7s linear infinite;vertical-align:-3px;}
+  @keyframes cmspin{to{transform:rotate(360deg);}}
+</style>
+<div class="sal-modal-overlay" id="computeModal" aria-hidden="true">
+  <div class="sal-modal" role="dialog" aria-modal="true">
+    <div class="sal-modal__head">
+      <div>
+        <h3 style="margin:0;">🧮 {% trans "Oylik hisob-kitobi" %}</h3>
+        <div class="sub" id="cmPeriod" style="font-size:13px;color:var(--muted);margin-top:2px;"></div>
+      </div>
+      <button type="button" class="sal-modal__close" onclick="closeComputeModal()" aria-label="Yopish">&times;</button>
+    </div>
+
+    <div class="sal-modal__body" id="cmBody">
+      <!-- JS to'ldiradi -->
+    </div>
+
+    <div class="sal-modal__foot">
+      <div id="cmSummary" style="font-weight:700;font-size:14px;"></div>
+      <div style="margin-left:auto;display:flex;gap:8px;">
+        <button type="button" class="btn btn-light btn-sm" onclick="closeComputeModal()">{% trans "Yopish" %}</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.reload()">↻ {% trans "Jadvalni yangilash" %}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* ===== Oylikni hisoblash — modal (AJAX) ===== */
+(function () {
+    var form = document.getElementById('computeForm');
+    if (!form) return;
+    var btn = document.getElementById('computeBtn');
+    var overlay = document.getElementById('computeModal');
+
+    function nf(n){ return Math.round(n || 0).toLocaleString('ru-RU'); }
+
+    window.closeComputeModal = function () {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    function openModal(){
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeComputeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeComputeModal();
+    });
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var fd = new FormData(form);
+        fd.append('format', 'json');
+        var oldHtml = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span class="cm-spin"></span> Hisoblanmoqda...';
+
+        // Modalni darrov ochib, spinner ko'rsatamiz
+        document.getElementById('cmPeriod').textContent = '';
+        document.getElementById('cmSummary').textContent = '';
+        document.getElementById('cmBody').innerHTML =
+            '<div class="empty" style="padding:34px 0;text-align:center;"><span class="cm-spin"></span><div style="margin-top:10px;">Hisoblanmoqda...</div></div>';
+        openModal();
+
+        fetch(form.action, {
+            method: 'POST',
+            body: fd,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            btn.disabled = false;
+            btn.innerHTML = oldHtml;
+            if (!data.ok) { throw new Error('bad'); }
+            renderResult(data);
+        })
+        .catch(function () {
+            btn.disabled = false;
+            btn.innerHTML = oldHtml;
+            document.getElementById('cmBody').innerHTML =
+                '<div class="empty" style="padding:30px 0;text-align:center;color:#b91c1c;">Xatolik yuz berdi. Sahifani yangilab qayta urinib ko\'ring.</div>';
+        });
+    });
+
+    function renderResult(data){
+        document.getElementById('cmPeriod').textContent =
+            data.period + ' • ' + data.count + ' ta xodim';
+        document.getElementById('cmSummary').innerHTML =
+            'Jami oylik fondi: <span style="color:#D4640F;">' + nf(data.total) + " so'm</span>";
+
+        if (!data.count){
+            document.getElementById('cmBody').innerHTML =
+                '<div class="empty" style="padding:30px 0;text-align:center;">Faol xodim topilmadi.</div>';
+            return;
+        }
+
+        var rowsHtml = '';
+        data.rows.forEach(function (r, i) {
+            rowsHtml +=
+                '<tr>' +
+                  '<td>' + (i + 1) + '</td>' +
+                  '<td><div class="cell"><span class="avatar">' + r.initials + '</span>' +
+                      '<span class="cell__name">' + r.name + '</span></div></td>' +
+                  '<td>' + r.position + '</td>' +
+                  '<td class="num">' + r.kpi + '</td>' +
+                  '<td class="num">' + nf(r.base) + '</td>' +
+                  '<td class="num" style="color:#1f9d55;">+' + nf(r.kpi_bonus) + '</td>' +
+                  '<td class="num" style="color:#d63b34;">' + (r.penalties ? '-' + nf(r.penalties) : '0') + '</td>' +
+                  '<td class="num money"><b>' + nf(r.total) + '</b></td>' +
+                  '<td><a class="btn btn-light btn-sm" href="' + r.detail_url + '">Batafsil</a></td>' +
+                '</tr>';
+        });
+
+        document.getElementById('cmBody').innerHTML =
+            '<div style="margin:6px 0 12px;font-size:13px;color:var(--muted,#6b7280);">' +
+                '✅ ' + data.created + ' ta yangi hisoblandi, ' + data.updated + ' ta yangilandi.' +
+            '</div>' +
+            '<div class="table-wrap"><table class="tbl"><thead><tr>' +
+                '<th>#</th><th>Xodim</th><th>Lavozim</th><th class="num">KPI</th>' +
+                "<th class=\"num\">Asosiy</th><th class=\"num\">KPI bonus</th>" +
+                '<th class="num">Jarima</th><th class="num">Jami</th><th></th>' +
+            '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div>';
+    }
+})();
+
+(function () {
+    var payout = {{ payout_json|safe }};
+    var rating = {{ rating_json|safe }};
+    var grid = getComputedStyle(document.documentElement).getPropertyValue('--line') || '#e9ecf2';
+    var ink = getComputedStyle(document.documentElement).getPropertyValue('--ink-soft') || '#5b6377';
+
+    // Oylik fondi — xodimlar bo'yicha (bar)
+    if (payout.length && window.Chart) {
+        new Chart(document.getElementById('payoutChart'), {
+            type: 'bar',
+            data: {
+                labels: payout.map(function (p) { return p.name; }),
+                datasets: [{
+                    label: "{% trans "Oylik (so'm)" %}",
+                    data: payout.map(function (p) { return p.total; }),
+                    backgroundColor: '#D4640F', borderRadius: 8, maxBarThickness: 46,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: ink, callback: function (v) { return (v / 1000) + 'k'; } }, grid: { color: grid } },
+                    x: { ticks: { color: ink }, grid: { display: false } }
+                }
+            }
+        });
+    } else {
+        document.getElementById('payoutChart').style.display = 'none';
+        document.getElementById('payoutEmpty').style.display = '';
+    }
+
+    // AI baholar taqsimoti (doughnut)
+    document.getElementById('rA').textContent = rating.A || 0;
+    document.getElementById('rB').textContent = rating.B || 0;
+    document.getElementById('rC').textContent = rating.C || 0;
+    document.getElementById('rD').textContent = rating.D || 0;
+    var rtotal = (rating.A || 0) + (rating.B || 0) + (rating.C || 0) + (rating.D || 0);
+    if (rtotal > 0 && window.Chart) {
+        new Chart(document.getElementById('ratingChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['A', 'B', 'C', 'D'],
+                datasets: [{ data: [rating.A || 0, rating.B || 0, rating.C || 0, rating.D || 0],
+                    backgroundColor: ['#1f9d55', '#2563eb', '#d98a04', '#d63b34'], borderWidth: 0 }]
+            },
+            options: { cutout: '62%', plugins: { legend: { display: false } } }
+        });
+    } else {
+        document.getElementById('ratingChart').style.display = 'none';
+    }
+})();
+</script>
+{% endblock %}

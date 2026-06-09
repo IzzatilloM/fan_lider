@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Direktor paneli" %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>{% blocktrans with name=user.first_name|default:user.display_name %}Salom, {{ name }}! 👋{% endblocktrans %}</h1>
+        <div class="sub">{% blocktrans with brand=BRAND_NAME %}{{ brand }} — boshqaruv va monitoring{% endblocktrans %}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'payments:dashboard' %}" class="btn btn-light">💳 {% trans "To'lovlar" %}</a>
+        <a href="{% url 'monitoring:home' %}" class="btn btn-primary">📈 {% trans "O'quv jarayoni" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico">🎓</div><div><div class="stat__label">{% trans "Faol o'quvchilar" %}</div></div></div>
+        <div class="stat__value">{{ active_students }}</div>
+        <div class="stat__hint">{% blocktrans with total=total_students %}Jami {{ total }} ta{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico green">💰</div><div><div class="stat__label">{% trans "Shu oy tushum" %}</div></div></div>
+        <div class="stat__value">{{ revenue_month|floatformat:0|intcomma }}</div>
+        <div class="stat__hint">{% trans "so'm — joriy oy" %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico red">⚠️</div><div><div class="stat__label">{% trans "Qarzdorlik" %}</div></div></div>
+        <div class="stat__value">{{ total_debt|floatformat:0|intcomma }}</div>
+        <div class="stat__hint">{% blocktrans with n=debtors_count %}{{ n }} ta qarzdor{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico amber">📈</div><div><div class="stat__label">{% trans "Davomat (hafta)" %}</div></div></div>
+        <div class="stat__value">{{ attendance_rate }}%</div>
+        <div class="stat__hint">{% blocktrans with score=avg_score %}O'rtacha baho {{ score }}%{% endblocktrans %}</div>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico">📚</div><div><div class="stat__label">{% trans "Guruhlar" %}</div></div></div>
+        <div class="stat__value">{{ total_groups }}</div>
+        <div class="stat__hint">{% trans "Faol guruhlar soni" %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico">👨‍🏫</div><div><div class="stat__label">{% trans "O'qituvchilar" %}</div></div></div>
+        <div class="stat__value">{{ total_teachers }}</div>
+        <div class="stat__hint">{% trans "Faol o'qituvchilar" %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico amber">📝</div><div><div class="stat__label">{% trans "Yangi arizalar" %}</div></div></div>
+        <div class="stat__value">{{ month_apps }}</div>
+        <div class="stat__hint">{% blocktrans with n=new_apps %}{{ n }} ta ko'rilmagan{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico green">💵</div><div><div class="stat__label">{% trans "To'lov yig'ilishi" %}</div></div></div>
+        <div class="stat__value">{{ collection_rate }}%</div>
+        <div class="stat__hint">{% blocktrans with n=unpaid_invoices %}{{ n }} to'lanmagan hisob{% endblocktrans %}</div>
+    </div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:18px;">
+    <div class="card">
+        <div class="card__head"><h3>📈 {% trans "Oxirgi 6 oy tushumi" %}</h3></div>
+        <div class="card__body"><canvas id="revChart" height="120"></canvas></div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>📚 {% trans "Yo'nalishlar bo'yicha o'quvchilar" %}</h3></div>
+        <div class="card__body"><canvas id="subjChart" height="120"></canvas></div>
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>👨‍🏫 {% trans "O'qituvchilar (o'quv jarayoni)" %}</h3>
+            <a href="{% url 'instructors:list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for t in teachers %}
+                <div class="li">
+                    <span class="avatar">{{ t.full_name|slice:":1" }}</span>
+                    <div class="li__main">
+                        <div class="li__title">{{ t.full_name }}</div>
+                        <div class="li__sub">{% if t.specialty %}{{ t.specialty }}{% else %}{% trans "O'qituvchi" %}{% endif %}</div>
+                    </div>
+                    <div class="li__right"><span class="badge brand">{% blocktrans with n=t.groups_n %}{{ n }} guruh{% endblocktrans %}</span></div>
+                </div>
+                {% empty %}<div class="empty"><div class="ico">👨‍🏫</div>{% trans "O'qituvchilar yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>⚠️ {% trans "Eng katta qarzdorlar" %}</h3>
+            <a href="{% url 'payments:debtors' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for s in top_debtors %}
+                <a href="{{ s.get_absolute_url }}" class="li">
+                    <span class="avatar">{{ s.initials }}</span>
+                    <div class="li__main">
+                        <div class="li__title">{{ s.full_name }}</div>
+                        <div class="li__sub">{{ s.phone }}</div>
+                    </div>
+                    <div class="li__right"><span class="badge red">−{{ s.debt_amount|floatformat:0|intcomma }}</span></div>
+                </a>
+                {% empty %}<div class="empty"><div class="ico">✅</div>{% trans "Qarzdorlar yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid cols-2" style="margin-top:18px;">
+    <div class="card">
+        <div class="card__head"><h3>📚 {% trans "Guruhlar to'ldirilganligi" %}</h3>
+            <a href="{% url 'courses:list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+        <div class="card__body" style="padding-top:10px;">
+            {% for g in groups %}
+            <div style="margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+                    <span style="font-weight:600;">{{ g.name }} <span class="text-muted">· {{ g.subject.name }}</span></span>
+                    <span class="text-muted">{{ g.students_n }}{% if g.capacity %}/{{ g.capacity }}{% endif %}</span>
+                </div>
+                <div style="height:8px;background:var(--bg,#eef0f4);border-radius:6px;overflow:hidden;">
+                    <div style="height:100%;border-radius:6px;background:var(--brand,#D4640F);width:{% if g.capacity %}{% widthratio g.students_n g.capacity 100 %}{% else %}0{% endif %}%;"></div>
+                </div>
+            </div>
+            {% empty %}<div class="empty"><div class="ico">📚</div>{% trans "Guruhlar yo'q" %}</div>{% endfor %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>🏆 {% trans "Eng yaxshi o'zlashtirgan o'quvchilar" %}</h3>
+            <a href="{% url 'students:list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for s in top_students %}
+                <a href="{{ s.get_absolute_url }}" class="li">
+                    <span class="avatar">{{ s.initials }}</span>
+                    <div class="li__main">
+                        <div class="li__title">{{ s.full_name }}</div>
+                        <div class="li__sub">{{ s.phone|default:"—" }}</div>
+                    </div>
+                    <div class="li__right"><span class="badge success">{{ s.avg|floatformat:0 }}%</span></div>
+                </a>
+                {% empty %}<div class="empty"><div class="ico">🏆</div>{% trans "Baholar yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top:18px;">
+    <div class="card__head"><h3>💳 {% trans "So'nggi to'lovlar" %}</h3>
+        <a href="{% url 'payments:dashboard' %}" class="btn btn-ghost btn-sm right">{% trans "Moliya" %} →</a></div>
+    <div class="card__body" style="padding:0;">
+        <div class="table-wrap">
+            <table class="tbl">
+                <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Sana" %}</th><th class="num">{% trans "Summa" %}</th></tr></thead>
+                <tbody>
+                {% for p in recent_payments %}
+                <tr>
+                    <td>{{ p.student.full_name }}</td>
+                    <td class="text-muted">{{ p.paid_at|date:"d.m.Y" }}</td>
+                    <td class="num"><b>{{ p.amount|floatformat:0|intcomma }}</b> {% trans "so'm" %}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3"><div class="empty" style="padding:24px;"><div class="ico">💳</div>{% trans "To'lovlar yo'q" %}</div></td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+    const brand = '{{ BRAND_COLOR|default:"#D4640F" }}';
+    const rev = {{ revenue_series_json|safe }};
+    const subj = {{ subject_dist_json|safe }};
+    new Chart(document.getElementById('revChart'), {
+        type: 'line',
+        data: { labels: rev.map(r => r.label), datasets: [{
+            data: rev.map(r => r.value), borderColor: brand, backgroundColor: 'rgba(212,100,15,.12)',
+            fill: true, tension: .4, pointRadius: 4, pointBackgroundColor: brand }] },
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+    });
+    new Chart(document.getElementById('subjChart'), {
+        type: 'doughnut',
+        data: { labels: subj.map(s => s['course__subject__name'] || '—'), datasets: [{
+            data: subj.map(s => s.c),
+            backgroundColor: ['#D4640F','#0E5C60','#2563eb','#16a34a','#d97706','#9333ea'] }] },
+        options: { plugins: { legend: { position: 'bottom' } } }
+    });
+</script>
+{% endblock %}

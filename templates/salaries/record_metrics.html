@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=record.employee.full_name %}Metrikalar — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+
+<div class="page-head">
+    <div><h1>{% trans "Metrikalarni tahrirlash" %}</h1>
+    <div class="sub">{% blocktrans with name=record.employee.full_name period=record.period.label %}{{ name }} · {{ period }}. Saqlangach oylik avtomatik qayta hisoblanadi.{% endblocktrans %}</div></div>
+</div>
+
+<div class="card">
+    <div class="card__body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-grid">
+                {% for field in form %}
+                <div class="field {% if field.name == 'metrics_note' %}full{% endif %}">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    {% for e in field.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary">💾 {% trans "Saqlash va qayta hisoblash" %}</button>
+                <a href="{% url 'salaries:record_detail' record.pk %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

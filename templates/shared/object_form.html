@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{{ title|default:_("Forma") }}{% endblock %}
+{% block content %}
+<div style="max-width:760px;margin:0 auto;">
+    <div class="page-head">
+        <div>
+            <a href="javascript:history.back()" class="text-muted" style="font-size:13px;">← {% trans "Orqaga" %}</a>
+            <h1>{{ title|default:_("Ma'lumotlarni kiritish") }}</h1>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-grid">{% include 'partials/form_fields.html' %}</div>
+                <div class="form-actions">
+                    <button class="btn btn-primary">💾 {% trans "Saqlash" %}</button>
+                    <a href="javascript:history.back()" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

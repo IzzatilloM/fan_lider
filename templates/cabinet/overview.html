@@ -1,0 +1,249 @@
+{% extends 'cabinet/base_cabinet.html' %}
+{% load static i18n %}
+
+{% block content %}
+<!-- Hero -->
+<div class="cab-hero">
+    <div class="cab-hero__avatar">
+        {% if student.photo %}<img src="{{ student.photo.url }}" alt="">
+        {% else %}<span>{{ student.initials }}</span>{% endif %}
+    </div>
+    <div class="cab-hero__main">
+        <h1>{% blocktrans with name=student.first_name %}Assalomu alaykum, {{ name }}! 👋{% endblocktrans %}</h1>
+        <p>{% trans "Bu sizning shaxsiy kabinetingiz — kurslaringiz, baholaringiz va to'lovlaringizni shu yerda kuzating." %}</p>
+        <div class="cab-hero__tags">
+            <span class="badge {{ perf_class }}">⭐ {% trans "O'zlashtirish" %}: {{ perf_label }}</span>
+            <span class="badge {% if student.is_debtor %}danger{% else %}success{% endif %}">
+                {% if student.is_debtor %}⚠️ {% blocktrans with amount=student.debt_amount|floatformat:0 %}Qarz: {{ amount }} so'm{% endblocktrans %}{% else %}✅ {% trans "To'lovlar joyida" %}{% endif %}
+            </span>
+            <span class="badge muted">🎓 {{ student.get_status_display }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Stat cards -->
+<div class="grid cols-4" style="margin-bottom:20px;">
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico">📊</div><div class="stat__label">{% trans "O'rtacha baho" %}</div></div>
+        <div class="stat__value">{{ overall_avg|floatformat:1 }}<span style="font-size:16px;">%</span></div>
+        <div class="bar {% if overall_avg >= 70 %}green{% elif overall_avg < 56 %}red{% endif %}" style="margin-top:10px;"><span style="width:{{ overall_avg }}%;"></span></div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico blue">📅</div><div class="stat__label">{% trans "Davomat" %}</div></div>
+        <div class="stat__value">{{ attendance_pct }}<span style="font-size:16px;">%</span></div>
+        <div class="bar {% if attendance_pct >= 80 %}green{% elif attendance_pct < 60 %}red{% endif %}" style="margin-top:10px;"><span style="width:{{ attendance_pct }}%;"></span></div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico green">📚</div><div class="stat__label">{% trans "Faol kurslar" %}</div></div>
+        <div class="stat__value">{{ active_enrollments|length }}</div>
+        <div class="stat__hint">{% blocktrans with n=enrollments|length %}Jami {{ n }} ta yozilish{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top"><div class="stat__ico {% if student.is_debtor %}red{% else %}amber{% endif %}">💳</div><div class="stat__label">{% trans "Balans" %}</div></div>
+        <div class="stat__value {% if student.is_debtor %}text-danger{% endif %}">{{ student.balance|floatformat:0 }}</div>
+        <div class="stat__hint">{% trans "so'm" %}{% if student.is_debtor %} — {% trans "qarzdorlik" %}{% endif %}</div>
+    </div>
+</div>
+
+<!-- Grade statistics -->
+<div class="grid cols-2" style="margin-bottom:20px;">
+    <div class="card">
+        <div class="card__head"><h3>📈 {% trans "Fanlar bo'yicha o'zlashtirish (%)" %}</h3></div>
+        <div class="card__body">
+            {% if course_values %}
+            <canvas id="courseChart" height="220"></canvas>
+            {% else %}
+            <div class="empty"><div class="ico">📭</div>{% trans "Hali baholar mavjud emas" %}</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>🏅 {% trans "Baholar taqsimoti" %}</h3></div>
+        <div class="card__body" style="display:flex;align-items:center;gap:18px;">
+            {% if assessments_count %}
+            <canvas id="gradeChart" height="200" style="max-width:200px;"></canvas>
+            <div style="flex:1;">
+                <div class="li"><span class="att present">5</span><div class="li__main"><div class="li__title">{% trans "A'lo" %}</div></div><div class="li__right">{% blocktrans with n=grade_dist.0 %}{{ n }} ta{% endblocktrans %}</div></div>
+                <div class="li"><span class="att late">4</span><div class="li__main"><div class="li__title">{% trans "Yaxshi" %}</div></div><div class="li__right">{% blocktrans with n=grade_dist.1 %}{{ n }} ta{% endblocktrans %}</div></div>
+                <div class="li"><span class="att excused">3</span><div class="li__main"><div class="li__title">{% trans "Qoniqarli" %}</div></div><div class="li__right">{% blocktrans with n=grade_dist.2 %}{{ n }} ta{% endblocktrans %}</div></div>
+                <div class="li"><span class="att absent">2</span><div class="li__main"><div class="li__title">{% trans "Past" %}</div></div><div class="li__right">{% blocktrans with n=grade_dist.3 %}{{ n }} ta{% endblocktrans %}</div></div>
+            </div>
+            {% else %}
+            <div class="empty" style="width:100%;"><div class="ico">📭</div>{% trans "Hali baholar mavjud emas" %}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Guruhdagi reyting -->
+{% if rankings %}
+<div class="card" style="margin-bottom:20px;">
+    <div class="card__head"><h3>🏆 {% trans "Guruhdagi reytingim" %}</h3>
+        <span class="right text-muted" style="font-size:12.5px;">{% trans "Guruhdoshlar orasida o'zlashtirish bo'yicha o'rin" %}</span></div>
+    <div class="card__body">
+        <div class="grid cols-2">
+            {% for r in rankings %}
+            <div class="rank-card {% if r.is_top3 %}rank-top{% endif %}">
+                <div class="rank-pos">
+                    {% if r.rank == 1 %}🥇{% elif r.rank == 2 %}🥈{% elif r.rank == 3 %}🥉{% else %}#{{ r.rank|default:"—" }}{% endif %}
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div class="rank-course">{{ r.course.subject.icon }} {{ r.course.name }}</div>
+                    <div class="rank-meta">
+                        {% if r.rank %}{% blocktrans with rank=r.rank total=r.total %}<b>{{ rank }}</b>-o'rin / {{ total }} o'quvchi{% endblocktrans %}{% else %}{% trans "Reyting yo'q" %}{% endif %}
+                        · {% trans "o'rtacha" %} <b>{{ r.avg }}%</b>
+                    </div>
+                    <div class="bar {% if r.avg >= 70 %}green{% elif r.avg < 56 %}red{% endif %}" style="margin-top:8px;">
+                        <span style="width:{{ r.avg }}%;"></span></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    .rank-card{display:flex;gap:14px;align-items:center;padding:14px 16px;border:1.5px solid var(--line,#e9ecf2);
+        border-radius:16px;transition:all .18s;background:var(--card,#fff);}
+    .rank-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.07);}
+    .rank-top{border-color:#f0c14b;background:linear-gradient(135deg,rgba(240,193,75,.10),transparent);}
+    .rank-pos{font-size:26px;font-weight:900;min-width:46px;text-align:center;}
+    .rank-course{font-weight:800;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .rank-meta{font-size:12.5px;color:var(--muted,#8a91a4);margin-top:3px;}
+</style>
+{% endif %}
+
+<!-- Courses -->
+<div class="card" style="margin-bottom:20px;">
+    <div class="card__head"><h3>📚 {% trans "Mening kurslarim va jadvalim" %}</h3></div>
+    <div class="card__body">
+        {% if enrollments %}
+        <div class="grid cols-2">
+            {% for e in enrollments %}
+            <div class="cab-course">
+                <div class="cab-course__ico" style="background:{{ e.course.subject.color }}22;color:{{ e.course.subject.color }};">{{ e.course.subject.icon|default:"📘" }}</div>
+                <div style="flex:1;min-width:0;">
+                    <div class="cab-course__title">{{ e.course.name }}</div>
+                    <div class="cab-course__meta">{{ e.course.subject.name }}
+                        {% if e.status == 'active' %}<span class="badge success" style="margin-left:6px;">{% trans "Faol" %}</span>
+                        {% else %}<span class="badge muted" style="margin-left:6px;">{{ e.get_status_display }}</span>{% endif %}
+                    </div>
+                    <div class="cab-course__rows">
+                        <span>👨‍🏫 {{ e.course.teacher.full_name|default:"—" }}</span>
+                        <span>🗓 {{ e.course.get_weekdays_display }}</span>
+                        <span>⏰ {% if e.course.start_time %}{{ e.course.start_time|time:"H:i" }}{% else %}—{% endif %}</span>
+                        {% if e.course.room %}<span>🚪 {{ e.course.room }}</span>{% endif %}
+                        <span>💰 {% blocktrans with fee=e.net_fee|floatformat:0 %}{{ fee }} so'm/oy{% endblocktrans %}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty"><div class="ico">📚</div>{% trans "Siz hali birorta kursga yozilmagansiz" %}</div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Payments + Grades -->
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>💳 {% trans "To'lovlarim" %}</h3><span class="right text-muted" style="font-size:12.5px;">{% blocktrans with paid=total_paid|floatformat:0 %}Jami to'langan: <b>{{ paid }}</b> so'm{% endblocktrans %}</span></div>
+        <div class="card__body" style="padding:0;">
+            <div class="table-wrap">
+                <table class="tbl">
+                    <thead><tr><th>{% trans "Oy / Kurs" %}</th><th class="num">{% trans "Summa" %}</th><th>{% trans "Holat" %}</th><th></th></tr></thead>
+                    <tbody>
+                    {% for inv in invoices %}
+                        <tr>
+                            <td><div class="cell__name">{{ inv.month_name }} {{ inv.year }}</div><div class="cell__meta">{{ inv.course.name|default:"—" }}</div></td>
+                            <td class="num">{{ inv.amount|floatformat:0 }}</td>
+                            <td>
+                                {% if inv.status == 'paid' %}<span class="badge success">{% trans "To'langan" %}</span>
+                                {% elif inv.status == 'partial' %}<span class="badge warning">{% trans "Qisman" %}</span>
+                                {% elif inv.status == 'cancelled' %}<span class="badge muted">{% trans "Bekor" %}</span>
+                                {% else %}<span class="badge danger">{% trans "To'lanmagan" %}</span>{% endif %}
+                            </td>
+                            <td class="num">
+                                {% with pmt=inv.payments.first %}
+                                {% if pmt %}
+                                <a class="btn btn-soft btn-sm" href="{% url 'payments:payment_receipt' pmt.pk %}" target="_blank" title="{% trans 'Chek (PDF)' %}">🧾 {% trans "Chek" %}</a>
+                                {% endif %}
+                                {% endwith %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4"><div class="empty" style="padding:30px;"><div class="ico">🧾</div>{% trans "Hisob-fakturalar yo'q" %}</div></td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>📝 {% trans "So'nggi baholar" %}</h3><span class="right text-muted" style="font-size:12.5px;">{% blocktrans with n=assessments_count %}{{ n }} ta baho{% endblocktrans %}</span></div>
+        <div class="card__body" style="padding:0;">
+            <div class="table-wrap">
+                <table class="tbl">
+                    <thead><tr><th>{% trans "Sana / Fan" %}</th><th>{% trans "Turi" %}</th><th class="num">{% trans "Natija" %}</th><th class="num">{% trans "Baho" %}</th></tr></thead>
+                    <tbody>
+                    {% for a in recent_assessments %}
+                        <tr>
+                            <td><div class="cell__name">{{ a.date|date:"d.m.Y" }}</div><div class="cell__meta">{{ a.course.subject.name|default:a.course.name }}</div></td>
+                            <td><span class="text-muted" style="font-size:12.5px;">{{ a.get_type_display }}</span></td>
+                            <td class="num">{{ a.percentage|floatformat:0 }}%</td>
+                            <td class="num"><span class="badge {{ a.badge_class }}">{{ a.grade_5 }}</span></td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4"><div class="empty" style="padding:30px;"><div class="ico">📝</div>{% trans "Hali baholar yo'q" %}</div></td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ course_labels|json_script:"courseLabels" }}
+{{ course_values|json_script:"courseValues" }}
+{{ course_colors|json_script:"courseColors" }}
+{{ grade_dist|json_script:"gradeDist" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+    var grid = getComputedStyle(document.documentElement).getPropertyValue('--line') || '#e9ecf2';
+    var ink = getComputedStyle(document.documentElement).getPropertyValue('--ink-soft') || '#5b6377';
+    var J = function (id) { var el = document.getElementById(id); return el ? JSON.parse(el.textContent) : null; };
+
+    var labels = J('courseLabels'), values = J('courseValues'), colors = J('courseColors');
+    if (labels && labels.length && window.Chart) {
+        new Chart(document.getElementById('courseChart'), {
+            type: 'bar',
+            data: { labels: labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 8, maxBarThickness: 46 }] },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, max: 100, ticks: { color: ink, callback: function (v) { return v + '%'; } }, grid: { color: grid } },
+                    x: { ticks: { color: ink }, grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    var dist = J('gradeDist');
+    if (dist && (dist[0] + dist[1] + dist[2] + dist[3]) > 0 && window.Chart) {
+        new Chart(document.getElementById('gradeChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ["{% trans "A'lo (5)" %}", "{% trans 'Yaxshi (4)' %}", "{% trans 'Qoniqarli (3)' %}", "{% trans 'Past (2)' %}"],
+                datasets: [{ data: dist, backgroundColor: ['#1f9d55', '#d98a04', '#2563eb', '#d63b34'], borderWidth: 0 }]
+            },
+            options: { cutout: '62%', plugins: { legend: { display: false } } }
+        });
+    }
+})();
+</script>
+{% endblock %}

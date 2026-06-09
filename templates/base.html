@@ -1,0 +1,142 @@
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Rejimni sahifa chizilishidan oldin qo'llaymiz (miltillashning oldini olish)
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+    <title>{% block title %}{{ BRAND_NAME }} CRM{% endblock %}</title>
+    <!-- Favicon (yumaloq logo) — har bir sahifada -->
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+    <link rel="apple-touch-icon" href="{% static 'logo-round.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    <style>
+        .impersonate-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+            background:linear-gradient(135deg,#D4640F,#9c4509);color:#fff;padding:9px 18px;
+            font-size:13.5px;font-weight:600;flex-wrap:wrap;}
+        .impersonate-bar .imp-back{color:#fff;text-decoration:none;font-weight:800;
+            background:rgba(255,255,255,.2);padding:5px 12px;border-radius:8px;transition:background .15s;}
+        .impersonate-bar .imp-back:hover{background:rgba(255,255,255,.32);}
+        /* Til almashtirgich */
+        .lang-switch{display:flex;align-items:center;gap:4px;background:var(--card,#fff);
+            border:1px solid var(--line,#e8ebf1);border-radius:10px;padding:3px 8px 3px 10px;
+            margin-right:4px;transition:border .15s,box-shadow .15s;}
+        .lang-switch:focus-within{border-color:var(--brand,#D4640F);box-shadow:0 0 0 3px rgba(212,100,15,.12);}
+        .lang-switch__globe{font-size:14px;line-height:1;}
+        .lang-switch select{border:none;background:transparent;font-weight:800;font-size:12.5px;
+            color:var(--ink,#161b26);cursor:pointer;outline:none;padding:3px 2px;letter-spacing:.4px;}
+        [data-theme="dark"] .lang-switch{background:rgba(255,255,255,.05);}
+        [data-theme="dark"] .lang-switch select{color:#e8ebf1;}
+        [data-theme="dark"] .lang-switch select option{color:#161b26;}
+        /* Header sozlamalar (gear) ikonkasi */
+        .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+            border-radius:11px;border:1px solid var(--line,#e8ebf1);background:var(--card,#fff);
+            font-size:17px;text-decoration:none;cursor:pointer;transition:all .15s;margin-right:4px;}
+        .icon-btn:hover{border-color:var(--brand,#D4640F);transform:translateY(-1px);
+            box-shadow:0 4px 12px rgba(212,100,15,.18);}
+        [data-theme="dark"] .icon-btn{background:rgba(255,255,255,.05);}
+        /* Yumaloq, tiniq brend logosi va header avatari */
+        .sidebar__brand .brand-logo{width:40px;height:40px;border-radius:50%;object-fit:cover;
+            box-shadow:0 3px 10px rgba(0,0,0,.18);}
+        .userchip .avatar{object-fit:cover;}
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="app">
+    {% include 'partials/sidebar.html' %}
+    <div class="scrim" id="scrim" onclick="toggleSidebar()"></div>
+
+    <div class="main">
+        {% if request.session.impersonator_id %}
+        <div class="impersonate-bar">
+            <span>👁 {% blocktrans with name=user.display_name role=user.get_role_display %}Siz <b>{{ name }}</b> ({{ role }}) hisobini ko'ryapsiz{% endblocktrans %}</span>
+            <a href="{% url 'accounts:stop_impersonation' %}" class="imp-back">← {% trans "Admin hisobiga qaytish" %}</a>
+        </div>
+        {% endif %}
+        <header class="topbar">
+            <button class="burger" onclick="toggleSidebar()">&#9776;</button>
+            <div class="topbar__title">{% block page_title %}{% endblock %}</div>
+            <div class="topbar__spacer"></div>
+
+            {# ---- Til almashtirgich: O'zbek / Rus / Ingliz ---- #}
+            <form action="{% url 'set_language' %}" method="post" class="lang-switch" id="langForm">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                <span class="lang-switch__globe">🌐</span>
+                <select name="language" onchange="document.getElementById('langForm').submit()" aria-label="Til">
+                    {% get_current_language as CURRENT %}
+                    {% get_available_languages as LANGS %}
+                    {% for code, name in LANGS %}
+                    <option value="{{ code }}" {% if code == CURRENT %}selected{% endif %}>{{ code|upper }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()" title="Tungi/kunduzgi rejim" aria-label="Rejimni almashtirish">
+                <span class="theme-toggle__sun">☀️</span>
+                <span class="theme-toggle__moon">🌙</span>
+            </button>
+            {% if new_applications_count %}
+            <a href="{% url 'enrollments:application_list' %}?status=new" class="btn btn-soft btn-sm">
+                🔔 {% blocktrans count counter=new_applications_count %}{{ counter }} yangi ariza{% plural %}{{ counter }} ta yangi ariza{% endblocktrans %}
+            </a>
+            {% endif %}
+            {% if user.is_superuser or user.role == 'admin' %}
+            <a href="{% url 'accounts:settings_home' %}" class="icon-btn" title="{% trans 'Sozlamalar' %}" aria-label="{% trans 'Sozlamalar' %}">⚙️</a>
+            {% else %}
+            <a href="{% url 'accounts:profile' %}" class="icon-btn" title="{% trans 'Sozlamalar' %}" aria-label="{% trans 'Sozlamalar' %}">⚙️</a>
+            {% endif %}
+            <a href="{% url 'accounts:profile' %}" class="userchip">
+                {% if user.avatar_url %}
+                    <img class="avatar" src="{{ user.avatar_url }}" alt="">
+                {% else %}
+                    <span class="avatar">{{ user.initials }}</span>
+                {% endif %}
+                <span>
+                    <span class="userchip__name">{{ user.display_name }}</span><br>
+                    <span class="userchip__role">{{ user.get_role_display }}</span>
+                </span>
+            </a>
+        </header>
+
+        <div class="content">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script>
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('scrim').classList.toggle('show');
+}
+function toggleTheme() {
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+}
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

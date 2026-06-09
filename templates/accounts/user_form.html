@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% if is_new %}{% trans "Yangi foydalanuvchi" %}{% else %}{% trans "Tahrirlash" %}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>{% if is_new %}➕ {% trans "Yangi foydalanuvchi" %}{% else %}✏️ {{ target.display_name }}{% endif %}</h1>
+        <div class="sub">{% trans "O'qituvchi, o'quvchi, direktor yoki administrator hisobini boshqaring" %}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'accounts:user_list' %}" class="btn btn-light">← {% trans "Orqaga" %}</a>
+    </div>
+</div>
+
+<div class="card" style="max-width:680px;">
+    <div class="card__body">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="grid cols-2" style="gap:14px;">
+                <div class="fld"><label>{% trans "Ism" %}</label>{{ form.first_name }}
+                    {% for e in form.first_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Familiya" %}</label>{{ form.last_name }}
+                    {% for e in form.last_name.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Login (username)" %} *</label>{{ form.username }}
+                    {% for e in form.username.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Rol" %} *</label>{{ form.role }}
+                    {% for e in form.role.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Email" %}</label>{{ form.email }}
+                    {% for e in form.email.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Telefon" %}</label>{{ form.phone }}
+                    {% for e in form.phone.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld"><label>{% trans "Parol" %} {% if is_new %}*{% endif %}</label>{{ form.password }}
+                    <div class="hint">{{ form.password.help_text }}</div>
+                    {% for e in form.password.errors %}<div class="errorlist">{{ e }}</div>{% endfor %}</div>
+                <div class="fld" style="display:flex;align-items:center;gap:8px;margin-top:24px;">
+                    {{ form.is_active }} <label style="margin:0;">{% trans "Faol hisob" %}</label></div>
+            </div>
+            {% if form.non_field_errors %}<div class="errorlist mt-2">{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>{% endif %}
+            <div style="margin-top:20px;display:flex;gap:10px;">
+                <button type="submit" class="btn btn-primary">💾 {% trans "Saqlash" %}</button>
+                <a href="{% url 'accounts:user_list' %}" class="btn btn-ghost">{% trans "Bekor qilish" %}</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .fld label{display:block;font-weight:700;font-size:12.5px;color:#3a4254;margin-bottom:6px;}
+    .fld .form-control,.fld .form-select{width:100%;}
+    .fld .hint{font-size:11.5px;color:var(--muted,#8a91a4);margin-top:4px;}
+    .errorlist{color:#d63b34;font-size:12px;font-weight:600;margin-top:4px;list-style:none;padding:0;}
+</style>
+{% endblock %}

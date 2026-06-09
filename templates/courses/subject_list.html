@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Yo'nalishlar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "O'quv yo'nalishlari" %}</h1><div class="sub">{% trans "Fanlar va yo'nalishlar ro'yxati" %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'courses:list' %}" class="btn btn-light">📚 {% trans "Guruhlar" %}</a>
+        <a href="{% url 'courses:subject_create' %}" class="btn btn-primary">➕ {% trans "Yangi yo'nalish" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-4">
+    {% for s in subjects %}
+    <div class="card">
+        <div class="card__body" style="text-align:center;">
+            <div class="stat__ico" style="margin:0 auto 12px;width:56px;height:56px;font-size:26px;background:{{ s.color }}22;color:{{ s.color }};">{{ s.icon }}</div>
+            <h3>{{ s.name }}</h3>
+            <p class="text-muted" style="font-size:13px;margin:6px 0 12px;">{% blocktrans with n=s.course_count %}{{ n }} ta guruh{% endblocktrans %}</p>
+            <a href="{% url 'courses:subject_edit' s.slug %}" class="btn btn-light btn-sm">✏️ {% trans "Tahrir" %}</a>
+            {% if not s.is_active %}<span class="badge muted" style="margin-top:8px;">{% trans "Nofaol" %}</span>{% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty" style="grid-column:1/-1;"><div class="ico">📂</div>{% trans "Yo'nalish yo'q." %} <a href="{% url 'courses:subject_create' %}" style="color:var(--brand);">{% trans "Birinchisini qo'shing" %}</a>.</div>
+    {% endfor %}
+</div>
+{% endblock %}

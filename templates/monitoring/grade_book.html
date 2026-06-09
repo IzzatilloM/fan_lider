@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=course.name %}Baholar — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'monitoring:home' %}" class="text-muted" style="font-size:13px;">← {% trans "Monitoring" %}</a>
+        <h1>📊 {% trans "Baholar jurnali" %}</h1>
+        <div class="sub">{{ course.name }} · {{ course.subject.name }}</div>
+    </div>
+    <div class="page-head__actions"><a href="{% url 'monitoring:assessment_create' %}?course={{ course.id }}" class="btn btn-primary">➕ {% trans "Baho qo'shish" %}</a></div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>🏆 {% trans "O'quvchilar reytingi" %}</h3></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for s in summary %}
+                <div class="li">
+                    <span style="font-weight:800;width:24px;color:var(--muted);">{{ forloop.counter }}</span>
+                    <span class="avatar">{{ s.student.initials }}</span>
+                    <div class="li__main"><div class="li__title">{{ s.student.full_name }}</div>
+                        <div class="bar" style="margin-top:5px;"><span style="width:{{ s.avg }}%;"></span></div></div>
+                    <div class="li__right">{{ s.avg }}%</div>
+                </div>
+                {% empty %}<div class="empty"><div class="ico">📊</div>{% trans "O'quvchi yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>{% trans "So'nggi baholar" %}</h3></div>
+        <div class="table-wrap">
+            <table class="tbl">
+                <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Turi" %}</th><th>{% trans "Sana" %}</th><th class="num">{% trans "Natija" %}</th><th></th></tr></thead>
+                <tbody>
+                    {% for a in assessments %}
+                    <tr>
+                        <td class="cell__name" style="font-size:13px;">{{ a.student.short_name }}</td>
+                        <td><span class="badge muted">{{ a.get_type_display }}</span></td>
+                        <td>{{ a.date|date:"d.m" }}</td>
+                        <td class="num"><span class="badge {{ a.badge_class }}">{{ a.score|floatformat:0 }}/{{ a.max_score|floatformat:0 }} ({{ a.percentage }}%)</span></td>
+                        <td class="num"><a href="{% url 'monitoring:assessment_delete' a.pk %}" class="btn btn-ghost btn-sm">🗑️</a></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5"><div class="empty"><div class="ico">📝</div>{% trans "Baho yo'q" %}</div></td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

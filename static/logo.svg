@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Fan Lider logo">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffb347"/>
+      <stop offset="0.5" stop-color="#f6911e"/>
+      <stop offset="1" stop-color="#d4640f"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e07a12"/>
+      <stop offset="1" stop-color="#a8480a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Shield body -->
+  <path fill="url(#gold)" stroke="#7a3406" stroke-width="10" stroke-linejoin="round"
+        d="M256 28 L452 96 V250 C452 372 366 446 256 486 C146 446 60 372 60 250 V96 Z"/>
+  <!-- Inner border line -->
+  <path fill="none" stroke="#fff3e2" stroke-width="7" stroke-linejoin="round" opacity="0.55"
+        d="M256 70 L414 124 V250 C414 350 344 412 256 446 C168 412 98 350 98 250 V124 Z"/>
+
+  <!-- Monogram F -->
+  <path fill="#fff3e2" stroke="#7a3406" stroke-width="7" stroke-linejoin="round"
+        d="M150 150 H276 V196 H206 V232 H262 V276 H206 V366 H150 Z"/>
+  <!-- Monogram L -->
+  <path fill="url(#goldDark)" stroke="#7a3406" stroke-width="7" stroke-linejoin="round"
+        d="M300 150 H356 V320 H424 V366 H300 Z"/>
+
+  <!-- Bottom accent gem -->
+  <path fill="#fff3e2" opacity="0.85" d="M256 300 l26 34 -26 70 -26-70 z"/>
+</svg>

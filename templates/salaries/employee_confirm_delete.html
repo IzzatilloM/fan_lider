@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Xodimni o'chirish" %}{% endblock %}
+{% block content %}
+<div class="card" style="max-width:520px;">
+    <div class="card__body">
+        <h3 style="margin-bottom:10px;">{% trans "Xodimni o'chirish" %}</h3>
+        <p class="text-muted">{% blocktrans with name=employee.full_name %}<b>{{ name }}</b> ni va unga tegishli barcha oylik yozuvlarini o'chirmoqchimisiz? Bu amalni qaytarib bo'lmaydi.{% endblocktrans %}</p>
+        <form method="post" class="form-actions">
+            {% csrf_token %}
+            <button class="btn btn-danger">🗑️ {% trans "Ha, o'chirish" %}</button>
+            <a href="{% url 'salaries:employees' %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

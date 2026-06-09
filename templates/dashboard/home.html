@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Boshqaruv paneli" %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <div>
+        <h1>{% blocktrans with name=user.first_name|default:user.display_name %}Salom, {{ name }}! 👋{% endblocktrans %}</h1>
+        <div class="sub">{% blocktrans with brand=BRAND_NAME %}{{ brand }} o'quv markazi — umumiy holat{% endblocktrans %}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'enrollments:application_list' %}" class="btn btn-light">📝 {% trans "Arizalar" %}</a>
+        <a href="{% url 'payments:payment_create' %}" class="btn btn-primary">💳 {% trans "To'lov qabul qilish" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat">
+        <div class="stat__top">
+            <div class="stat__ico">🎓</div>
+            <div><div class="stat__label">{% trans "Faol o'quvchilar" %}</div></div>
+        </div>
+        <div class="stat__value">{{ active_students }}</div>
+        <div class="stat__hint">{% blocktrans with total=total_students %}Jami {{ total }} ta ro'yxatda{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top">
+            <div class="stat__ico green">💰</div>
+            <div><div class="stat__label">{% trans "Shu oy tushum" %}</div></div>
+        </div>
+        <div class="stat__value">{{ revenue_month|floatformat:0|intcomma }}</div>
+        <div class="stat__hint">{% trans "so'm — joriy oy" %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top">
+            <div class="stat__ico red">⚠️</div>
+            <div><div class="stat__label">{% trans "Qarzdorlik" %}</div></div>
+        </div>
+        <div class="stat__value">{{ total_debt|floatformat:0|intcomma }}</div>
+        <div class="stat__hint">{% blocktrans with n=debtors_count %}{{ n }} ta qarzdor o'quvchi{% endblocktrans %}</div>
+    </div>
+    <div class="stat">
+        <div class="stat__top">
+            <div class="stat__ico amber">📝</div>
+            <div><div class="stat__label">{% trans "Yangi arizalar" %}</div></div>
+        </div>
+        <div class="stat__value">{{ new_apps }}</div>
+        <div class="stat__hint">{% blocktrans with n=month_apps %}Bu oy {{ n }} ta keldi{% endblocktrans %}</div>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat"><div class="stat__label">{% trans "Faol guruhlar" %}</div><div class="stat__value" style="font-size:22px;">{{ total_groups }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "O'qituvchilar" %}</div><div class="stat__value" style="font-size:22px;">{{ total_teachers }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Davomat (hafta)" %}</div><div class="stat__value" style="font-size:22px;">{{ attendance_rate }}%</div></div>
+    <div class="stat"><div class="stat__label">{% trans "O'rtacha baho" %}</div><div class="stat__value" style="font-size:22px;">{{ avg_score }}%</div></div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:18px;">
+    <div class="card">
+        <div class="card__head"><h3>📈 {% trans "Oxirgi 6 oy tushumi" %}</h3></div>
+        <div class="card__body"><canvas id="revChart" height="120"></canvas></div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>🔄 {% trans "Arizalar holati (funnel)" %}</h3></div>
+        <div class="card__body">
+            <canvas id="funnelChart" height="120"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>🆕 {% trans "So'nggi arizalar" %}</h3>
+            <a href="{% url 'enrollments:application_list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a>
+        </div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for a in recent_apps %}
+                <a href="{% url 'enrollments:application_detail' a.pk %}" class="li">
+                    <span class="avatar">{{ a.full_name|slice:":1" }}</span>
+                    <div class="li__main">
+                        <div class="li__title">{{ a.full_name }}</div>
+                        <div class="li__sub">{{ a.phone }} · {{ a.subject.name|default:"—" }}</div>
+                    </div>
+                    <div class="li__right"><span class="badge brand">{{ a.get_status_display }}</span></div>
+                </a>
+                {% empty %}<div class="empty"><div class="ico">📭</div>{% trans "Hozircha ariza yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>💳 {% trans "So'nggi to'lovlar" %}</h3>
+            <a href="{% url 'payments:payment_list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a>
+        </div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for p in recent_payments %}
+                <div class="li">
+                    <span class="avatar">{{ p.student.initials }}</span>
+                    <div class="li__main">
+                        <div class="li__title">{{ p.student.full_name }}</div>
+                        <div class="li__sub">{{ p.get_method_display }} · {{ p.paid_at|date:"d.m.Y" }}</div>
+                    </div>
+                    <div class="li__right text-success">+{{ p.amount|floatformat:0|intcomma }}</div>
+                </div>
+                {% empty %}<div class="empty"><div class="ico">💸</div>{% trans "Hozircha to'lov yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if top_debtors %}
+<div class="card" style="margin-top:18px;">
+    <div class="card__head"><h3>⚠️ {% trans "Eng katta qarzdorlar" %}</h3>
+        <a href="{% url 'payments:debtors' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a>
+    </div>
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Telefon" %}</th><th class="num">{% trans "Qarz (so'm)" %}</th><th></th></tr></thead>
+            <tbody>
+                {% for s in top_debtors %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ s.initials }}</span><span class="cell__name">{{ s.full_name }}</span></div></td>
+                    <td>{{ s.phone }}</td>
+                    <td class="num text-danger money">{{ s.debt_amount|floatformat:0|intcomma }}</td>
+                    <td class="num"><a href="{% url 'payments:payment_create' %}?student={{ s.id }}" class="btn btn-soft btn-sm">{% trans "To'lov" %}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const BRAND = '{{ BRAND_COLOR }}';
+const rev = {{ revenue_series_json|safe }};
+const funnel = {{ app_funnel_json|safe }};
+
+new Chart(document.getElementById('revChart'), {
+    type: 'bar',
+    data: {
+        labels: rev.map(r => r.label),
+        datasets: [{ data: rev.map(r => r.value), backgroundColor: BRAND, borderRadius: 8, maxBarThickness: 38 }]
+    },
+    options: { plugins:{legend:{display:false}}, scales:{ y:{ ticks:{ callback:v=> (v/1000)+'k' }, grid:{color:'#eef0f4'} }, x:{grid:{display:false}} } }
+});
+
+new Chart(document.getElementById('funnelChart'), {
+    type: 'doughnut',
+    data: {
+        labels: funnel.map(f => f.label),
+        datasets: [{ data: funnel.map(f => f.value),
+            backgroundColor: ['#D4640F','#e8923f','#f0b27a','#1f9d55','#d63b34'] }]
+    },
+    options: { plugins:{legend:{position:'right'}}, cutout:'62%' }
+});
+</script>
+{% endblock %}

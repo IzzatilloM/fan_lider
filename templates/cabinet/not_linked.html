@@ -1,0 +1,15 @@
+{% extends 'cabinet/base_cabinet.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="card" style="max-width:560px;margin:40px auto;">
+    <div class="card__body" style="text-align:center;padding:42px 28px;">
+        <div style="font-size:46px;margin-bottom:12px;">🔗</div>
+        <h2 style="font-size:20px;margin-bottom:8px;">{% trans "Hisob hali bog'lanmagan" %}</h2>
+        <p class="text-muted" style="margin:0 0 18px;">
+            {% trans "Sizning foydalanuvchi hisobingiz hali o'quvchi profiliga bog'lanmagan. Iltimos, markaz ma'muriyatiga murojaat qiling." %}
+        </p>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-light">🚪 {% trans "Chiqish" %}</a>
+    </div>
+</div>
+{% endblock %}

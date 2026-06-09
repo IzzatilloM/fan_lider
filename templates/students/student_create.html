@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Yangi o'quvchi" %}{% endblock %}
+{% block content %}
+<div style="max-width:820px;margin:0 auto;">
+    <div class="page-head">
+        <div>
+            <a href="{% url 'students:list' %}" class="text-muted" style="font-size:13px;">← {% trans "O'quvchilar" %}</a>
+            <h1>{% trans "Yangi o'quvchi qo'shish" %}</h1>
+            <div class="sub">{% trans "Ma'lumotlarni to'ldiring va xohlasangiz darhol kabinet logini yarating." %}</div>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>👤 {% trans "Shaxsiy ma'lumotlar" %}</h3></div>
+            <div class="card__body">
+                <div class="form-grid">{% include 'partials/form_fields.html' %}</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>🔐 {% trans "Kabinet logini (username / parol)" %}</h3></div>
+            <div class="card__body">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:14px;font-weight:600;">
+                    <input type="checkbox" name="create_login" value="1" checked
+                           onchange="document.getElementById('loginFields').style.opacity=this.checked?'1':'.45';">
+                    {% trans "O'quvchi uchun shaxsiy kabinet logini yaratilsin" %}
+                </label>
+                <div id="loginFields" class="form-grid" style="grid-template-columns:1fr 1fr;">
+                    <div class="field">
+                        <label>{% trans "Username (login)" %}</label>
+                        <input class="form-control" name="username" placeholder="{% trans "Bo'sh — avtomatik (ism+familiya)" %}">
+                        <span class="help">{% trans "Bo'sh qoldirsangiz tizim o'zi unikal login tavsiya qiladi." %}</span>
+                    </div>
+                    <div class="field">
+                        <label>{% trans "Parol" %}</label>
+                        <input class="form-control" name="password" placeholder="{% trans "Bo'sh — avtomatik xavfsiz parol" %}">
+                        <span class="help">{% trans "Telegram ulangan bo'lsa, login va parol botga yuboriladi." %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-primary">💾 {% trans "Saqlash" %}</button>
+            <a href="{% url 'students:list' %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Xodimlar" %}{% endblock %}
+{% block content %}
+
+<div class="page-head">
+    <div>
+        <h1>{% trans "Xodimlar" %}</h1>
+        <div class="sub">{% blocktrans with active=active_count %}Oylik hisoblanadigan barcha xodimlar va ularning stavkalari. Faol: {{ active }}{% endblocktrans %}</div>
+    </div>
+    <div class="page-head__actions">
+        <form method="post" action="{% url 'salaries:sync' %}" style="display:inline;">
+            {% csrf_token %}
+            <button class="btn btn-light">🔄 {% trans "Foydalanuvchilardan import" %}</button>
+        </form>
+        <a href="{% url 'salaries:employee_create' %}" class="btn btn-primary">➕ {% trans "Yangi xodim" %}</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr>
+                <th>{% trans "F.I.O." %}</th><th>{% trans "Lavozim" %}</th><th>{% trans "Ish turi" %}</th>
+                <th class="num">{% trans "Oylik / stavka" %}</th><th>{% trans "KPI %" %}</th><th>{% trans "Holat" %}</th><th></th>
+            </tr></thead>
+            <tbody>
+                {% for e in employees %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ e.initials }}</span>
+                        <span><span class="cell__name">{{ e.full_name }}</span>
+                        {% if e.user %}<br><span class="cell__meta">{{ e.user.email }}</span>{% endif %}</span></div></td>
+                    <td>{{ e.get_position_display }}</td>
+                    <td>{{ e.get_employment_type_display }}</td>
+                    <td class="num money">
+                        {% if e.employment_type == 'hourly' %}{{ e.hourly_rate|floatformat:0|intcomma }}/{% trans "soat" %}
+                        {% elif e.employment_type == 'per_student' %}{{ e.per_student_rate|floatformat:0|intcomma }}/{% trans "o'quvchi" %}
+                        {% else %}{{ e.base_salary|floatformat:0|intcomma }}{% endif %}
+                    </td>
+                    <td>{{ e.kpi_bonus_pct|floatformat:0 }}%</td>
+                    <td>{% if e.is_active %}<span class="badge success">{% trans "Faol" %}</span>{% else %}<span class="badge muted">{% trans "Nofaol" %}</span>{% endif %}</td>
+                    <td style="display:flex;gap:6px;">
+                        <a href="{% url 'salaries:employee_edit' e.pk %}" class="btn btn-light btn-sm">✏️</a>
+                        <a href="{% url 'salaries:employee_delete' e.pk %}" class="btn btn-light btn-sm">🗑️</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7"><div class="empty"><div class="ico">👥</div>{% trans "Hali xodim yo'q." %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

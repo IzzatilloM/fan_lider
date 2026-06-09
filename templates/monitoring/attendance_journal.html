@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=course.name %}Davomat jurnali — {{ name }}{% endblocktrans %}{% endblock %}
+{% block extra_head %}<style>
+.jrnl th, .jrnl td{padding:7px 6px;text-align:center;}
+.jrnl td:first-child, .jrnl th:first-child{text-align:left;position:sticky;left:0;background:#fff;min-width:170px;}
+.jrnl .att{margin:0 auto;}
+</style>{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'monitoring:home' %}" class="text-muted" style="font-size:13px;">← {% trans "Monitoring" %}</a>
+        <h1>📅 {% trans "Davomat jurnali" %}</h1>
+        <div class="sub">{{ course.name }} · {{ course.subject.name }}</div>
+    </div>
+    <div class="page-head__actions"><a href="{% url 'monitoring:attendance_take' course.slug %}" class="btn btn-primary">✅ {% trans "Davomat olish" %}</a></div>
+</div>
+
+<form method="get" class="toolbar">
+    <select name="month" class="form-select" style="max-width:160px;" onchange="this.form.submit()">
+        {% for i,m in months %}<option value="{{ i }}" {% if i == month %}selected{% endif %}>{{ m }}</option>{% endfor %}
+    </select>
+    <input type="number" name="year" value="{{ year }}" class="form-control" style="max-width:110px;" onchange="this.form.submit()">
+</form>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl jrnl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th>
+                {% for d in days %}<th>{{ d }}</th>{% endfor %}
+                <th>%</th></tr></thead>
+            <tbody>
+                {% for r in matrix %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ r.student.initials }}</span><span class="cell__name" style="font-size:13px;">{{ r.student.full_name }}</span></div></td>
+                    {% for c in r.cells %}
+                    <td><span class="att {% if c.status %}{{ c.status }}{% else %}empty{% endif %}">{% if c.status == 'present' %}+{% elif c.status == 'absent' %}–{% elif c.status == 'late' %}K{% elif c.status == 'excused' %}S{% endif %}</span></td>
+                    {% endfor %}
+                    <td><b class="{% if r.percent >= 80 %}text-success{% elif r.percent < 50 %}text-danger{% endif %}">{{ r.percent }}%</b></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="{{ days|length|add:2 }}"><div class="empty"><div class="ico">📅</div>{% trans "Bu oy uchun davomat yo'q" %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div style="margin-top:12px;font-size:13px;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;">
+    <span><span class="att present" style="display:inline-grid;width:22px;height:22px;">+</span> {% trans "Keldi" %}</span>
+    <span><span class="att absent" style="display:inline-grid;width:22px;height:22px;">–</span> {% trans "Kelmadi" %}</span>
+    <span><span class="att late" style="display:inline-grid;width:22px;height:22px;">K</span> {% trans "Kechikdi" %}</span>
+    <span><span class="att excused" style="display:inline-grid;width:22px;height:22px;">S</span> {% trans "Sababli" %}</span>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "O'qituvchilar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "O'qituvchilar" %}</h1><div class="sub">{% blocktrans with active=active_count total=total_count %}Markaz o'qituvchilari ({{ active }} faol / {{ total }}){% endblocktrans %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'instructors:create' %}" class="btn btn-primary">➕ {% trans "Yangi o'qituvchi" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-3">
+    {% for ins in instructors %}
+    <div class="card">
+        <div class="card__body">
+            <div class="cell" style="margin-bottom:12px;">
+                {% if ins.photo_url %}<img class="avatar lg" src="{{ ins.photo_url }}">{% else %}<span class="avatar lg">{{ ins.full_name|slice:":2"|upper }}</span>{% endif %}
+                <div><a href="{% url 'instructors:detail' ins.pk %}" class="cell__name" style="font-size:16px;">{{ ins.full_name }}</a>
+                    <div class="cell__meta">{{ ins.specialty|default:_("O'qituvchi") }}</div></div>
+            </div>
+            <div style="font-size:13px;color:var(--ink-soft);display:flex;flex-direction:column;gap:5px;">
+                <span>📞 {{ ins.phone|default:"—" }}</span>
+                <span>📚 {% blocktrans with n=ins.active_groups %}{{ n }} ta faol guruh{% endblocktrans %}</span>
+                <span>🎖️ {% blocktrans with n=ins.experience_years %}{{ n }} yil tajriba{% endblocktrans %}</span>
+            </div>
+            {% if request.user.is_admin_role %}
+            <div class="cred-box">
+                <div class="cred-row"><span class="cred-label">{% trans "Login" %}</span>
+                    {% if ins.user %}<code>{{ ins.user.username }}</code>{% else %}<span class="text-muted">—</span>{% endif %}</div>
+                <div class="cred-row"><span class="cred-label">{% trans "Parol" %}</span>
+                    {% if ins.user.plain_password %}
+                    <span class="pw-cell">
+                        <span class="pw-dots">••••••••</span>
+                        <span class="pw-real" style="display:none;"><code>{{ ins.user.plain_password }}</code></span>
+                        <button type="button" class="btn btn-ghost btn-sm pw-eye" title="{% trans 'Ko‘rsatish' %}">👁</button>
+                    </span>
+                    {% elif ins.user %}<span class="text-muted">{% trans "Parol saqlanmagan" %}</span>
+                    {% else %}<span class="text-muted">—</span>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+            <div style="margin-top:14px;display:flex;gap:8px;align-items:center;">
+                <a href="{% url 'instructors:detail' ins.pk %}" class="btn btn-light btn-sm">{% trans "Profil" %}</a>
+                <a href="{% url 'instructors:edit' ins.pk %}" class="btn btn-soft btn-sm">✏️ {% trans "Tahrir" %}</a>
+                <a href="{% url 'instructors:delete' ins.pk %}" class="btn btn-ghost btn-sm" title="{% trans "O'chirish" %}">🗑️</a>
+                {% if ins.is_active %}<span class="badge success" style="margin-left:auto;">{% trans "Faol" %}</span>{% else %}<span class="badge muted" style="margin-left:auto;">{% trans "Nofaol" %}</span>{% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty" style="grid-column:1/-1;"><div class="ico">👨‍🏫</div>{% trans "O'qituvchi yo'q." %} <a href="{% url 'instructors:create' %}" style="color:var(--brand);">{% trans "Birinchi o'qituvchini qo'shing" %}</a>.</div>
+    {% endfor %}
+</div>
+
+{% if request.user.is_admin_role %}
+<style>
+    .cred-box{margin-top:12px;padding-top:12px;border-top:1px solid var(--line,#e9ecf2);display:flex;flex-direction:column;gap:6px;font-size:13px;}
+    .cred-row{display:flex;align-items:center;gap:8px;}
+    .cred-label{min-width:48px;color:var(--ink-soft,#8a91a4);}
+    .pw-cell{display:inline-flex;align-items:center;gap:6px;}
+    .pw-dots{letter-spacing:2px;color:var(--muted,#8a91a4);}
+</style>
+<script>
+    document.querySelectorAll('.pw-eye').forEach(function(b){
+        b.addEventListener('click', function(){
+            var cell=b.closest('.pw-cell');
+            var dots=cell.querySelector('.pw-dots'), real=cell.querySelector('.pw-real');
+            var show=real.style.display==='none';
+            real.style.display=show?'inline':'none';
+            dots.style.display=show?'none':'inline';
+            b.textContent=show?'🙈':'👁';
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

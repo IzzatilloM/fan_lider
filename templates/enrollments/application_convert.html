@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "O'quvchiga aylantirish" %}{% endblock %}
+{% block content %}
+<div style="max-width:520px;margin:30px auto;">
+    <div class="card">
+        <div class="card__body" style="text-align:center;padding:34px;">
+            <div style="font-size:44px;">🎓</div>
+            <h2 style="margin:12px 0;">{% trans "Arizani o'quvchiga aylantirish" %}</h2>
+            <p class="text-muted" style="margin-bottom:8px;">{% trans "Quyidagi ariza asosida yangi o'quvchi profili yaratiladi:" %}</p>
+            <p style="font-weight:800;font-size:17px;">{{ application.full_name }}</p>
+            <p class="text-muted" style="margin-bottom:22px;">{{ application.phone }}{% if application.preferred_course %} · {% blocktrans with course=application.preferred_course.name %}{{ course }} guruhiga yoziladi{% endblocktrans %}{% endif %}</p>
+            <form method="post" style="display:flex;gap:10px;justify-content:center;">
+                {% csrf_token %}
+                <a href="{% url 'enrollments:application_detail' application.pk %}" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+                <button class="btn btn-primary">✅ {% trans "Tasdiqlash" %}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% load static i18n %}
+{% with ns=request.resolver_match.namespace role=request.user.role %}
+<aside class="sidebar" id="sidebar">
+    <a href="{% url 'dashboard:home' %}" class="sidebar__brand">
+        {% if CENTER and CENTER.logo %}
+        <img class="brand-logo" src="{{ CENTER.logo.url }}" alt="{{ BRAND_NAME }} logo">
+        {% else %}
+        <img class="brand-logo" src="{% static 'logo-round.png' %}" alt="{{ BRAND_NAME }} logo">
+        {% endif %}
+        <span>
+            <span class="brand-name">{{ BRAND_NAME }}</span><br>
+            <span class="brand-sub">{% trans "CRM Tizimi" %}</span>
+        </span>
+    </a>
+
+    <nav class="nav">
+        {% if user.is_superuser or role == 'admin' %}
+        {# ---------- ADMIN: to'liq ---------- #}
+        <div class="nav__label">{% trans "Asosiy" %}</div>
+        <a href="{% url 'dashboard:home' %}" class="nav__item {% if ns == 'dashboard' %}active{% endif %}">
+            <span class="ico">📊</span> {% trans "Boshqaruv paneli" %}
+        </a>
+
+        <div class="nav__label">{% trans "Sahifalar" %}</div>
+        <a href="{% url 'instructors:list' %}" class="nav__item {% if ns == 'instructors' %}active{% endif %}">
+            <span class="ico">👨‍🏫</span> {% trans "O'qituvchilar" %} (Teacher)
+        </a>
+        <a href="{% url 'students:list' %}" class="nav__item {% if ns == 'students' %}active{% endif %}">
+            <span class="ico">🎓</span> {% trans "O'quvchilar" %} (Student)
+        </a>
+
+        <div class="nav__label">{% trans "Ro'yxatdan o'tish" %}</div>
+        <a href="{% url 'enrollments:application_list' %}" class="nav__item {% if ns == 'enrollments' %}active{% endif %}">
+            <span class="ico">📝</span> {% trans "Onlayn arizalar" %}
+            {% if new_applications_count %}<span class="badge-dot">{{ new_applications_count }}</span>{% endif %}
+        </a>
+
+        <div class="nav__label">{% trans "To'lovlar" %}</div>
+        <a href="{% url 'payments:dashboard' %}" class="nav__item {% if ns == 'payments' %}active{% endif %}">
+            <span class="ico">💳</span> {% trans "Moliya / To'lovlar" %}
+        </a>
+
+        <div class="nav__label">{% trans "O'quv jarayoni" %}</div>
+        <a href="{% url 'monitoring:home' %}" class="nav__item {% if ns == 'monitoring' %}active{% endif %}">
+            <span class="ico">📈</span> {% trans "Monitoring" %}
+        </a>
+        <a href="{% url 'courses:list' %}" class="nav__item {% if ns == 'courses' %}active{% endif %}">
+            <span class="ico">📚</span> {% trans "Guruhlar" %}
+        </a>
+
+        <div class="nav__label">{% trans "Markaz" %}</div>
+        <a href="{% url 'salaries:home' %}" class="nav__item {% if ns == 'salaries' %}active{% endif %}">
+            <span class="ico">💰</span> {% trans "Oyliklar (AI)" %}
+        </a>
+
+        <div class="nav__label">{% trans "Ko'rinishlar" %}</div>
+        <a href="{% url 'dashboard:director' %}" class="nav__item {% if request.resolver_match.url_name == 'director' %}active{% endif %}">
+            <span class="ico">🧭</span> {% trans "Direktor paneli" %}
+        </a>
+        <a href="{% url 'dashboard:teacher' %}" class="nav__item {% if request.resolver_match.url_name == 'teacher' or request.resolver_match.url_name == 'teacher_preview' %}active{% endif %}">
+            <span class="ico">👨‍🏫</span> {% trans "O'qituvchi paneli" %}
+        </a>
+
+        <div class="nav__label">{% trans "Boshqaruv" %}</div>
+        <a href="{% url 'accounts:user_list' %}" class="nav__item {% if request.resolver_match.url_name == 'user_list' or request.resolver_match.url_name == 'user_create' or request.resolver_match.url_name == 'user_edit' %}active{% endif %}">
+            <span class="ico">👥</span> {% trans "Foydalanuvchilar" %}
+        </a>
+        <a href="{% url 'accounts:settings_home' %}" class="nav__item {% if request.resolver_match.url_name == 'settings_home' %}active{% endif %}">
+            <span class="ico">⚙️</span> {% trans "Sozlamalar" %}
+        </a>
+        <a href="{% url 'accounts:reset_requests' %}" class="nav__item {% if request.resolver_match.url_name == 'reset_requests' %}active{% endif %}">
+            <span class="ico">🔑</span> {% trans "Parol murojaatlari" %}
+            {% if pending_reset_count %}<span class="badge-dot">{{ pending_reset_count }}</span>{% endif %}
+        </a>
+        <a href="{% url 'enrollments:apply' %}" target="_blank" class="nav__item">
+            <span class="ico">🌐</span> {% trans "Ommaviy ariza" %}
+        </a>
+
+        {% elif role == 'director' %}
+        {# ---------- DIREKTOR: monitoring ---------- #}
+        <div class="nav__label">{% trans "Boshqaruv" %}</div>
+        <a href="{% url 'dashboard:director' %}" class="nav__item {% if ns == 'dashboard' %}active{% endif %}">
+            <span class="ico">📊</span> {% trans "Direktor paneli" %}
+        </a>
+
+        <div class="nav__label">{% trans "Monitoring" %}</div>
+        <a href="{% url 'payments:dashboard' %}" class="nav__item {% if ns == 'payments' %}active{% endif %}">
+            <span class="ico">💳</span> {% trans "To'lovlar monitoringi" %}
+        </a>
+        <a href="{% url 'monitoring:home' %}" class="nav__item {% if ns == 'monitoring' %}active{% endif %}">
+            <span class="ico">📈</span> {% trans "O'quv jarayoni" %}
+        </a>
+        <a href="{% url 'students:list' %}" class="nav__item {% if ns == 'students' %}active{% endif %}">
+            <span class="ico">🎓</span> {% trans "O'quvchilar" %}
+        </a>
+        <a href="{% url 'courses:list' %}" class="nav__item {% if ns == 'courses' %}active{% endif %}">
+            <span class="ico">📚</span> {% trans "Guruhlar" %}
+        </a>
+        <a href="{% url 'instructors:list' %}" class="nav__item {% if ns == 'instructors' %}active{% endif %}">
+            <span class="ico">👨‍🏫</span> {% trans "O'qituvchilar" %}
+        </a>
+
+        {% elif role == 'teacher' %}
+        {# ---------- O'QITUVCHI ---------- #}
+        <div class="nav__label">{% trans "Asosiy" %}</div>
+        <a href="{% url 'dashboard:teacher' %}" class="nav__item {% if request.resolver_match.url_name == 'teacher' or request.resolver_match.url_name == 'teacher_preview' %}active{% endif %}">
+            <span class="ico">🏠</span> {% trans "Mening panelim" %}
+        </a>
+        <a href="{% url 'dashboard:teacher_students' %}" class="nav__item {% if request.resolver_match.url_name == 'teacher_students' or request.resolver_match.url_name == 'teacher_students_preview' %}active{% endif %}">
+            <span class="ico">👥</span> {% trans "Guruh o'quvchilarim" %}
+        </a>
+        <a href="{% url 'monitoring:home' %}" class="nav__item {% if ns == 'monitoring' %}active{% endif %}">
+            <span class="ico">📈</span> {% trans "Davomat va baholar" %}
+        </a>
+        <a href="{% url 'salaries:home' %}" class="nav__item {% if ns == 'salaries' %}active{% endif %}">
+            <span class="ico">💰</span> {% trans "Mening oyligim" %}
+        </a>
+        {% endif %}
+
+        <div class="nav__label">{% trans "Hisob" %}</div>
+        {% if user.is_superuser or role == 'admin' %}
+        <a href="{% url 'accounts:profile' %}" class="nav__item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+            <span class="ico">👤</span> {% trans "Profil" %}
+        </a>
+        {% else %}
+        <a href="{% url 'accounts:profile' %}" class="nav__item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+            <span class="ico">⚙️</span> {% trans "Sozlamalar" %}
+        </a>
+        {% endif %}
+        <a href="{% url 'accounts:logout' %}" class="nav__item">
+            <span class="ico">🚪</span> {% trans "Chiqish" %}
+        </a>
+    </nav>
+</aside>
+{% endwith %}

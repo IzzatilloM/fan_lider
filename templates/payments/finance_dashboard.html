@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Moliya boshqaruvi" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "Moliya / To'lovlar" %}</h1><div class="sub">{% trans "To'lovlar, hisob-fakturalar va qarzdorlik nazorati" %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'payments:invoice_generate' %}" class="btn btn-light">🧾 {% trans "Oylik hisob-fakturalar" %}</a>
+        <a href="{% url 'payments:payment_create' %}" class="btn btn-primary">💳 {% trans "To'lov qabul qilish" %}</a>
+    </div>
+</div>
+
+<div class="tabs">
+    <a href="{% url 'payments:dashboard' %}" class="active">{% trans "Umumiy" %}</a>
+    <a href="{% url 'payments:payment_list' %}">{% trans "To'lovlar" %}</a>
+    <a href="{% url 'payments:invoice_list' %}">{% trans "Hisob-fakturalar" %}</a>
+    <a href="{% url 'payments:debtors' %}">{% trans "Qarzdorlar" %}</a>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat"><div class="stat__top"><div class="stat__ico green">💰</div><div class="stat__label">{% trans "Shu oy tushum" %}</div></div>
+        <div class="stat__value">{{ total_month|floatformat:0|intcomma }}</div><div class="stat__hint">{% blocktrans with n=payments_count %}{{ n }} ta to'lov{% endblocktrans %}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico">📊</div><div class="stat__label">{% trans "Jami tushum" %}</div></div>
+        <div class="stat__value" style="font-size:22px;">{{ total_all|floatformat:0|intcomma }}</div><div class="stat__hint">{% trans "Butun davr" %}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico red">⚠️</div><div class="stat__label">{% trans "Qarzdorlik" %}</div></div>
+        <div class="stat__value text-danger" style="font-size:22px;">{{ total_debt|floatformat:0|intcomma }}</div><div class="stat__hint">{% blocktrans with n=debtors_count %}{{ n }} o'quvchi{% endblocktrans %}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico amber">🧾</div><div class="stat__label">{% trans "To'lanmagan faktura" %}</div></div>
+        <div class="stat__value">{{ unpaid_count }}</div><div class="stat__hint">{% trans "Kutilmoqda" %}</div></div>
+</div>
+
+<div class="grid cols-2" style="margin-bottom:18px;">
+    <div class="card">
+        <div class="card__head"><h3>📈 {% trans "Oxirgi 6 oy tushumi" %}</h3></div>
+        <div class="card__body"><canvas id="revChart" height="130"></canvas></div>
+    </div>
+    <div class="card">
+        <div class="card__head"><h3>{% trans "So'nggi to'lovlar" %}</h3>
+            <a href="{% url 'payments:payment_list' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for p in recent_payments %}
+                <div class="li"><span class="avatar">{{ p.student.initials }}</span>
+                    <div class="li__main"><div class="li__title">{{ p.student.full_name }}</div>
+                        <div class="li__sub">{{ p.get_method_display }} · {{ p.paid_at|date:"d.m.Y" }}</div></div>
+                    <div class="li__right text-success">+{{ p.amount|floatformat:0|intcomma }}</div></div>
+                {% empty %}<div class="empty"><div class="ico">💸</div>{% trans "To'lov yo'q" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if top_debtors %}
+<div class="card">
+    <div class="card__head"><h3>⚠️ {% trans "Eng katta qarzdorlar" %}</h3><a href="{% url 'payments:debtors' %}" class="btn btn-ghost btn-sm right">{% trans "Barchasi" %} →</a></div>
+    <div class="table-wrap"><table class="tbl">
+        <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Telefon" %}</th><th class="num">{% trans "Qarz" %}</th><th></th></tr></thead>
+        <tbody>{% for s in top_debtors %}
+        <tr><td><div class="cell"><span class="avatar">{{ s.initials }}</span><span class="cell__name">{{ s.full_name }}</span></div></td>
+            <td>{{ s.phone }}</td><td class="num text-danger money">{{ s.debt_amount|floatformat:0|intcomma }}</td>
+            <td class="num"><a href="{% url 'payments:payment_create' %}?student={{ s.id }}" class="btn btn-soft btn-sm">{% trans "To'lov" %}</a></td></tr>
+        {% endfor %}</tbody>
+    </table></div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const rev = {{ monthly_series_json|default:'[]'|safe }};
+const series = [{% for m in monthly_series %}{label:'{{ m.label }}',value:{{ m.value }}},{% endfor %}];
+new Chart(document.getElementById('revChart'), {
+    type:'line',
+    data:{labels:series.map(s=>s.label),datasets:[{data:series.map(s=>s.value),borderColor:'#D4640F',backgroundColor:'rgba(212,100,15,.12)',fill:true,tension:.35,borderWidth:3,pointBackgroundColor:'#D4640F'}]},
+    options:{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>(v/1000)+'k'},grid:{color:'#eef0f4'}},x:{grid:{display:false}}}}
+});
+</script>
+{% endblock %}

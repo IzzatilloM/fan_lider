@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "Guruh o'quvchilarim" %}{% endblock %}
+
+{% block content %}
+{% if admin_preview %}
+<div class="alert info" style="justify-content:space-between;margin-bottom:16px;">
+    <span>👁️ <b>{% trans "Admin ko'rinishi" %}</b> — {% blocktrans with name=admin_preview.full_name %}siz <b>{{ name }}</b> o'qituvchining o'quvchilarini ko'rib turibsiz.{% endblocktrans %}</span>
+    <a href="{% url 'instructors:detail' admin_preview.pk %}" class="btn btn-light btn-sm">← {% trans "Profilga qaytish" %}</a>
+</div>
+{% endif %}
+
+<div class="page-head">
+    <div>
+        <h1>👥 {% trans "Guruh o'quvchilarim" %}</h1>
+        <div class="sub">{% blocktrans with g=total_groups s=total_students %}{{ g }} ta guruh · {{ s }} ta o'quvchi — aloqa, davomat va o'zlashtirish{% endblocktrans %}</div>
+    </div>
+    <a href="{% if admin_preview %}{% url 'dashboard:teacher_preview' admin_preview.pk %}{% else %}{% url 'dashboard:teacher' %}{% endif %}" class="btn btn-light btn-sm">← {% trans "Panelga qaytish" %}</a>
+</div>
+
+{% for g in groups %}
+<div class="card" style="margin-bottom:18px;">
+    <div class="card__head">
+        <h3>
+            <span class="avatar" style="background:{{ g.course.subject.color }};color:#fff;width:26px;height:26px;font-size:14px;vertical-align:middle;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;">{{ g.course.subject.icon }}</span>
+            {{ g.course.name }}
+        </h3>
+        <span class="right text-muted" style="font-size:12.5px;">
+            {% if g.course.start_time %}⏰ {{ g.course.start_time|time:"H:i" }} · {% endif %}
+            👥 {{ g.students|length }} {% trans "o'quvchi" %}
+        </span>
+    </div>
+    <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+        <div class="list-divided">
+            {% for s in g.students %}
+            <div class="li">
+                {% if s.photo %}
+                <img class="avatar" src="{{ s.photo.url }}" alt="">
+                {% else %}
+                <span class="avatar">{{ s.initials }}</span>
+                {% endif %}
+                <div class="li__main">
+                    <div class="li__title">{{ s.full_name }}</div>
+                    <div class="li__sub" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:2px;">
+                        {% if s.phone %}<a href="tel:{{ s.phone }}" style="text-decoration:none;">📞 {{ s.phone }}</a>{% endif %}
+                        {% if s.parent_phone %}<span class="text-muted">👨‍👩‍👧 {{ s.parent_phone }}</span>{% endif %}
+                        {% if s.telegram_chat_id %}<a href="tg://user?id={{ s.telegram_chat_id }}" style="text-decoration:none;">✈️ Telegram</a>{% endif %}
+                        {% if s.is_debtor %}<span class="badge danger">{% trans "Qarz" %}</span>{% endif %}
+                    </div>
+                </div>
+                <div class="li__right" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <span class="badge soft" title="{% trans 'Davomat' %}">📈 {{ s.attendance_percentage }}%</span>
+                    <span class="badge soft" title="{% trans "O'rtacha baho" %}">⭐ {{ s.average_score }}%</span>
+                    <a href="{% url 'monitoring:student_report' s.slug %}" class="btn btn-soft btn-sm">📊 {% trans "Hisobot" %}</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty"><div class="ico">🪑</div>
+                {% trans "Bu guruhda hali faol o'quvchi yo'q." %}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="card">
+    <div class="card__body">
+        <div class="empty"><div class="ico">📚</div>
+            {% trans "Sizga hali guruh biriktirilmagan. Administratorga murojaat qiling." %}</div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

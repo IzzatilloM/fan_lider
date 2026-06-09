@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "O'quv monitoring" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "O'quv jarayoni monitoringi" %}</h1><div class="sub">{% trans "Davomat, baholar va dars jurnallari bo'yicha nazorat" %}</div></div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:20px;">
+    <div class="stat"><div class="stat__top"><div class="stat__ico">📋</div><div class="stat__label">{% trans "Davomat (7 kun)" %}</div></div><div class="stat__value">{{ attendance_week }}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico green">✅</div><div class="stat__label">{% trans "Kelganlar" %}</div></div><div class="stat__value">{{ present_week }}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico blue">📝</div><div class="stat__label">{% trans "Baholar (7 kun)" %}</div></div><div class="stat__value">{{ assessments_week }}</div></div>
+    <div class="stat"><div class="stat__top"><div class="stat__ico amber">📚</div><div class="stat__label">{% trans "Darslar (7 kun)" %}</div></div><div class="stat__value">{{ lessons_week }}</div></div>
+</div>
+
+<div class="page-head"><div><h1 style="font-size:18px;">{% trans "Guruhni tanlang" %}</h1></div></div>
+<div class="grid cols-3">
+    {% for c in courses %}
+    <div class="card">
+        <div class="card__body">
+            <div class="cell" style="margin-bottom:14px;">
+                <span class="stat__ico" style="background:{{ c.subject.color }}22;color:{{ c.subject.color }};">{{ c.subject.icon }}</span>
+                <div><div class="cell__name">{{ c.name }}</div><div class="cell__meta">{% blocktrans with n=c.students %}{{ n }} o'quvchi{% endblocktrans %} · {{ c.teacher.full_name|default:"—" }}</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <a href="{% url 'monitoring:attendance_take' c.slug %}" class="btn btn-primary btn-sm">✅ {% trans "Davomat" %}</a>
+                <a href="{% url 'monitoring:grade_book' c.slug %}" class="btn btn-light btn-sm">📊 {% trans "Baholar" %}</a>
+                <a href="{% url 'monitoring:attendance_journal' c.slug %}" class="btn btn-light btn-sm">📅 {% trans "Jurnal" %}</a>
+                <a href="{% url 'monitoring:lesson_journal' c.slug %}" class="btn btn-light btn-sm">📚 {% trans "Darslar" %}</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty" style="grid-column:1/-1;"><div class="ico">📈</div>{% trans "Faol guruh yo'q." %} <a href="{% url 'courses:create' %}" style="color:var(--brand);">{% trans "Guruh yarating" %}</a>.</div>
+    {% endfor %}
+</div>
+{% endblock %}

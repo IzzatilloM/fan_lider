@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=course.name %}Darslar jurnali — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'monitoring:home' %}" class="text-muted" style="font-size:13px;">← {% trans "Monitoring" %}</a>
+        <h1>📚 {% trans "Darslar jurnali" %}</h1>
+        <div class="sub">{{ course.name }} · {% trans "O'tilgan mavzular va uy vazifalari" %}</div>
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>➕ {% trans "Yangi dars qo'shish" %}</h3></div>
+        <div class="card__body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-grid" style="grid-template-columns:1fr;">{% include 'partials/form_fields.html' %}</div>
+                <div class="form-actions"><button class="btn btn-primary">💾 {% trans "Saqlash" %}</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>{% trans "O'tilgan darslar" %}</h3></div>
+        <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+            <div class="list-divided">
+                {% for l in lessons %}
+                <div class="li" style="align-items:flex-start;">
+                    <div class="li__main">
+                        <div class="li__title">{{ l.topic }}</div>
+                        <div class="li__sub">📅 {{ l.date|date:"d.m.Y" }}</div>
+                        {% if l.homework %}<div style="margin-top:6px;font-size:13px;"><b>{% trans "Uy vazifa" %}:</b> {{ l.homework }}</div>{% endif %}
+                    </div>
+                </div>
+                {% empty %}<div class="empty"><div class="ico">📚</div>{% trans "Hali dars kiritilmagan" %}</div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

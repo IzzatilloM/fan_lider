@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% trans "O'chirishni tasdiqlash" %}{% endblock %}
+{% block content %}
+<div style="max-width:480px;margin:40px auto;">
+    <div class="card">
+        <div class="card__body" style="text-align:center;padding:34px;">
+            <div style="font-size:46px;">🗑️</div>
+            <h2 style="margin:14px 0 8px;">{% trans "Rostdan o'chirilsinmi?" %}</h2>
+            <p class="text-muted" style="margin-bottom:6px;">{{ type|default:_("Ob'ekt") }}:</p>
+            <p style="font-weight:800;font-size:17px;margin-bottom:24px;">{{ object }}</p>
+            <form method="post" style="display:flex;gap:10px;justify-content:center;">
+                {% csrf_token %}
+                <a href="javascript:history.back()" class="btn btn-light">{% trans "Bekor qilish" %}</a>
+                <button type="submit" class="btn btn-danger">{% trans "Ha, o'chirish" %}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

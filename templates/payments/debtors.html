@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Qarzdorlar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "Qarzdor o'quvchilar" %}</h1><div class="sub">{% blocktrans with n=count %}{{ n }} ta qarzdor{% endblocktrans %} · {% trans "Jami" %}: <b class="text-danger">{{ total_debt|floatformat:0|intcomma }}</b> {% trans "so'm" %}</div></div>
+</div>
+
+<div class="tabs">
+    <a href="{% url 'payments:dashboard' %}">{% trans "Umumiy" %}</a>
+    <a href="{% url 'payments:payment_list' %}">{% trans "To'lovlar" %}</a>
+    <a href="{% url 'payments:invoice_list' %}">{% trans "Hisob-fakturalar" %}</a>
+    <a href="{% url 'payments:debtors' %}" class="active">{% trans "Qarzdorlar" %}</a>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Telefon" %}</th><th>{% trans "Ota-ona tel." %}</th><th class="num">{% trans "Qarz miqdori" %}</th><th></th></tr></thead>
+            <tbody>
+                {% for s in debtors %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ s.initials }}</span>
+                        <a href="{% url 'students:detail' s.slug %}" class="cell__name">{{ s.full_name }}</a></div></td>
+                    <td>{{ s.phone }}</td>
+                    <td>{{ s.parent_phone|default:"—" }}</td>
+                    <td class="num money text-danger">{{ s.debt_amount|floatformat:0|intcomma }}</td>
+                    <td class="num"><a href="{% url 'payments:payment_create' %}?student={{ s.id }}" class="btn btn-primary btn-sm">💳 {% trans "To'lov" %}</a></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5"><div class="empty"><div class="ico">🎉</div>{% trans "Qarzdorlar yo'q — barcha to'lovlar joyida!" %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

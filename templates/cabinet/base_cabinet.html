@@ -1,0 +1,135 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+    <title>{% block title %}{{ BRAND_NAME }} — {% trans "Mening kabinetim" %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+    <style>
+        .lang-switch{display:flex;align-items:center;gap:4px;background:var(--card,#fff);
+            border:1px solid var(--line,#e8ebf1);border-radius:10px;padding:3px 8px 3px 10px;
+            margin-right:6px;transition:border .15s,box-shadow .15s;}
+        .lang-switch:focus-within{border-color:var(--brand,#D4640F);box-shadow:0 0 0 3px rgba(212,100,15,.12);}
+        .lang-switch__globe{font-size:14px;line-height:1;}
+        .lang-switch select{border:none;background:transparent;font-weight:800;font-size:12.5px;
+            color:var(--ink,#161b26);cursor:pointer;outline:none;padding:3px 2px;letter-spacing:.4px;}
+        [data-theme="dark"] .lang-switch{background:rgba(255,255,255,.05);}
+        [data-theme="dark"] .lang-switch select{color:#e8ebf1;}
+        [data-theme="dark"] .lang-switch select option{color:#161b26;}
+
+        /* Chiqish (logout) tugmasi — yumaloq pill, qizg'ish ohang */
+        .logout-btn{display:inline-flex;align-items:center;gap:7px;flex:none;
+            height:38px;padding:0 16px;border-radius:999px;
+            border:1px solid var(--danger,#d63b34);background:var(--danger-soft,#fdeceb);
+            color:var(--danger,#d63b34);font-weight:700;font-size:13px;line-height:1;
+            text-decoration:none;cursor:pointer;white-space:nowrap;
+            transition:background .15s,color .15s,transform .15s,box-shadow .15s;}
+        .logout-btn:hover{background:var(--danger,#d63b34);color:#fff;transform:translateY(-1px);
+            box-shadow:0 4px 12px rgba(214,59,52,.28);}
+        .logout-btn__ico{font-size:15px;line-height:1;}
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="cab">
+<header class="cab-top">
+    <a href="{% url 'cabinet:overview' %}" class="cab-brand">
+        <img src="{% static 'logo.png' %}" alt="{{ BRAND_NAME }}">
+        <span>
+            <span class="cab-brand__name">{{ BRAND_NAME }}</span>
+            <span class="cab-brand__sub">{% trans "O'quvchi kabineti" %}</span>
+        </span>
+    </a>
+    <div class="topbar__spacer"></div>
+
+    {# ---- Til almashtirgich ---- #}
+    <form action="{% url 'set_language' %}" method="post" class="lang-switch" id="langForm">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <span class="lang-switch__globe">🌐</span>
+        <select name="language" onchange="document.getElementById('langForm').submit()" aria-label="{% trans 'Til' %}">
+            {% get_current_language as CURRENT %}
+            {% get_available_languages as LANGS %}
+            {% for code, name in LANGS %}
+            <option value="{{ code }}" {% if code == CURRENT %}selected{% endif %}>{{ code|upper }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <button class="theme-toggle" type="button" onclick="toggleTheme()" title="{% trans 'Tungi/kunduzgi rejim' %}">
+        <span class="theme-toggle__sun">☀️</span>
+        <span class="theme-toggle__moon">🌙</span>
+    </button>
+    <div class="userchip">
+        {% if admin_preview %}
+            <span class="avatar">{{ student.initials }}</span>
+            <span>
+                <span class="userchip__name">{{ student.full_name }}</span><br>
+                <span class="userchip__role">{% trans "Admin ko'rinishi" %}</span>
+            </span>
+        {% else %}
+            <a href="{% url 'accounts:profile' %}" class="userchip-link" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+            {% if user.avatar_url %}
+                <img class="avatar" src="{{ user.avatar_url }}" alt="">
+            {% elif user.student_profile.photo %}
+                <img class="avatar" src="{{ user.student_profile.photo.url }}" alt="">
+            {% else %}
+                <span class="avatar">{{ user.student_profile.initials|default:user.initials }}</span>
+            {% endif %}
+            <span>
+                <span class="userchip__name">{{ user.display_name }}</span><br>
+                <span class="userchip__role">{% trans "O'quvchi" %}</span>
+            </span>
+            </a>
+        {% endif %}
+    </div>
+    {% if admin_preview %}
+        <a href="{% url 'students:detail' student.slug %}" class="btn btn-light btn-sm" title="{% trans 'Orqaga' %}">← {% trans "Profil" %}</a>
+    {% else %}
+        <a href="{% url 'accounts:profile' %}" class="btn btn-light btn-sm" title="{% trans 'Sozlamalar' %}">⚙️ {% trans "Sozlamalar" %}</a>
+        <a href="{% url 'accounts:logout' %}" class="logout-btn" title="{% trans 'Chiqish' %}">
+            <span class="logout-btn__ico">🚪</span><span>{% trans "Chiqish" %}</span>
+        </a>
+    {% endif %}
+</header>
+
+<main class="cab-main">
+    {% if admin_preview %}
+    <div class="alert info" style="margin-bottom:16px;">
+        👁️ {% blocktrans with name=student.full_name %}<b>Admin ko'rinishi.</b> Siz <b>{{ name }}</b> o'quvchining shaxsiy kabinetini ko'rib turibsiz.{% endblocktrans %}
+    </div>
+    {% endif %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+    <footer class="cab-foot">© {{ BRAND_NAME }} CRM — {% trans "o'quvchi shaxsiy kabineti" %}</footer>
+</main>
+
+<script>
+function toggleTheme() {
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+}
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

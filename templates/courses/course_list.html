@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "Guruhlar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "O'quv guruhlari" %}</h1><div class="sub">{% trans "Barcha guruhlar va ularning to'ldirilishi" %}</div></div>
+    <div class="page-head__actions">
+        <a href="{% url 'courses:subject_list' %}" class="btn btn-light">📂 {% trans "Yo'nalishlar" %}</a>
+        <a href="{% url 'courses:create' %}" class="btn btn-primary">➕ {% trans "Yangi guruh" %}</a>
+    </div>
+</div>
+
+<form method="get" class="toolbar">
+    <div class="search">🔎<input type="text" name="q" value="{{ q }}" placeholder="{% trans "Guruh yoki yo'nalish..." %}"></div>
+    <select name="subject" class="form-select" style="max-width:200px;" onchange="this.form.submit()">
+        <option value="">{% trans "Barcha yo'nalish" %}</option>
+        {% for s in subjects %}<option value="{{ s.id }}" {% if subject_id == s.id|stringformat:'s' %}selected{% endif %}>{{ s.name }}</option>{% endfor %}
+    </select>
+    <select name="status" class="form-select" style="max-width:180px;" onchange="this.form.submit()">
+        <option value="">{% trans "Barcha holat" %}</option>
+        {% for v,l in status_choices %}<option value="{{ v }}" {% if status == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-light">{% trans "Filtr" %}</button>
+</form>
+
+<div class="grid cols-3">
+    {% for c in courses %}
+    <div class="card">
+        <div class="card__body">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                <span class="stat__ico" style="background:{{ c.subject.color }}22;color:{{ c.subject.color }};">{{ c.subject.icon }}</span>
+                <div>
+                    <a href="{% url 'courses:detail' c.slug %}" class="cell__name" style="font-size:15.5px;">{{ c.name }}</a>
+                    <div class="cell__meta">{{ c.subject.name }}</div>
+                </div>
+                <span class="badge {% if c.status == 'recruiting' %}info{% elif c.status == 'ongoing' %}success{% elif c.status == 'finished' %}muted{% else %}warning{% endif %}" style="margin-left:auto;">{{ c.get_status_display }}</span>
+            </div>
+            <div style="font-size:13px;color:var(--ink-soft);display:flex;flex-direction:column;gap:5px;margin-bottom:12px;">
+                <span>👨‍🏫 {% if c.teacher %}{{ c.teacher.full_name }}{% else %}{% trans "O'qituvchi tayinlanmagan" %}{% endif %}</span>
+                <span>🗓️ {{ c.get_weekdays_display }} {% if c.start_time %}· {{ c.start_time|time:"H:i" }}{% endif %}</span>
+                <span>💰 {% blocktrans with fee=c.monthly_fee|floatformat:0|intcomma %}{{ fee }} so'm / oy{% endblocktrans %}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;">
+                <span class="text-muted">{% trans "To'ldirilgan" %}</span>
+                <span><b>{{ c.students }}</b> / {{ c.capacity }}</span>
+            </div>
+            <div class="bar"><span style="width:{{ c.fill_percent }}%;"></span></div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty" style="grid-column:1/-1;"><div class="ico">📚</div>{% trans "Guruh topilmadi." %} <a href="{% url 'courses:create' %}" style="color:var(--brand);">{% trans "Yangi guruh qo'shing" %}</a>.</div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{{ student.full_name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'students:list' %}" class="text-muted" style="font-size:13px;">← {% trans "O'quvchilar" %}</a>
+        <h1>{{ student.full_name }}</h1>
+        <div class="sub">{{ student.get_status_display }} · {{ student.phone }}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'cabinet:admin_view' student.slug %}" class="btn btn-light">👁️ {% trans "Kabinet" %}</a>
+        <a href="{% url 'monitoring:student_report' student.slug %}" class="btn btn-light">📈 {% trans "Hisobot" %}</a>
+        <a href="{% url 'payments:payment_create' %}?student={{ student.id }}" class="btn btn-light">💳 {% trans "To'lov" %}</a>
+        <a href="{% url 'enrollments:enrollment_create' %}?student={{ student.id }}" class="btn btn-light">➕ {% trans "Guruhga yozish" %}</a>
+        <a href="{% url 'students:update' student.slug %}" class="btn btn-primary">✏️ {% trans "Tahrir" %}</a>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat">
+        <div class="stat__label">{% trans "Balans" %}</div>
+        <div class="stat__value {% if student.is_debtor %}text-danger{% elif student.balance > 0 %}text-success{% endif %}" style="font-size:21px;">{{ student.balance|floatformat:0|intcomma }}</div>
+        <div class="stat__hint">{% if student.is_debtor %}{% trans "Qarzdor" %}{% else %}{% trans "Joriy balans" %}{% endif %}</div>
+    </div>
+    <div class="stat"><div class="stat__label">{% trans "Davomat" %}</div><div class="stat__value" style="font-size:21px;">{{ student.attendance_percentage }}%</div></div>
+    <div class="stat"><div class="stat__label">{% trans "O'rtacha baho" %}</div><div class="stat__value" style="font-size:21px;">{{ student.average_score }}%</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Faol guruhlar" %}</div><div class="stat__value" style="font-size:21px;">{{ enrollments|length }}</div></div>
+</div>
+
+<div class="grid cols-2">
+    <div>
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>{% trans "Shaxsiy ma'lumotlar" %}</h3></div>
+            <div class="card__body" style="font-size:13.5px;line-height:2;">
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Otasining ismi" %}</span><b>{{ student.middle_name|default:"—" }}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Ota-ona tel." %}</span><b>{{ student.parent_phone|default:"—" }}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Tug'ilgan sana" %}</span><b>{{ student.birth_date|date:"d.m.Y"|default:"—" }}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Maktab / sinf" %}</span><b>{{ student.school_name|default:"—" }} {{ student.grade }}</b></div>
+                <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Manzil" %}</span><b>{{ student.address|default:"—" }}</b></div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>🎓 {% trans "O'quvchi kabineti (login)" %}</h3></div>
+            <div class="card__body">
+                {% if student.user %}
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                        <span class="badge success">✅ {% trans "Login mavjud" %}</span>
+                        <span class="text-muted" style="font-size:13px;">{% trans "Login" %}: <b>{{ student.user.username }}</b></span>
+                        {% if student.telegram_chat_id %}<span class="badge info">📨 {% trans "Telegram ulangan" %}</span>{% else %}<span class="badge muted">{% trans "Telegram ulanmagan" %}</span>{% endif %}
+                    </div>
+                    <details>
+                        <summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-soft);">🔑 {% trans "Parolni yangilash / qayta yuborish" %}</summary>
+                        <form method="post" action="{% url 'students:login_create' student.slug %}" style="margin-top:12px;">
+                            {% csrf_token %}
+                            <div class="field" style="margin-bottom:10px;"><label>{% trans "Login" %}</label>
+                                <input class="form-control" name="username" value="{{ student.user.username }}"></div>
+                            <div class="field" style="margin-bottom:10px;"><label>{% trans "Yangi parol" %}</label>
+                                <input class="form-control" name="password" placeholder="{% trans "Bo'sh qoldirsangiz — avtomatik yaratiladi" %}"></div>
+                            <button class="btn btn-primary btn-sm" type="submit">{% trans "Yangilash va yuborish" %}</button>
+                        </form>
+                    </details>
+                {% else %}
+                    <p class="text-muted" style="font-size:13px;margin:0 0 12px;">
+                        {% trans "O'quvchi uchun shaxsiy kabinet logini yarating. Telegram ulangan bo'lsa, login va parol avtomatik botga yuboriladi." %}
+                    </p>
+                    <form method="post" action="{% url 'students:login_create' student.slug %}">
+                        {% csrf_token %}
+                        <div class="form-grid" style="grid-template-columns:1fr 1fr;">
+                            <div class="field"><label>{% trans "Login" %}</label>
+                                <input class="form-control" name="username" value="{{ suggested_username }}"></div>
+                            <div class="field"><label>{% trans "Parol" %}</label>
+                                <input class="form-control" name="password" placeholder="{% trans 'Avtomatik yaratiladi' %}"></div>
+                        </div>
+                        <button class="btn btn-primary" type="submit" style="margin-top:14px;">🔐 {% trans "Login yaratish" %}</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__head"><h3>{% trans "Guruhlar" %}</h3></div>
+            <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+                <div class="list-divided">
+                    {% for en in enrollments %}
+                    <div class="li">
+                        <div class="li__main"><div class="li__title">{{ en.course.name }}</div>
+                            <div class="li__sub">{{ en.course.subject.name }} · {{ en.get_status_display }}</div></div>
+                        <div class="li__right money">{{ en.net_fee|floatformat:0|intcomma }}</div>
+                    </div>
+                    {% empty %}<div class="empty"><div class="ico">📚</div>{% trans "Guruhga yozilmagan" %}</div>{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="card" style="margin-bottom:18px;">
+            <div class="card__head"><h3>{% trans "So'nggi to'lovlar" %}</h3>
+                <a href="{% url 'payments:payment_create' %}?student={{ student.id }}" class="btn btn-soft btn-sm right">➕ {% trans "To'lov" %}</a></div>
+            <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+                <div class="list-divided">
+                    {% for p in payments %}
+                    <div class="li"><div class="li__main"><div class="li__title">{{ p.get_method_display }}</div>
+                        <div class="li__sub">{{ p.paid_at|date:"d.m.Y H:i" }}</div></div>
+                        <a class="btn btn-soft btn-sm" href="{% url 'payments:payment_receipt' p.pk %}" target="_blank" title="{% trans 'Chek (PDF)' %}">🧾</a>
+                        <div class="li__right text-success">+{{ p.amount|floatformat:0|intcomma }}</div></div>
+                    {% empty %}<div class="empty"><div class="ico">💸</div>{% trans "To'lov yo'q" %}</div>{% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card__head"><h3>{% trans "So'nggi baholar" %}</h3></div>
+            <div class="card__body" style="padding-top:6px;padding-bottom:6px;">
+                <div class="list-divided">
+                    {% for a in assessments %}
+                    <div class="li"><div class="li__main"><div class="li__title">{{ a.title|default:a.get_type_display }}</div>
+                        <div class="li__sub">{{ a.course.name }} · {{ a.date|date:"d.m.Y" }}</div></div>
+                        <div class="li__right"><span class="badge {{ a.badge_class }}">{{ a.percentage }}%</span></div></div>
+                    {% empty %}<div class="empty"><div class="ico">📝</div>{% trans "Baho yo'q" %}</div>{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

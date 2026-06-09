@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+/staticfiles/
+/media/
+
+# Muhit
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store

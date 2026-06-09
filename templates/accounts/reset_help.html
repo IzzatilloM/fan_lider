@@ -1,0 +1,50 @@
+{% extends 'accounts/auth_base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Parolni tiklash" %}{% endblock %}
+{% block heading %}{% trans "Parolni tiklash" %}{% endblock %}
+{% block subtitle %}{% trans "O'qituvchi va o'quvchilar parolni Telegram bot orqali administratordan tiklaydi." %}{% endblock %}
+
+{% block content %}
+<div class="reset-steps">
+    <div class="step">
+        <span class="num">1</span>
+        <div><b>{% trans "Telegram botni oching" %}</b><p>{% trans "Quyidagi tugma orqali markaz botiga o'ting." %}</p></div>
+    </div>
+    <div class="step">
+        <span class="num">2</span>
+        <div>{% blocktrans %}<b>«🔑 Parolni tiklash»</b> tugmasini bosing{% endblocktrans %}<p>{% blocktrans %}So'ng <b>O'qituvchi</b> yoki <b>O'quvchi</b> ni tanlang.{% endblocktrans %}</p></div>
+    </div>
+    <div class="step">
+        <span class="num">3</span>
+        <div>{% blocktrans %}<b>«Adminga murojaat»</b> ni bosing{% endblocktrans %}<p>{% trans "Murojaat administratorga tushadi." %}</p></div>
+    </div>
+    <div class="step">
+        <span class="num">4</span>
+        <div><b>{% trans "Yangi parolni kuting" %}</b><p>{% trans "Administrator yangi parol o'rnatadi va bot sizga yuboradi." %}</p></div>
+    </div>
+</div>
+
+{% if bot_username %}
+<a href="https://t.me/{{ bot_username }}" target="_blank" class="btn-brand mt-4 text-decoration-none d-inline-flex justify-content-center align-items-center gap-2">
+    <i class="bi bi-telegram"></i> {% trans "Telegram botni ochish" %}</a>
+{% else %}
+<div class="alert alert-info py-2 px-3 rounded-3 small fw-semibold mt-3">
+    {% trans "Markaz Telegram boti administrator tomonidan ulanadi." %}
+</div>
+{% endif %}
+
+<style>
+    .reset-steps{display:flex;flex-direction:column;gap:14px;margin-top:6px;}
+    .step{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1.5px solid var(--line);
+        border-radius:15px;transition:all .18s;background:#fff;}
+    .step:hover{border-color:var(--brand);transform:translateX(4px);box-shadow:0 8px 20px rgba(212,100,15,.1);}
+    .step .num{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;
+        display:grid;place-items:center;flex:none;font-size:14px;}
+    .step b{font-size:14.5px;}
+    .step p{margin:2px 0 0;font-size:12.5px;color:var(--muted);}
+</style>
+{% endblock %}
+
+{% block footer %}
+    <a href="{% url 'accounts:login_page' %}">← {% trans "Kirish sahifasiga qaytish" %}</a>
+{% endblock %}

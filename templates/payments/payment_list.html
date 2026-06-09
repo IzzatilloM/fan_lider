@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{% trans "To'lovlar" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><h1>{% trans "To'lovlar tarixi" %}</h1><div class="sub">{% trans "Jami ko'rsatilgan" %}: <b class="text-success">{{ total|floatformat:0|intcomma }}</b> {% trans "so'm" %}</div></div>
+    <div class="page-head__actions"><a href="{% url 'payments:payment_create' %}" class="btn btn-primary">💳 {% trans "To'lov qabul qilish" %}</a></div>
+</div>
+
+<div class="tabs">
+    <a href="{% url 'payments:dashboard' %}">{% trans "Umumiy" %}</a>
+    <a href="{% url 'payments:payment_list' %}" class="active">{% trans "To'lovlar" %}</a>
+    <a href="{% url 'payments:invoice_list' %}">{% trans "Hisob-fakturalar" %}</a>
+    <a href="{% url 'payments:debtors' %}">{% trans "Qarzdorlar" %}</a>
+</div>
+
+<form method="get" class="toolbar">
+    <div class="search">🔎<input type="text" name="q" value="{{ q }}" placeholder="{% trans "O'quvchi ismi..." %}"></div>
+    <select name="method" class="form-select" style="max-width:180px;" onchange="this.form.submit()">
+        <option value="">{% trans "Barcha turi" %}</option>
+        {% for v,l in method_choices %}<option value="{{ v }}" {% if method == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-light">{% trans "Filtr" %}</button>
+</form>
+
+<div class="card">
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Turi" %}</th><th>{% trans "Sana" %}</th><th>{% trans "Qabul qildi" %}</th><th class="num">{% trans "Summa" %}</th><th></th></tr></thead>
+            <tbody>
+                {% for p in payments %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ p.student.initials }}</span>
+                        <a href="{% url 'students:detail' p.student.slug %}" class="cell__name">{{ p.student.full_name }}</a></div></td>
+                    <td><span class="badge brand">{{ p.get_method_display }}</span></td>
+                    <td>{{ p.paid_at|date:"d.m.Y H:i" }}</td>
+                    <td>{{ p.received_by.display_name|default:"—" }}</td>
+                    <td class="num money text-success">+{{ p.amount|floatformat:0|intcomma }}</td>
+                    <td class="num" style="white-space:nowrap;">
+                        <a href="{% url 'payments:payment_receipt' p.pk %}" target="_blank" class="btn btn-soft btn-sm" title="{% trans 'Chek (PDF)' %}">🧾</a>
+                        <a href="{% url 'payments:payment_delete' p.pk %}" class="btn btn-ghost btn-sm">🗑️</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6"><div class="empty"><div class="ico">💸</div>{% trans "To'lov topilmadi" %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

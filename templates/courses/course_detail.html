@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load humanize i18n %}
+{% block page_title %}{{ course.name }}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'courses:list' %}" class="text-muted" style="font-size:13px;">← {% trans "Guruhlar" %}</a>
+        <h1>{{ course.subject.icon }} {{ course.name }}{% if course.level %} <span class="badge brand" style="font-size:13px;vertical-align:middle;">{{ course.level }}</span>{% endif %}</h1>
+        <div class="sub">{{ course.subject.name }} · {{ course.get_weekdays_display }}{% if course.start_time %} · ⏰ {{ course.start_time|time:"H:i" }}{% endif %} · {{ course.get_status_display }}</div>
+    </div>
+    <div class="page-head__actions">
+        <a href="{% url 'monitoring:attendance_take' course.slug %}" class="btn btn-light">✅ {% trans "Davomat" %}</a>
+        <a href="{% url 'monitoring:grade_book' course.slug %}" class="btn btn-light">📊 {% trans "Baholar" %}</a>
+        <a href="{% url 'courses:edit' course.slug %}" class="btn btn-light">✏️ {% trans "Tahrir" %}</a>
+        <a href="{% url 'courses:delete' course.slug %}" class="btn btn-ghost">🗑️</a>
+    </div>
+</div>
+
+<div class="grid cols-4" style="margin-bottom:18px;">
+    <div class="stat"><div class="stat__label">{% trans "O'quvchilar" %}</div><div class="stat__value" style="font-size:22px;">{{ course.active_students_count }}/{{ course.capacity }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Oylik to'lov" %}</div><div class="stat__value" style="font-size:20px;">{{ course.monthly_fee|floatformat:0|intcomma }}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Davomiyligi" %}</div><div class="stat__value" style="font-size:22px;">{% blocktrans with n=course.duration_months %}{{ n }} oy{% endblocktrans %}</div></div>
+    <div class="stat"><div class="stat__label">{% trans "Bo'sh joy" %}</div><div class="stat__value" style="font-size:22px;">{{ course.free_seats }}</div></div>
+</div>
+
+<div class="card">
+    <div class="card__head"><h3>{% trans "O'quvchilar ro'yxati" %}</h3>
+        <a href="{% url 'enrollments:enrollment_create' %}?course={{ course.id }}" class="btn btn-primary btn-sm right">➕ {% trans "O'quvchi yozish" %}</a>
+    </div>
+    <div class="table-wrap">
+        <table class="tbl">
+            <thead><tr><th>{% trans "O'quvchi" %}</th><th>{% trans "Telefon" %}</th><th>{% trans "Oylik" %}</th><th>{% trans "Boshlangan" %}</th><th>{% trans "Holat" %}</th></tr></thead>
+            <tbody>
+                {% for en in enrollments %}
+                <tr>
+                    <td><div class="cell"><span class="avatar">{{ en.student.initials }}</span>
+                        <a href="{% url 'students:detail' en.student.slug %}" class="cell__name">{{ en.student.full_name }}</a></div></td>
+                    <td>{{ en.student.phone }}</td>
+                    <td class="money">{{ en.net_fee|floatformat:0|intcomma }}</td>
+                    <td>{{ en.start_date|date:"d.m.Y" }}</td>
+                    <td><span class="badge success">{{ en.get_status_display }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5"><div class="empty"><div class="ico">👥</div>{% trans "Bu guruhda hali o'quvchi yo'q" %}</div></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

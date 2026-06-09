@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block page_title %}{% blocktrans with name=application.full_name %}Ariza — {{ name }}{% endblocktrans %}{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <a href="{% url 'enrollments:application_list' %}" class="text-muted" style="font-size:13px;">← {% trans "Arizalar" %}</a>
+        <h1>{{ application.full_name }}</h1>
+        <div class="sub">{{ application.created_at|date:"d.m.Y H:i" }} · {{ application.get_source_display }}</div>
+    </div>
+    <div class="page-head__actions">
+        {% if application.converted_student %}
+            <a href="{% url 'students:detail' application.converted_student.slug %}" class="btn btn-primary">🎓 {% trans "O'quvchini ko'rish" %}</a>
+        {% else %}
+            <a href="{% url 'enrollments:application_convert' application.pk %}" class="btn btn-primary">✅ {% trans "O'quvchiga aylantirish" %}</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="grid cols-2">
+    <div class="card">
+        <div class="card__head"><h3>{% trans "Ariza ma'lumotlari" %}</h3>
+            <span class="badge {% if application.status == 'new' %}info{% elif application.status == 'enrolled' %}success{% elif application.status == 'rejected' %}danger{% else %}warning{% endif %} right">{{ application.get_status_display }}</span></div>
+        <div class="card__body" style="font-size:14px;line-height:2.1;">
+            <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Telefon" %}</span><b><a href="tel:{{ application.phone }}">{{ application.phone }}</a></b></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Ota-ona tel." %}</span><b>{{ application.parent_phone|default:"—" }}</b></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Yosh" %}</span><b>{{ application.age|default:"—" }}</b></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Yo'nalish" %}</span><b>{{ application.subject.name|default:"—" }}</b></div>
+            <div style="display:flex;justify-content:space-between;"><span class="text-muted">{% trans "Manba" %}</span><b>{{ application.get_source_display }}</b></div>
+            {% if application.message %}<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line);"><span class="text-muted">{% trans "Xabar" %}:</span><br>{{ application.message }}</div>{% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card__head"><h3>{% trans "Holatni boshqarish" %}</h3></div>
+        <div class="card__body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-grid" style="grid-template-columns:1fr;">{% include 'partials/form_fields.html' %}</div>
+                <div class="form-actions"><button class="btn btn-primary">💾 {% trans "Saqlash" %}</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

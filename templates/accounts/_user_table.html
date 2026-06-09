@@ -1,0 +1,46 @@
+{% load i18n %}
+{# rows = foydalanuvchilar querysети; show_impersonate (ixtiyoriy) #}
+<div class="table-wrap">
+    <table class="tbl">
+        <thead><tr>
+            <th>{% trans "Foydalanuvchi" %}</th>
+            <th>{% trans "Login" %}</th>
+            <th>{% trans "Parol" %}</th>
+            <th>{% trans "Holat" %}</th>
+            <th class="num">{% trans "Amallar" %}</th>
+        </tr></thead>
+        <tbody>
+        {% for u in rows %}
+        <tr>
+            <td>
+                <div class="cell__name">{{ u.display_name }}</div>
+                <div class="cell__meta">{{ u.phone|default:u.email|default:"—" }}</div>
+            </td>
+            <td><code>{{ u.username }}</code></td>
+            <td>
+                {% if u.plain_password %}
+                <span class="pw-cell">
+                    <span class="pw-dots">••••••••</span>
+                    <span class="pw-real" style="display:none;"><code>{{ u.plain_password }}</code></span>
+                    <button type="button" class="btn btn-ghost btn-sm pw-eye" title="{% trans 'Ko‘rsatish' %}">👁</button>
+                </span>
+                {% else %}<span class="text-muted" style="font-size:12px;">—</span>{% endif %}
+            </td>
+            <td>{% if u.is_active %}<span class="badge success">{% trans "Faol" %}</span>{% else %}<span class="badge muted">{% trans "O‘chiq" %}</span>{% endif %}</td>
+            <td class="num">
+                <div style="display:flex;gap:6px;justify-content:flex-end;">
+                    <a href="{% url 'accounts:user_edit' u.pk %}" class="btn btn-soft btn-sm" title="{% trans 'Tahrirlash' %}">✏️</a>
+                    <button type="button" class="btn btn-soft btn-sm setpw" data-url="{% url 'accounts:user_set_password' u.pk %}" title="{% trans 'Parol almashtirish' %}">🔑</button>
+                    {% if u.pk != request.user.pk %}
+                    <a href="{% url 'accounts:impersonate' u.pk %}" class="btn btn-soft btn-sm" title="{% trans 'Sahifasiga kirish' %}">🔓</a>
+                    <button type="button" class="btn btn-ghost btn-sm del" data-url="{% url 'accounts:user_delete' u.pk %}" data-name="{{ u.username }}" title="{% trans 'O‘chirish' %}">🗑</button>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5"><div class="empty" style="padding:30px;text-align:center;color:var(--muted);">{% trans "Hozircha yo‘q" %}</div></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
