@@ -58,6 +58,11 @@ services:
         sync: false
       - key: TELEGRAM_WEBHOOK_SECRET
         value: fanlider-webhook-2026
+      - key: MAX_ADMINS
+        value: "3"
+      # AI oylik tahlili (Gemini) — ixtiyoriy, bo'sh bo'lsa offline rejim
+      - key: GEMINI_API_KEY
+        sync: false
       - key: DJANGO_SUPERUSER_USERNAME
         sync: false
       - key: DJANGO_SUPERUSER_EMAIL
