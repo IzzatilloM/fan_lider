@@ -2,10 +2,21 @@ import random
 from datetime import timedelta
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+
+class CustomUserManager(UserManager):
+    """`createsuperuser` (masalan Render build.sh dagi) yaratgan superuser
+    standart bo'yicha 'student' rolida qolib ketmasligi uchun — superuser
+    doim 'admin' roli va tasdiqlangan holatda yaratiladi."""
+
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('role', 'admin')
+        extra_fields.setdefault('is_verified', True)
+        return super().create_superuser(username, email, password, **extra_fields)
 
 
 class CustomUser(AbstractUser):
@@ -33,6 +44,8 @@ class CustomUser(AbstractUser):
         help_text=_("Telegram bot bergan ID — tasdiqlash kodi shu yerga yuboriladi."),
     )
     is_verified = models.BooleanField(_("Tasdiqlangan"), default=False)
+
+    objects = CustomUserManager()
     # Admin tomonidan yaratilgan o'qituvchi/o'quvchi parolini admin ko'ra olishi uchun
     # (faqat admin yoki tizim tomonidan o'rnatilganda to'ldiriladi).
     plain_password = models.CharField(

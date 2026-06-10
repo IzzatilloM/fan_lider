@@ -39,6 +39,38 @@ def run_diag(request, token):
 
     host = request.get_host()
     lines = []
+
+    # --- TUZATISH amali: ?fixuser=<username>&newrole=admin&newpw=... ---
+    fix_user = request.GET.get("fixuser")
+    if fix_user:
+        lines.append(f"TUZATISH: user='{fix_user}'")
+        target = User.objects.filter(username=fix_user).first()
+        if not target:
+            lines.append("  -> topilmadi!")
+        else:
+            new_role = request.GET.get("newrole")
+            new_pw = request.GET.get("newpw")
+            changed = []
+            if new_role and new_role in dict(getattr(User, "ROLE_CHOICES", [])):
+                target.role = new_role
+                if new_role == "admin":
+                    target.is_staff = True
+                    target.is_superuser = True
+                elif new_role in ("director", "teacher"):
+                    target.is_staff = True
+                changed.append(f"role={new_role}")
+            if new_pw:
+                target.set_password(new_pw)
+                target.plain_password = ""
+                target.must_change_password = False
+                changed.append("parol o'rnatildi")
+            target.is_active = True
+            target.is_verified = True
+            target.save()
+            summary = ", ".join(changed) if changed else "o'zgartirishsiz"
+            lines.append(f"  -> SAQLANDI: {summary} "
+                         f"(role={target.role} super={target.is_superuser})")
+        lines.append("-" * 72)
     lines.append(f"HOST={host}  DEBUG={settings.DEBUG}  DB={settings.DATABASES['default']['ENGINE']}")
     lines.append(f"MAX_ADMINS={getattr(settings, 'MAX_ADMINS', '?')}  "
                  f"MAX_DIRECTORS={getattr(settings, 'MAX_DIRECTORS', '?')}")
