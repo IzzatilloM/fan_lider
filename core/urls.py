@@ -4,13 +4,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from . import diag  # VAQTINCHALIK diagnostika (keyin olib tashlanadi)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # VAQTINCHALIK: Render'dagi xatolikni aniqlash uchun (diagnostika tugagach o'chiriladi)
-    path('__diag__/<str:token>/', diag.run_diag),
 
     # Til almashtirish (set_language) — O'zbek / Rus / Ingliz
     path('i18n/', include('django.conf.urls.i18n')),
