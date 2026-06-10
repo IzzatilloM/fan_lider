@@ -5,7 +5,8 @@ Xato topilgach BU FAYL VA URL O'CHIRILADI.
 import traceback
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.messages import get_messages
 from django.http import HttpResponse, HttpResponseNotFound
 from django.test import Client
 
@@ -39,9 +40,47 @@ def run_diag(request, token):
     host = request.get_host()
     lines = []
     lines.append(f"HOST={host}  DEBUG={settings.DEBUG}  DB={settings.DATABASES['default']['ENGINE']}")
+    lines.append(f"MAX_ADMINS={getattr(settings, 'MAX_ADMINS', '?')}  "
+                 f"MAX_DIRECTORS={getattr(settings, 'MAX_DIRECTORS', '?')}")
     lines.append(f"admin={admin.username if admin else None}  "
                  f"director={director.username if director else None}")
     lines.append(f"counts: users={User.objects.count()}")
+    lines.append("-" * 72)
+
+    # --- Barcha foydalanuvchilar holati ---
+    lines.append("FOYDALANUVCHILAR:")
+    for u in User.objects.all().order_by('id'):
+        lines.append(
+            f"  id={u.id} user='{u.username}' role='{getattr(u,'role','')}' "
+            f"active={u.is_active} super={u.is_superuser} staff={u.is_staff} "
+            f"usable_pw={u.has_usable_password()} email='{u.email}'"
+        )
+    lines.append("-" * 72)
+
+    # --- LOGIN sinovi: ?u=...&p=...&role=... (haqiqiy login_page oqimi) ---
+    test_u = request.GET.get('u')
+    test_p = request.GET.get('p')
+    test_role = request.GET.get('role', 'admin')
+    if test_u and test_p:
+        lines.append(f"LOGIN SINOVI: u='{test_u}' role='{test_role}'")
+        # 1) authenticate (backend darajasi)
+        au = authenticate(request, username=test_u, password=test_p)
+        lines.append(f"  authenticate() -> {'MUVAFFAQIYAT user=' + au.username if au else 'None (login yoki parol xato)'}")
+        # 2) to'liq login_page POST oqimi (rol tekshiruvi + admin_login_allowed bilan)
+        c = Client(raise_request_exception=True, enforce_csrf_checks=False)
+        try:
+            resp = c.post('/accounts/login/', {
+                'identifier': test_u, 'password': test_p, 'role': test_role,
+            }, secure=True, SERVER_NAME=host, follow=True)
+            msgs = [f"{m.tags}:{m.message}" for m in get_messages(resp.wsgi_request)]
+            chain = ' -> '.join(f"{u}({s})" for u, s in resp.redirect_chain) or '(redirect yo\'q)'
+            lines.append(f"  login_page POST -> status={resp.status_code}  redir={chain}")
+            lines.append(f"  xabarlar: {msgs}")
+        except Exception:
+            lines.append("  login_page POST -> XATOLIK:")
+            lines.append(traceback.format_exc())
+        lines.append("-" * 72)
+
     lines.append("=" * 72)
 
     def probe(user, label_user):
